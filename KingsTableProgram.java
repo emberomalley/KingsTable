@@ -1,17 +1,17 @@
 import java.awt.*;
 import javax.swing.*;
-import javafx.application.Applicaiton;
+//import javafx.application.Applicaiton; //I'm having an import error on my computer (which is effecting the below code) -Ember
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class KingsTableProgram extends Application
+public class KingsTableProgram //extends Application
 {
    public static int boardSize = 11; //always Odd# x Odd#, usually 11x11 or 13x13
    public static int titleSize = 100; //px size of the grid boxes
-   private Tile[][] board = new Tile[boardSize][boardSize];
+   //private Tile[][] board = new Tile[boardSize][boardSize]; //will help to keep track of behind the scenes position of pieces
    
    private Group titleGroup = new Group();
    private Group pieceGroup = new Group();
@@ -26,12 +26,12 @@ public class KingsTableProgram extends Application
       kingsBoard.setSize(800,800);
       kingsBoard.setTitle("King's Table");
       Container pane = kingsBoard.getContentPane();
-      pane.setLayout(new GridLayout(rows,cols));
-      for(int i=0; i<rows; i++){
-         for(int j=0; j<cols; j++){
+      pane.setLayout(new GridLayout(boardSize,boardSize));
+      for(int i=0; i<boardSize; i++){
+         for(int j=0; j<boardSize; j++){
             JPanel panel = new JPanel();
             panel.setBorder(BorderFactory.createLineBorder(Color.black));
-            if((i==0 && (j==0 || j==(cols-1))) || (i==(cols-1) && (j==0 || j==(cols-1))) || (i==(cols/2) && j==(cols/2)))
+            if((i==0 && (j==0 || j==(boardSize-1))) || (i==(boardSize-1) && (j==0 || j==(boardSize-1))) || (i==(boardSize/2) && j==(boardSize/2)))
             {
                panel.setBackground(c2);
             }
