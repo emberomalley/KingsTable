@@ -9,9 +9,10 @@ import javafx.stage.Stage;
 
 public class KingsTableProgram //extends Application
 {
-   public static int boardSize = 11; //always Odd# x Odd#, usually 11x11 or 13x13
-   public static int titleSize = 100; //px size of the grid boxes
-   //private Tile[][] board = new Tile[boardSize][boardSize]; //will help to keep track of behind the scenes position of pieces
+   public static Board board = new Board();
+   
+   public static int boardSize = board.getSize(); //always Odd# x Odd#, usually 11x11 or 13x13
+   public static int tileSize = board.getTileSize(); //px size of the grid boxes
    
    private Group titleGroup = new Group();
    private Group pieceGroup = new Group();
