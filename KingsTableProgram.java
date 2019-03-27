@@ -117,7 +117,7 @@ public class KingsTableProgram extends Application {
                     imageContainer.getChildren().addAll(square, image);
                 }
                 
-                if (i == board.getSelectedTileX() && j == board.getSelectedTileY()) {
+                if (i == KingsTableProgram.board.getSelectedTileX() && j == KingsTableProgram.board.getSelectedTileY()) {
                     Rectangle highlight = new Rectangle();
                     highlight.setWidth(KingsTableProgram.tileSize);
                     highlight.setHeight(KingsTableProgram.tileSize);
