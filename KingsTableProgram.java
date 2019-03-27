@@ -1,4 +1,7 @@
 import java.awt.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 import javax.swing.*;
 
 import javafx.application.Application;
@@ -64,7 +67,10 @@ public class KingsTableProgram extends Application
 		
 		// Background Image
 		StackPane backgroundImgContainer = new StackPane();
-		ImageView bgimage = new ImageView("file:stoneBG.jpg");
+		System.out.println(System.getProperty("user.dir"));
+		//FileInputStream filestream = new FileInputStream(System.getProperty("user.dir") + "\\stoneBG.jpg");
+		//Image image = new Image(filestream);
+		ImageView bgimage = new ImageView("file:" + System.getProperty("user.dir") + "\\stoneBG.jpg");
 		bgimage.setFitHeight(height+100);
 		bgimage.setFitWidth(width+500);
 		backgroundImgContainer.getChildren().addAll(bgimage,border);
@@ -164,7 +170,7 @@ public class KingsTableProgram extends Application
 		
 		//Show Game ------------
 		primaryStage.setScene(scene);
-		primaryStage.setTitle("King's Table");
+		primaryStage.setTitle("King's Table "+System.getProperty("user.dir"));
 		primaryStage.setResizable(false);
 		primaryStage.show();
 	}
