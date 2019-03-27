@@ -106,7 +106,6 @@ public class KingsTableProgram extends Application
 				square.setHeight(KingsTableProgram.tileSize);
 				square.setStroke(Color.BLACK);
 				square.setFill(Color.TRANSPARENT);
-				
 				square.setOnMouseEntered(event -> {
 					square.setEffect(new InnerShadow(+50d, 0d, 0d, Color.GOLD));
 				});
@@ -180,29 +179,32 @@ public class KingsTableProgram extends Application
 		//Piece GUI experiment
 		//Set Up initial table
 		//Attackers                  TOP    |    LEFT   |     RIGHT      |     BOTTOM
-		int[] xCoorA = new int[] {3,4,5,6,7,5,0,0,0,0,0,1,10,10,10,10,10,9, 3, 4, 5, 6, 7, 5};
-		int[] yCoorA = new int[] {0,0,0,0,0,1,3,4,5,6,7,5,3, 4, 5, 6, 7, 5,10,10,10,10,10,9};
+		int[] xCoor = new int[] {3,4,5,6,7,5,0,0,0,0,0,1,10,10,10,10,10,9, 3, 4, 5, 6, 7, 5,
+				//Defenders
+				5,4,5,6,3,4,6,7,4,5,6,5};
+		int[] yCoor = new int[] {0,0,0,0,0,1,3,4,5,6,7,5,3, 4, 5, 6, 7, 5,10,10,10,10,10,9,
+				//Defenders
+				3,4,4,4,5,5,5,5,6,6,6,7};
 		Image dpImage = new Image("defenderPiece.jpg");
 		Image apImage = new Image("attackerPiece.jpg");
-		for(int i=0; i < xCoorA.length; i++) {
+		for(int i=0; i < xCoor.length; i++) {
 			Circle piece = new Circle(KingsTableProgram.tileSize/3);
-			piece.setFill(new ImagePattern(apImage));
-			GridPane.setRowIndex(piece,yCoorA[i]);
-			GridPane.setColumnIndex(piece,xCoorA[i]);
+			if(i>23) {
+				piece.setFill(new ImagePattern(dpImage));
+			}
+			else {
+				piece.setFill(new ImagePattern(apImage));
+			}
+			GridPane.setRowIndex(piece,yCoor[i]);
+			GridPane.setColumnIndex(piece,xCoor[i]);
 			GridPane.setHalignment(piece, HPos.CENTER);
 			piece.setEffect(new DropShadow(+10d, 0d, 0d, Color.BLACK)); //Radius, offsetX, offsetY, color
-			gridPaneGAME.getChildren().addAll(piece);
-		}
-		//Defenders
-		int[] xCoorD = new int[] {5,4,5,6,3,4,6,7,4,5,6,5};
-		int[] yCoorD = new int[] {3,4,4,4,5,5,5,5,6,6,6,7};
-		for(int i=0; i < xCoorD.length; i++) {
-			Circle piece = new Circle(KingsTableProgram.tileSize/3);
-			piece.setFill(new ImagePattern(dpImage));
-			GridPane.setRowIndex(piece,yCoorD[i]);
-			GridPane.setColumnIndex(piece,xCoorD[i]);
-			GridPane.setHalignment(piece, HPos.CENTER);
-			piece.setEffect(new DropShadow(+10d, 0d, 0d, Color.BLACK)); //Radius, offsetX, offsetY, color
+			piece.setOnMouseEntered(event -> { //we can add a thing here where if it is the player's piece it will highlight
+				piece.setEffect(new InnerShadow(+30d, 0d, 0d, Color.GOLD));
+			});
+			piece.setOnMouseExited(event -> {
+				piece.setEffect(new InnerShadow(0d, 0d, 0d, Color.TRANSPARENT));
+			});
 			gridPaneGAME.getChildren().addAll(piece);
 		}
 		//King
@@ -211,6 +213,12 @@ public class KingsTableProgram extends Application
 		GridPane.setRowIndex(king,5);
 		GridPane.setColumnIndex(king,5);
 		GridPane.setHalignment(king, HPos.CENTER);
+		king.setOnMouseEntered(event -> { //we can add a thing here where if it is the player's piece it will highlight
+			king.setEffect(new InnerShadow(+50d, 0d, 0d, Color.GOLD));
+		});
+		king.setOnMouseExited(event -> {
+			king.setEffect(new InnerShadow(0d, 0d, 0d, Color.TRANSPARENT));
+		});
 		king.setEffect(new DropShadow(+10d, 0d, 0d, Color.BLACK)); //Radius, offsetX, offsetY, color
 		gridPaneGAME.getChildren().addAll(king);
 	}
