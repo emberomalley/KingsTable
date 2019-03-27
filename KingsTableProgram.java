@@ -31,6 +31,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.InnerShadow;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -104,19 +105,23 @@ public class KingsTableProgram extends Application
 				square.setWidth(KingsTableProgram.tileSize);
 				square.setHeight(KingsTableProgram.tileSize);
 				square.setStroke(Color.BLACK);
+				square.setFill(Color.TRANSPARENT);
+				
+				square.setOnMouseEntered(event -> {
+					square.setEffect(new InnerShadow(+50d, 0d, 0d, Color.GOLD));
+				});
+				square.setOnMouseExited(event -> {
+					square.setEffect(new InnerShadow(0d, 0d, 0d, Color.TRANSPARENT));
+				});
 				StackPane imageContainer = new StackPane();
 				if((i==0 && (j==0 || j==(boardSize-1))) || (i==(boardSize-1) && (j==0 || j==(boardSize-1))) || (i==(boardSize/2) && j==(boardSize/2)))
 	            {
 					fileName = "darkWood.jpg";
-					square.setFill(KingsTableProgram.kingSquareColor);
 	            }
-	            else{
-	            	square.setFill(KingsTableProgram.regSquareColor);
-	            	}
 				ImageView image = new ImageView(fileName);
             	image.setFitHeight(KingsTableProgram.tileSize);
 				image.setFitWidth(KingsTableProgram.tileSize);
-            	imageContainer.getChildren().addAll(square,image);
+            	imageContainer.getChildren().addAll(image,square);
 				gridPaneGAME.setEffect(new DropShadow(+30d, 0d, 0d, Color.BLACK)); 
 				GridPane.setRowIndex(imageContainer,i);
 				GridPane.setColumnIndex(imageContainer,j);
