@@ -67,10 +67,7 @@ public class KingsTableProgram extends Application
 		
 		// Background Image
 		StackPane backgroundImgContainer = new StackPane();
-		System.out.println(System.getProperty("user.dir"));
-		//FileInputStream filestream = new FileInputStream(System.getProperty("user.dir") + "\\stoneBG.jpg");
-		//Image image = new Image(filestream);
-		ImageView bgimage = new ImageView("file:" + System.getProperty("user.dir") + "\\stoneBG.jpg");
+		ImageView bgimage = new ImageView("stoneBG.jpg");
 		bgimage.setFitHeight(height+100);
 		bgimage.setFitWidth(width+500);
 		backgroundImgContainer.getChildren().addAll(bgimage,border);
@@ -106,14 +103,14 @@ public class KingsTableProgram extends Application
 				StackPane imageContainer = new StackPane();
 				if((i==0 && (j==0 || j==(boardSize-1))) || (i==(boardSize-1) && (j==0 || j==(boardSize-1))) || (i==(boardSize/2) && j==(boardSize/2)))
 	            {
-					ImageView image = new ImageView("file:darkWood.jpg");
+					ImageView image = new ImageView("darkWood.jpg");
 					image.setFitHeight(KingsTableProgram.tileSize);
 					image.setFitWidth(KingsTableProgram.tileSize);
 					square.setFill(KingsTableProgram.c2);
 					imageContainer.getChildren().addAll(square,image);
 	            }
 	            else{
-	            	ImageView image = new ImageView("file:lightWood.jpg");
+	            	ImageView image = new ImageView("lightWood.jpg");
 	            	image.setFitHeight(KingsTableProgram.tileSize);
 					image.setFitWidth(KingsTableProgram.tileSize);
 	            	square.setFill(KingsTableProgram.c1);
