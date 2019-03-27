@@ -122,6 +122,13 @@ public class KingsTableProgram extends Application
             	image.setFitHeight(KingsTableProgram.tileSize);
 				image.setFitWidth(KingsTableProgram.tileSize);
             	imageContainer.getChildren().addAll(image,square);
+            	if (i == KingsTableProgram.board.getSelectedTileX() && j == KingsTableProgram.board.getSelectedTileY()) {
+					Rectangle highlight = new Rectangle();
+					highlight.setWidth(KingsTableProgram.tileSize);
+					highlight.setHeight(KingsTableProgram.tileSize);
+					highlight.setFill(Color.rgb(250, 255, 0, .4));
+					imageContainer.getChildren().addAll(highlight);
+				}
 				gridPaneGAME.setEffect(new DropShadow(+30d, 0d, 0d, Color.BLACK));
 				GridPane.setRowIndex(imageContainer,i);
 				GridPane.setColumnIndex(imageContainer,j);
