@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Board {
     //Fields.
     private int size = 11; //Dimensions of the board.
-    private int tileSize = 60; //Size of tile of the board in pixels.
+    private int tileSize = 45; //Size of tile of the board in pixels.
     private int[][] Tile = new int[size][size]; //Change to be an array of pieces later/
     private int[] selectedTile = new int[2]; //Selected tile of the board.
 
