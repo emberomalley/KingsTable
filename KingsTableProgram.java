@@ -1,3 +1,4 @@
+
 import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -39,22 +40,22 @@ import javafx.scene.text.FontWeight;
 public class KingsTableProgram extends Application
 {
    public static Board board = new Board();
-   
+
    public static int boardSize = board.getSize(); //always Odd# x Odd#, usually 11x11 or 13x13
    public static int tileSize = board.getTileSize(); //px size of the grid boxes
-   
+
    private Group tileGroup = new Group();
    private Group pieceGroup = new Group();
-   
+
    public static Color regSquareColor = Color.WHITE; //default colors
    public static Color kingSquareColor = Color.GRAY;
    public static Color textColor = Color.DARKGOLDENROD;
    public static String textFont = "Rockwell";
-   
-   public static void game() {	   
-	   
+
+   public static void game() {
+
    }
-   
+
    public static void main(String[] args)
    {
 	   launch(args);
@@ -65,11 +66,11 @@ public class KingsTableProgram extends Application
 		//set up background border pane (Top/Left/Right/Center/Bottom)
 		BorderPane border = new BorderPane();
 		//border.setPadding(new Insets(0,0,0,0)); //top,right,bottom,left
-		
+
 		//Screen Size
 		int width = 1000;
 		int height = 700;
-		
+
 		// Background Image--------------
 		StackPane backgroundImgContainer = new StackPane();
 		ImageView bgimage = new ImageView("stoneBG.jpg");
@@ -77,8 +78,8 @@ public class KingsTableProgram extends Application
 		bgimage.setFitWidth(width+500);
 		backgroundImgContainer.getChildren().addAll(bgimage,border);
 		Scene scene = new Scene(backgroundImgContainer,width,height);
-		
-		
+
+
 		//TOP (Menu Button and Title)------------
 		HBox hboxTOP = new HBox();
 		hboxTOP.setAlignment(Pos.TOP_LEFT);
@@ -93,11 +94,11 @@ public class KingsTableProgram extends Application
 		hboxTOP.getChildren().addAll(buttonMenu, gameTitle);
 		hboxTOP.setSpacing(300);
 		border.setTop(hboxTOP);
-		
-		
+
+
 		//CENTER (Game Table)------------
 		GridPane gridPaneGAME = new GridPane();
-		gridPaneGAME.setAlignment(Pos.CENTER); 
+		gridPaneGAME.setAlignment(Pos.CENTER);
 		for(int i=0; i<KingsTableProgram.boardSize; i++) {
 			for(int j=0; j<KingsTableProgram.boardSize; j++) {
 				String fileName = "lightWood.jpg";
@@ -121,30 +122,30 @@ public class KingsTableProgram extends Application
             	image.setFitHeight(KingsTableProgram.tileSize);
 				image.setFitWidth(KingsTableProgram.tileSize);
             	imageContainer.getChildren().addAll(image,square);
-				gridPaneGAME.setEffect(new DropShadow(+30d, 0d, 0d, Color.BLACK)); 
+				gridPaneGAME.setEffect(new DropShadow(+30d, 0d, 0d, Color.BLACK));
 				GridPane.setRowIndex(imageContainer,i);
 				GridPane.setColumnIndex(imageContainer,j);
 				gridPaneGAME.getChildren().addAll(imageContainer);
 			}
 		}
 		border.setCenter(gridPaneGAME);
-		
-		
+
+
 		//LEFT (white Game Pieces graveyard)------------
 		VBox vboxLeft = new VBox();
 		vboxLeft.setSpacing(10);
 		vboxLeft.setPadding(new Insets(0,100,0,70));
 		//vboxLeft.setStyle("-fx-background-color: #D3D3D3;"); //for visual testing
 		border.setLeft(vboxLeft);
-		
-		
+
+
 		//RIGHT (black Game Pieces graveyard)------------
 		VBox vboxRight = new VBox();
 		vboxRight.setSpacing(10);
 		vboxRight.setPadding(new Insets(0,70,0,100));
 		//vboxRight.setStyle("-fx-background-color: #D3D3D3;"); //for visual testing
 		border.setRight(vboxRight);
-		
+
 		//BOTTOM (High Score, Timer, Player's Score)------------
 		HBox hboxBOTTOM = new HBox();
 		hboxBOTTOM.setAlignment(Pos.BOTTOM_CENTER);
@@ -168,14 +169,14 @@ public class KingsTableProgram extends Application
 		userScore.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
 		hboxBOTTOM.getChildren().addAll(highScore, region1, timer, region2, userScore);
 		border.setBottom(hboxBOTTOM);
-		
+
 		//Show Game ------------
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("King's Table");
 		primaryStage.setResizable(false);
 		primaryStage.show();
-		
-		
+
+
 		//Piece GUI experiment
 		//Set Up initial table
 		//Attackers                  TOP    |    LEFT   |     RIGHT      |     BOTTOM

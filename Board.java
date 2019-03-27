@@ -5,8 +5,8 @@ public class Board {
     private int size = 11; //Dimensions of the board.
     private int tileSize = 45; //Size of tile of the board in pixels.
     private int[][] Tile = new int[size][size]; //Change to be an array of pieces later/
-    private int[] selectedTile = new int[2]; //Selected tile of the board.
-
+    private int selectedTileX = 1; //Selected tile of the board.
+    private int selectedTileY = 1;
     //Constructor
     public Board() {
 
@@ -38,6 +38,13 @@ public class Board {
     }
     public int getTileSize(){
         return this.tileSize;
+    }
+    
+    public int getSelectedTileX(){
+        return this.selectedTileX;
+    }
+    public int getSelectedTileY(){
+        return this.selectedTileY;
     }
     
     
