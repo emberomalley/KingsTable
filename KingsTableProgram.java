@@ -105,21 +105,6 @@ public class KingsTableProgram extends Application
 				square.setStroke(Color.BLACK);
 			
 				StackPane imageContainer = new StackPane();
-				// Gabe - Give every box an id
-				imageContainer.setId(i+","+j);
-				imageContainer
-				.setOnMouseClicked(
-						event -> {
-							System.out.println("Clicled a tile"+imageContainer.getId());
-//							Rectangle square1 = new Rectangle();
-//							square.setWidth(KingsTableProgram.tileSize);
-//							square.setHeight(KingsTableProgram.tileSize);
-//							square.setStroke(Color.BLACK);
-//							ImageView image = new ImageView("file:darkWood.jpg");
-//							imageContainer.set
-//							imageContainer.getChi.getChildren().setAll(square1,image);
-				
-						});
 				if((i==0 && (j==0 || j==(boardSize-1))) || (i==(boardSize-1) && (j==0 || j==(boardSize-1))) || (i==(boardSize/2) && j==(boardSize/2)))
 	            {
 					ImageView image = new ImageView("file:darkWood.jpg");
