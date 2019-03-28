@@ -111,7 +111,7 @@ public class KingsTableProgram extends Application
 					square.setEffect(new InnerShadow(+50d, 0d, 0d, Color.GOLD));
 				});
 				square.setOnMouseExited(event -> {
-					square.setEffect(new InnerShadow(0d, 0d, 0d, Color.TRANSPARENT));
+					square.setEffect(new InnerShadow(10d, 0d, 0d, Color.BLACK));
 				});
 				StackPane imageContainer = new StackPane();
 				if((i==0 && (j==0 || j==(boardSize-1))) || (i==(boardSize-1) && (j==0 || j==(boardSize-1))) || (i==(boardSize/2) && j==(boardSize/2)))
@@ -206,12 +206,12 @@ public class KingsTableProgram extends Application
 			GridPane.setRowIndex(piece,yCoor[i]);
 			GridPane.setColumnIndex(piece,xCoor[i]);
 			GridPane.setHalignment(piece, HPos.CENTER);
-			piece.setEffect(new DropShadow(+10d, 0d, 0d, Color.BLACK)); //Radius, offsetX, offsetY, color
+			piece.setEffect(new InnerShadow(+6d, 0d, 0d, Color.BLACK)); //Radius, offsetX, offsetY, color
 			piece.setOnMouseEntered(event -> { //we can add a thing here where if it is the player's piece it will highlight
 				piece.setEffect(new InnerShadow(+30d, 0d, 0d, Color.GOLD));
 			});
 			piece.setOnMouseExited(event -> {
-				piece.setEffect(new InnerShadow(0d, 0d, 0d, Color.TRANSPARENT));
+				piece.setEffect(new InnerShadow(+6d, 0d, 0d, Color.BLACK));
 			});
 			gridPaneGAME.getChildren().addAll(piece);
 		}
@@ -225,9 +225,9 @@ public class KingsTableProgram extends Application
 			king.setEffect(new InnerShadow(+50d, 0d, 0d, Color.GOLD));
 		});
 		king.setOnMouseExited(event -> {
-			king.setEffect(new InnerShadow(0d, 0d, 0d, Color.TRANSPARENT));
+			king.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK));
 		});
-		king.setEffect(new DropShadow(+10d, 0d, 0d, Color.BLACK)); //Radius, offsetX, offsetY, color
+		king.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK)); //Radius, offsetX, offsetY, color
 		gridPaneGAME.getChildren().addAll(king);
 	}
 
