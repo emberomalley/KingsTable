@@ -8,6 +8,7 @@ import javax.swing.*;
 
 import javafx.application.Application;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -40,7 +41,7 @@ import javafx.scene.text.FontWeight;
 
 public class KingsTableProgram extends Application {
 	public static Board board = new Board();
-	public static Circle selected;
+	public static Node selected;
 	public static int boardSize = board.getSize(); // always Odd# x Odd#, usually 11x11 or 13x13
 	public static int tileSize = board.getTileSize(); // px size of the grid boxes
 
@@ -119,12 +120,14 @@ public class KingsTableProgram extends Application {
 					System.out.println("Clicled a tile" + square);
 					if(selected!=null) {
 						String[] coordinates = selected.getId().split(",");
+						System.out.println(selected);
 						System.out.println("coordinates for selected " +coordinates[0]+" "+coordinates[1]);
 						gridPaneGAME.getChildren().remove(selected);
 						GridPane.setRowIndex(selected,Integer.parseInt(coordinates[0]) );
 						GridPane.setColumnIndex(selected, Integer.parseInt(coordinates[1]));
 						GridPane.setHalignment(selected, HPos.CENTER);
 //						gridPaneGAME.getChildren().add(selected);
+						square.setEffect(new InnerShadow(+50d, 0d, 0d, Color.GOLD));
 						selected = null;
 					}
 					//TODO update overlay just clicked, remove previous
@@ -240,11 +243,21 @@ public class KingsTableProgram extends Application {
 			// Click this piece, save to a global last clicked value
 			// Remove last clicked image location replace on new clicked location
 			piece.setOnMouseClicked(event ->{
-				selected = piece;
-				System.out.println("clicked");
+				if(selected==piece) { //piece is already selected
+					selected = null;
+					piece.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK));
+					System.out.println("Uncliked");
+				}
+				else if(selected==null){ //selecting new piece (Does not let you select a piece if you've already selected something)
+					selected = piece;
+					piece.setEffect(new InnerShadow(+30d, 0d, 0d, Color.GOLD));
+					System.out.println("clicked piece" + piece);
+				}
 			});
 			piece.setOnMouseExited(event -> {
-				piece.setEffect(new InnerShadow(+6d, 0d, 0d, Color.BLACK));
+				if(selected!=piece) {
+					piece.setEffect(new InnerShadow(+6d, 0d, 0d, Color.BLACK));
+				}
 			});
 			gridPaneGAME.getChildren().addAll(piece);
 		}
@@ -254,6 +267,18 @@ public class KingsTableProgram extends Application {
 		GridPane.setRowIndex(king, 5);
 		GridPane.setColumnIndex(king, 5);
 		GridPane.setHalignment(king, HPos.CENTER);
+		king.setOnMouseClicked(event ->{
+			if(selected!=null) { //piece is already selected
+				selected = null;
+				king.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK));
+				System.out.println("Uncliked");
+			}
+			else if(selected==null){ //selecting new piece (Does not let you select a piece if you've already selected something)
+				selected = king;
+				king.setEffect(new InnerShadow(+30d, 0d, 0d, Color.GOLD));
+				System.out.println("clicked piece" + king);
+			}
+		});
 		king.setOnMouseEntered(event -> { // we can add a thing here where if it is the player's piece it will highlight
 			king.setEffect(new InnerShadow(+50d, 0d, 0d, Color.GOLD));
 		});
