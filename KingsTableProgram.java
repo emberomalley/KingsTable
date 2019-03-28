@@ -232,7 +232,7 @@ public class KingsTableProgram extends Application {
 			GridPane.setColumnIndex(piece, xCoor[i]);
 			GridPane.setHalignment(piece, HPos.CENTER);
 			piece.setId(yCoor[i]+","+xCoor[i]);
-			piece.setEffect(new DropShadow(+10d, 0d, 0d, Color.BLACK)); // Radius, offsetX, offsetY, color
+			piece.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK)); // Radius, offsetX, offsetY, color
 			piece.setOnMouseEntered(event -> { // we can add a thing here where if it is the player's piece it will
 												// highlight
 				piece.setEffect(new InnerShadow(+30d, 0d, 0d, Color.GOLD));
