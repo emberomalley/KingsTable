@@ -8,6 +8,7 @@ import javax.swing.*;
 
 import javafx.application.Application;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -40,7 +41,7 @@ import javafx.scene.text.FontWeight;
 
 public class KingsTableProgram extends Application {
 	public static Board board = new Board();
-	public static Circle selected;
+	public static Node selected;
 	public static int boardSize = board.getSize(); // always Odd# x Odd#, usually 11x11 or 13x13
 	public static int tileSize = board.getTileSize(); // px size of the grid boxes
 
@@ -83,16 +84,24 @@ public class KingsTableProgram extends Application {
 		// TOP (Menu Button and Title)------------
 		HBox hboxTOP = new HBox();
 		hboxTOP.setAlignment(Pos.TOP_LEFT);
-		hboxTOP.setPadding(new Insets(15, 0, 15, 0));// top,right,bottom,left
+		hboxTOP.setPadding(new Insets(15, 0, 15, 5));// top,right,bottom,left
 		// hboxTOP.setStyle("-fx-background-color: #D3D3D3;"); //plain grey background
 		Button buttonMenu = new Button("Menu"); // Menu Button
 		buttonMenu.resize(50, 50);
+		buttonMenu.setStyle("-fx-background-color: #B8860B");
+		buttonMenu.setOnMouseEntered(event -> { // we can add a thing here where if it is the player's piece it will
+			// highlight
+			buttonMenu.setStyle("-fx-background-color: #FFD700");
+		});
+		buttonMenu.setOnMouseExited(event -> {
+			buttonMenu.setStyle("-fx-background-color: #B8860B");
+		});
 		Text gameTitle = new Text("King's Table");
 		gameTitle.setFill(KingsTableProgram.textColor);
 		gameTitle.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK)); // Radius, offsetX, offsetY, color
 		gameTitle.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 50));
 		hboxTOP.getChildren().addAll(buttonMenu, gameTitle);
-		hboxTOP.setSpacing(300);
+		hboxTOP.setSpacing(295);
 		border.setTop(hboxTOP);
 
 		// CENTER (Game Table)------------
@@ -116,16 +125,20 @@ public class KingsTableProgram extends Application {
 				// Gabe - Give every box an id
 				square.setId(i + "," + j);
 				square.setOnMouseClicked(event -> {
-					System.out.println("Clicled a tile" + square);
+					System.out.println("Clicked a tile" + square);
 					if(selected!=null) {
-						String[] coordinates = selected.getId().split(",");
+						String[] coordinates = square.getId().split(",");
+						System.out.println("selected = " + selected);
 						System.out.println("coordinates for selected " +coordinates[0]+" "+coordinates[1]);
 						gridPaneGAME.getChildren().remove(selected);
 						GridPane.setRowIndex(selected,Integer.parseInt(coordinates[0]) );
 						GridPane.setColumnIndex(selected, Integer.parseInt(coordinates[1]));
 						GridPane.setHalignment(selected, HPos.CENTER);
-//						gridPaneGAME.getChildren().add(selected);
+						gridPaneGAME.getChildren().add(selected);
 						selected = null;
+                                                
+                                                //Nick - Update the back end.
+  
 					}
 					//TODO update overlay just clicked, remove previous
 
@@ -208,8 +221,8 @@ public class KingsTableProgram extends Application {
 		primaryStage.setResizable(false);
 		primaryStage.show();
 
-		//Draw Pieces
-		Image dpImage = new Image("defenderPiece.jpg");
+		// Draw Pieces
+                Image dpImage = new Image("defenderPiece.jpg");
 		Image apImage = new Image("attackerPiece.jpg");
                 
                 for (int i = 0; i < KingsTableProgram.boardSize; i++) {
@@ -249,7 +262,22 @@ public class KingsTableProgram extends Application {
                             }
 		}
             }
-                
+		
+	}
+	
+	
+	public static void createPiece(int team, int level, int selected) { //Player (0=attacker,1=defender) | Level (0=normal,1=king) | selected(0=no,1=yes)
+		if(level==1) {
+			Circle piece = new Circle(KingsTableProgram.tileSize / 2);
+		}
+		else {
+			Circle piece = new Circle(KingsTableProgram.tileSize / 3);
+		}
+		if (team==1) {
+			//piece.setFill(new ImagePattern(dpImage)); //make dpImage available here
+		} else {
+			//piece.setFill(new ImagePattern(apImage));
+		}
 	}
 
 }

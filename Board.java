@@ -72,6 +72,14 @@ public class Board {
     public int getSelectedTileY(){
         return this.selectedTileY;
     }
+    public void printBoard(){
+        for (int i=0;i<size;i++){
+            for (int j=0;j<size;j++){
+                System.out.print(boardState[i][j]);
+            }
+            System.out.println();
+        }
+    }
     
     
 }
