@@ -135,6 +135,7 @@ public class KingsTableProgram extends Application {
 						GridPane.setColumnIndex(selected, Integer.parseInt(coordinates[1]));
 						GridPane.setHalignment(selected, HPos.CENTER);
 						gridPaneGAME.getChildren().add(selected);
+						selected.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK));
 						selected = null;
                                                 
                                                 //Nick - Update the back end.
@@ -252,11 +253,21 @@ public class KingsTableProgram extends Application {
                                 // Click this piece, save to a global last clicked value
                                 // Remove last clicked image location replace on new clicked location
                                 piece.setOnMouseClicked(event ->{
-                                        selected = piece;
-                                        System.out.println("clicked");
+                                	if(selected==piece) { //piece is already selected
+                            			selected = null;
+                            			piece.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK));
+                            			System.out.println("Uncliked");
+                            		}
+                            		else if(selected==null){ //selecting new piece (Does not let you select a piece if you've already selected something)
+                            			selected = piece;
+                            			piece.setEffect(new InnerShadow(+30d, 0d, 0d, Color.GOLD));
+                            			System.out.println("clicked piece" + piece);
+                            		}
                                 });
                                 piece.setOnMouseExited(event -> {
-                                        piece.setEffect(new InnerShadow(+6d, 0d, 0d, Color.BLACK));
+                                	if(selected!=piece) {
+                            			piece.setEffect(new InnerShadow(+6d, 0d, 0d, Color.BLACK));
+                            		}
                                 });
                                 gridPaneGAME.getChildren().addAll(piece);
                             }
