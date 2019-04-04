@@ -62,7 +62,7 @@ Scene menu, game, help;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-                //////// Menu Scene
+                //Menu Scene
 		// set up background border pane (Top/Left/Right/Center/Bottom)
 		BorderPane menuBorder = new BorderPane();
                 menuBorder.setPadding(new Insets(15, 520, 100, 150));
@@ -71,14 +71,12 @@ Scene menu, game, help;
 		int menuHeight = 700;
 
                 StackPane menuBackgroundImgContainer = new StackPane();
-                ImageView menuBgImage = new ImageView("vikingFire.jpg");
+                ImageView menuBgImage = new ImageView("vikingFire.jpg");//background image
                 menuBgImage.setFitHeight(menuHeight + 10);
                 menuBgImage.setFitWidth(menuWidth + 10);
                 menuBackgroundImgContainer.getChildren().addAll(menuBgImage,menuBorder);
                 menu = new Scene(menuBackgroundImgContainer, menuWidth,menuHeight);
-                
-                HBox menuHboxCENTER = new HBox();
-                menuHboxCENTER.setAlignment(Pos.CENTER);
+            
                 
                 Button buttonPlayGame = new Button("Play Game"); // play game button
                 buttonPlayGame.resize(menuWidth*.05, menuHeight*.1);
@@ -90,33 +88,84 @@ Scene menu, game, help;
 		buttonPlayGame.setOnMouseExited(event -> {
 			buttonPlayGame.setStyle("-fx-background-color: #B8860B");
 		});
+                Button buttonHelp = new Button("Help Screen"); // goes to help screen
+                buttonHelp.resize(menuWidth*.05, menuHeight*.1);
+                buttonHelp.setStyle("-fx-background-color: #B8860B");
+                buttonHelp.setOnMouseEntered(event -> { 
+			// highlight
+			buttonHelp.setStyle("-fx-background-color: #FFD700");
+		});
+		buttonHelp.setOnMouseExited(event -> {
+			buttonHelp.setStyle("-fx-background-color: #B8860B");
+		});
                 Text menuTitle = new Text("King's Table");
                 menuTitle.setFont(new Font(textFont, 80));
                 menuTitle.setFill(Color.ORANGERED);
                 menuTitle.setStroke(Color.RED);
-                Label label1 = new Label("King's Table");
-                buttonPlayGame.setOnAction(e -> primaryStage.setScene(game));//click button go to Game screen
+                buttonPlayGame.setOnAction(clickToGame -> primaryStage.setScene(game));//click button go to Game screen
+                buttonHelp.setOnAction(clickToHelpScreen -> primaryStage.setScene(help));//click button go to Help screen
                 VBox layout1 = new VBox(20);
-                layout1.getChildren().addAll(label1, buttonPlayGame, menuTitle);
+                layout1.getChildren().addAll(buttonPlayGame, buttonHelp, menuTitle);
                 menuBorder.setBottom(layout1);
+                ///////////// end of menu scene
 
-
-//////////
+                // Help Scene
+                // set up background border pane (Top/Left/Right/Center/Bottom)
+                BorderPane helpBorder = new BorderPane();
+                
+                // Screen Size
+                int helpWidth = 1000;
+		int helpHeight = 700;
+                
+                // Background Image--------------
+                StackPane helpBackgroundImgContainer = new StackPane();
+                ImageView helpBgImage = new ImageView("helpscreenbackground.jpg");//background image
+                helpBgImage.setFitHeight(helpHeight);
+                helpBgImage.setFitWidth(helpWidth);
+                helpBackgroundImgContainer.getChildren().addAll(helpBgImage, helpBorder);
+                help = new Scene(helpBackgroundImgContainer, helpWidth,helpHeight);
+                
+                // TOP (Menu Button and Title of Game Scene)------------
+                HBox hboxTOPHelp = new HBox();
+                hboxTOPHelp.setAlignment(Pos.TOP_LEFT);
+                hboxTOPHelp.setPadding(new Insets(15,0,15,5));
+                Button buttonBackToMenu = new Button("Menu");
+                buttonBackToMenu.resize(50,50);
+                buttonBackToMenu.setStyle("-fx-background-color: #FFFFFF");
+		buttonBackToMenu.setOnMouseEntered(highlightMenu -> { //  
+			// highlight
+			buttonBackToMenu.setStyle("-fx-text-fill: #FFFFFF");
+                        buttonBackToMenu.setStyle("-fx-border-color: red");
+		});
+		buttonBackToMenu.setOnMouseExited(event -> {
+			buttonBackToMenu.setStyle("-fx-background-color: #FFFFFF");
+		});
+                Text helpTitle = new Text("Help");
+                helpTitle.setFont(new Font(textFont, 80));
+                helpTitle.setFill(Color.WHITESMOKE);
+                helpTitle.setStroke(Color.DARKGOLDENROD);
+                buttonBackToMenu.setOnAction(event -> primaryStage.setScene(menu));//click button and go back to menu screen
+                VBox layout2 = new VBox(20);
+                layout2.getChildren().addAll(helpTitle, buttonBackToMenu);
+                helpBorder.setTop(layout2);
+                //end of Help scene
+                
                 // Game Scene
                 // set up background border pane (Top/Left/Right/Center/Bottom)
 		BorderPane gameBorder = new BorderPane();
+                
 		// Screen Size
 		int gameWidth = 1000;
 		int gameHeight = 700;
+                
 		// Background Image--------------
 		StackPane gameBackgroundImgContainer = new StackPane();
                 ImageView gameBgImage = new ImageView("stoneBG.jpg");
                 gameBgImage.setFitHeight(gameHeight + 100);
   		gameBgImage.setFitWidth(gameWidth + 500);
 		gameBackgroundImgContainer.getChildren().addAll(gameBgImage, gameBorder);
-		Scene gameScene = new Scene(gameBackgroundImgContainer, gameWidth, gameHeight);
-
-
+                game = new Scene(gameBackgroundImgContainer, gameWidth, gameHeight);
+                
 		// TOP (Menu Button and Title of Game Scene)------------
 		HBox hboxTOP = new HBox();
 		hboxTOP.setAlignment(Pos.TOP_LEFT);
@@ -124,7 +173,7 @@ Scene menu, game, help;
 		Button buttonMenu = new Button("Menu"); // Menu Button
 		buttonMenu.resize(50, 50);
 		buttonMenu.setStyle("-fx-background-color: #B8860B");
-		buttonMenu.setOnMouseEntered(event -> { // we can add a thing here where if it is the player's piece it will
+		buttonMenu.setOnMouseEntered(event -> { //  
 			// highlight
 			buttonMenu.setStyle("-fx-background-color: #FFD700");
 		});
@@ -134,10 +183,9 @@ Scene menu, game, help;
                 
 
 		Text gameTitle = new Text("King's Table");
-                Label label2 = new Label("King's Table");
-                buttonMenu.setOnAction(e -> primaryStage.setScene(menu));//click button and go back to menu screen
-                VBox layout2 = new VBox(20);
-                layout2.getChildren().addAll(label2, buttonMenu);
+                buttonMenu.setOnAction(event -> primaryStage.setScene(menu));//click button and go back to menu screen
+                VBox layout3 = new VBox(20);
+                layout3.getChildren().addAll(buttonMenu);
                 ////
 		gameTitle.setFill(KingsTableTest.textColor);
 		gameTitle.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK)); // Radius, offsetX, offsetY, color

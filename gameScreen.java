@@ -1,4 +1,7 @@
+
 import java.awt.Button;
+import javafx.event.EventHandler;
+import javafx.event.ActionEvent;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.GridLayout;
@@ -9,13 +12,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 
-public class gameScreen {
-	
+
+public class gameScreenTest {
 	//Constructor
-	public gameScreen() {
+	public gameScreenTest() {
 		Board board = new Board();
 		int boardSize = board.getSize(); //always Odd# x Odd#, usually 11x11 or 13x13
 		int tileSize = board.getTileSize(); //px size of the grid boxes
