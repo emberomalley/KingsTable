@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.lang.Math;
+
 
 public class Board {
     //Fields.
@@ -38,15 +40,41 @@ public class Board {
         boardState[5][5] = 3;
     }
     
-    //Methods
-    
-    //Updates the selected tile field with the coordinates of the tile at the offset position.
-    //xOffset: Horizontal distance in pixels from the top left of the grid.
-    //yOffset: Vertical distance in pixels from the top left of the grid.
-    //Note: This method will utilize the tileSize field of the class.
-    // The offset values can be computed based on the position of the cursor during a click.
-    public void selectTile(int xOffset,int yOffset){
-        
+    //This method checks for a valid move and updates the board state.
+    //Returns false if the move is invalid.
+    public boolean movePiece(int x1,int y1,int x2,int y2){
+        //Checks if the space is occupied.
+        if (boardState[x2][y2] != 0){
+            return false;
+        }
+        //Checks for rook movement.
+        else if ((x1 != x2) && (y1 != y2)){
+            return false;
+        }
+        //Checks for pieces in the way.
+        else if (x1 != x2){
+            int l = Math.min(x1,x2);
+            int u = Math.max(x1,x2);
+            for (int i = l+1; i < u;i++){
+                if (boardState[i][y1] != 0){
+                    return false;
+                }
+            }
+        }
+        else if (y1 != y2){
+            int l = Math.min(y1,y2);
+            int u = Math.max(y1,y2);
+            for (int i = l+1; i < u;i++){
+                if (boardState[x1][i] != 0){
+                    return false;
+                }
+            }
+        }
+        //If all these checks pass then the move must be valid.
+        //Update the board and return that the move is valid.
+        boardState[x2][y2] = boardState[x1][y1];
+        boardState[x1][y1] = 0;
+        return true;
     }
     
     //Getters and Setters.
@@ -54,6 +82,7 @@ public class Board {
     public void setSize(int size){
         this.size = size;
     }
+    
     public int getSize(){
         return this.size;
     }

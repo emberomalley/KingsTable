@@ -125,20 +125,26 @@ public class KingsTableProgram extends Application {
 				// Gabe - Give every box an id
 				square.setId(i + "," + j);
 				square.setOnMouseClicked(event -> {
-					System.out.println("Clicked a tile" + square);
+					//System.out.println("Clicked a tile" + square);
+                                        String[] coordinates = square.getId().split(",");
 					if(selected!=null) {
-						String[] coordinates = square.getId().split(",");
-						System.out.println("selected = " + selected);
-						System.out.println("coordinates for selected " +coordinates[0]+" "+coordinates[1]);
-						gridPaneGAME.getChildren().remove(selected);
-						GridPane.setRowIndex(selected,Integer.parseInt(coordinates[0]) );
-						GridPane.setColumnIndex(selected, Integer.parseInt(coordinates[1]));
-						GridPane.setHalignment(selected, HPos.CENTER);
-						gridPaneGAME.getChildren().add(selected);
-						selected.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK));
-						selected = null;
-                                                
-                                                //Nick - Update the back end.
+                                                //movePiece function verifies the move and updates board state.
+                                                if (KingsTableProgram.board.movePiece(GridPane.getRowIndex(selected), GridPane.getColumnIndex(selected),Integer.parseInt(coordinates[0]),Integer.parseInt(coordinates[1]))){
+                                                    System.out.println("Piece moved from (" +GridPane.getRowIndex(selected) +"," + GridPane.getColumnIndex(selected) +  ") to (" +coordinates[0]+","+coordinates[1]+").");
+                                                    //Display the text board for testing.
+                                                    KingsTableProgram.board.printBoard();
+                                                    //This stuff updates the display.
+                                                    gridPaneGAME.getChildren().remove(selected);
+                                                    GridPane.setRowIndex(selected,Integer.parseInt(coordinates[0]) );
+                                                    GridPane.setColumnIndex(selected, Integer.parseInt(coordinates[1]));
+                                                    GridPane.setHalignment(selected, HPos.CENTER);
+                                                    gridPaneGAME.getChildren().add(selected);
+                                                    selected.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK));
+                                                    selected = null;
+                                                }
+                                                else{
+                                                    System.out.println("This move is invalid.");
+                                                }
   
 					}
 					//TODO update overlay just clicked, remove previous
@@ -256,12 +262,12 @@ public class KingsTableProgram extends Application {
                                 	if(selected==piece) { //piece is already selected
                             			selected = null;
                             			piece.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK));
-                            			System.out.println("Uncliked");
+                            			//System.out.println("Uncliked");
                             		}
                             		else if(selected==null){ //selecting new piece (Does not let you select a piece if you've already selected something)
                             			selected = piece;
                             			piece.setEffect(new InnerShadow(+30d, 0d, 0d, Color.GOLD));
-                            			System.out.println("clicked piece" + piece);
+                            			//System.out.println("clicked piece" + piece);
                             		}
                                 });
                                 piece.setOnMouseExited(event -> {
