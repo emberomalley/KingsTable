@@ -17,9 +17,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 
 
-public class gameScreenTest {
+public class gameScreen {
 	//Constructor
-	public gameScreenTest() {
+	public gameScreen() {
 		Board board = new Board();
 		int boardSize = board.getSize(); //always Odd# x Odd#, usually 11x11 or 13x13
 		int tileSize = board.getTileSize(); //px size of the grid boxes

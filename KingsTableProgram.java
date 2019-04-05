@@ -38,7 +38,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.control.Label;
 
 
-public class KingsTableTest extends Application {
+public class KingsTableProgram extends Application {
 	public static Board board = new Board();
 	public static Node selected; 
 	public static int boardSize = board.getSize(); // always Odd# x Odd#, usually 11x11 or 13x13
@@ -119,34 +119,36 @@ Scene menu, game, help;
                 
                 // Background Image--------------
                 StackPane helpBackgroundImgContainer = new StackPane();
-                ImageView helpBgImage = new ImageView("helpscreenbackground.jpg");//background image
+                ImageView helpBgImage = new ImageView("torch.GIF");//background image
                 helpBgImage.setFitHeight(helpHeight);
                 helpBgImage.setFitWidth(helpWidth);
                 helpBackgroundImgContainer.getChildren().addAll(helpBgImage, helpBorder);
                 help = new Scene(helpBackgroundImgContainer, helpWidth,helpHeight);
                 
-                // TOP (Menu Button and Title of Game Scene)------------
+                // TOP (Menu Button and Title of Help Scene)------------
                 HBox hboxTOPHelp = new HBox();
                 hboxTOPHelp.setAlignment(Pos.TOP_LEFT);
+                // set up for HBox containing the title and the button: (Top/Left/Right/Center/Bottom)
                 hboxTOPHelp.setPadding(new Insets(15,0,15,5));
                 Button buttonBackToMenu = new Button("Menu");
                 buttonBackToMenu.resize(50,50);
                 buttonBackToMenu.setStyle("-fx-background-color: #FFFFFF");
-		buttonBackToMenu.setOnMouseEntered(highlightMenu -> { //  
+		buttonBackToMenu.setOnMouseEntered(highlightOnMenu -> { //  
 			// highlight
 			buttonBackToMenu.setStyle("-fx-text-fill: #FFFFFF");
                         buttonBackToMenu.setStyle("-fx-border-color: red");
 		});
-		buttonBackToMenu.setOnMouseExited(event -> {
+		buttonBackToMenu.setOnMouseExited(highlightOff -> {
 			buttonBackToMenu.setStyle("-fx-background-color: #FFFFFF");
 		});
                 Text helpTitle = new Text("Help");
-                helpTitle.setFont(new Font(textFont, 80));
+                helpTitle.setFont(new Font(textFont, 80));//setting font and its size
                 helpTitle.setFill(Color.WHITESMOKE);
                 helpTitle.setStroke(Color.DARKGOLDENROD);
-                buttonBackToMenu.setOnAction(event -> primaryStage.setScene(menu));//click button and go back to menu screen
+                buttonBackToMenu.setOnAction(backToMenu -> primaryStage.setScene(menu));//click button and go back to menu screen
                 VBox layout2 = new VBox(20);
                 layout2.getChildren().addAll(helpTitle, buttonBackToMenu);
+                hboxTOPHelp.setSpacing(295);
                 helpBorder.setTop(layout2);
                 //end of Help scene
                 
@@ -187,9 +189,9 @@ Scene menu, game, help;
                 VBox layout3 = new VBox(20);
                 layout3.getChildren().addAll(buttonMenu);
                 ////
-		gameTitle.setFill(KingsTableTest.textColor);
+		gameTitle.setFill(KingsTableProgram.textColor);
 		gameTitle.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK)); // Radius, offsetX, offsetY, color
-		gameTitle.setFont(Font.font(KingsTableTest.textFont, FontWeight.BOLD, 50));
+		gameTitle.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 50));
 		hboxTOP.getChildren().addAll(buttonMenu, gameTitle);
 ////////                hboxTOP.getChildren().addAll(buttonMenu, buttonHelp, gameTitle);
 		hboxTOP.setSpacing(295);
@@ -198,12 +200,12 @@ Scene menu, game, help;
 		// CENTER (Game Table)------------
 		GridPane gridPaneGAME = new GridPane();
 		gridPaneGAME.setAlignment(Pos.CENTER);
-		for (int i = 0; i < KingsTableTest.boardSize; i++) {
-			for (int j = 0; j < KingsTableTest.boardSize; j++) {
+		for (int i = 0; i < KingsTableProgram.boardSize; i++) {
+			for (int j = 0; j < KingsTableProgram.boardSize; j++) {
 				String fileName = "lightWood.jpg";
 				Rectangle square = new Rectangle();
-				square.setWidth(KingsTableTest.tileSize);
-				square.setHeight(KingsTableTest.tileSize);
+				square.setWidth(KingsTableProgram.tileSize);
+				square.setHeight(KingsTableProgram.tileSize);
 				square.setStroke(Color.BLACK);
 				square.setFill(Color.TRANSPARENT);
 				square.setOnMouseEntered(event -> {
@@ -248,11 +250,11 @@ Scene menu, game, help;
 				//image.setFitHeight(KingsTableProgram.tileSize);
 				//image.setFitWidth(KingsTableProgram.tileSize);
 				imageContainer.getChildren().addAll(square);
-				if (i == KingsTableTest.board.getSelectedTileX()
-						&& j == KingsTableTest.board.getSelectedTileY()) {
+				if (i == KingsTableProgram.board.getSelectedTileX()
+						&& j == KingsTableProgram.board.getSelectedTileY()) {
 					Rectangle highlight = new Rectangle();
-					highlight.setWidth(KingsTableTest.tileSize);
-					highlight.setHeight(KingsTableTest.tileSize);
+					highlight.setWidth(KingsTableProgram.tileSize);
+					highlight.setHeight(KingsTableProgram.tileSize);
 					highlight.setFill(Color.rgb(250, 255, 0, .4));
 					imageContainer.getChildren().addAll(highlight);
 				}
@@ -291,14 +293,14 @@ Scene menu, game, help;
 		Region region2 = new Region();
 		HBox.setHgrow(region2, Priority.ALWAYS);
 		highScore.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK)); // Radius, offsetX, offsetY, color;
-		highScore.setFill(KingsTableTest.textColor);
-		highScore.setFont(Font.font(KingsTableTest.textFont, FontWeight.BOLD, 20));
+		highScore.setFill(KingsTableProgram.textColor);
+		highScore.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
 		timer.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
-		timer.setFill(KingsTableTest.textColor);
-		timer.setFont(Font.font(KingsTableTest.textFont, FontWeight.BOLD, 30));
+		timer.setFill(KingsTableProgram.textColor);
+		timer.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 30));
 		userScore.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
-		userScore.setFill(KingsTableTest.textColor);
-		userScore.setFont(Font.font(KingsTableTest.textFont, FontWeight.BOLD, 20));
+		userScore.setFill(KingsTableProgram.textColor);
+		userScore.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
 		hboxBOTTOM.getChildren().addAll(highScore, region1, timer, region2, userScore);
 		gameBorder.setBottom(hboxBOTTOM);
 
@@ -321,7 +323,7 @@ Scene menu, game, help;
 		Image apImage = new Image("attackerPiece.jpg");
 		for (int i = 0; i < xCoor.length; i++) {
 
-			Circle piece = new Circle(KingsTableTest.tileSize / 3);
+			Circle piece = new Circle(KingsTableProgram.tileSize / 3);
 
 			if (i > 23) {
 				piece.setFill(new ImagePattern(dpImage));
@@ -359,7 +361,7 @@ Scene menu, game, help;
 			gridPaneGAME.getChildren().addAll(piece);
 		}
 		// King
-		Circle king = new Circle(KingsTableTest.tileSize / 2);
+		Circle king = new Circle(KingsTableProgram.tileSize / 2);
 		king.setFill(new ImagePattern(dpImage));
 		GridPane.setRowIndex(king, 5);
 		GridPane.setColumnIndex(king, 5);
@@ -389,10 +391,10 @@ Scene menu, game, help;
 	
 	public static void createPiece(int team, int level, int selected) { //Player (0=attacker,1=defender) | Level (0=normal,1=king) | selected(0=no,1=yes)
 		if(level==1) {
-			Circle piece = new Circle(KingsTableTest.tileSize / 2);
+			Circle piece = new Circle(KingsTableProgram.tileSize / 2);
 		}
 		else {
-			Circle piece = new Circle(KingsTableTest.tileSize / 3);
+			Circle piece = new Circle(KingsTableProgram.tileSize / 3);
 		}
 		if (team==1) {
 			//piece.setFill(new ImagePattern(dpImage)); //make dpImage available here
