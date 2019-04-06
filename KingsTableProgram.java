@@ -1,11 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-
-
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.scene.Group;
@@ -36,6 +28,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.control.Label;
+import javafx.scene.text.FontPosture;
 
 
 public class KingsTableProgram extends Application {
@@ -59,7 +52,6 @@ public class KingsTableProgram extends Application {
 	}
 
 Scene menu, game, help;       
-
 	@Override
 	public void start(Stage primaryStage) throws Exception {
                 //Menu Scene
@@ -76,26 +68,25 @@ Scene menu, game, help;
                 menuBgImage.setFitWidth(menuWidth + 10);
                 menuBackgroundImgContainer.getChildren().addAll(menuBgImage,menuBorder);
                 menu = new Scene(menuBackgroundImgContainer, menuWidth,menuHeight);
-            
                 
                 Button buttonPlayGame = new Button("Play Game"); // play game button
                 buttonPlayGame.resize(menuWidth*.05, menuHeight*.1);
                 buttonPlayGame.setStyle("-fx-background-color: #B8860B");
-                buttonPlayGame.setOnMouseEntered(event -> { 
+                buttonPlayGame.setOnMouseEntered(highlightOnPlayGame -> { 
 			// highlight
 			buttonPlayGame.setStyle("-fx-background-color: #FFD700");
 		});
-		buttonPlayGame.setOnMouseExited(event -> {
+		buttonPlayGame.setOnMouseExited(highlightOff -> {
 			buttonPlayGame.setStyle("-fx-background-color: #B8860B");
 		});
                 Button buttonHelp = new Button("Help Screen"); // goes to help screen
                 buttonHelp.resize(menuWidth*.05, menuHeight*.1);
                 buttonHelp.setStyle("-fx-background-color: #B8860B");
-                buttonHelp.setOnMouseEntered(event -> { 
+                buttonHelp.setOnMouseEntered(highlightOnHelpScreen -> { 
 			// highlight
 			buttonHelp.setStyle("-fx-background-color: #FFD700");
 		});
-		buttonHelp.setOnMouseExited(event -> {
+		buttonHelp.setOnMouseExited(highlightOff -> {
 			buttonHelp.setStyle("-fx-background-color: #B8860B");
 		});
                 Text menuTitle = new Text("King's Table");
@@ -146,10 +137,30 @@ Scene menu, game, help;
                 helpTitle.setFill(Color.WHITESMOKE);
                 helpTitle.setStroke(Color.DARKGOLDENROD);
                 buttonBackToMenu.setOnAction(backToMenu -> primaryStage.setScene(menu));//click button and go back to menu screen
+                ///
+                Text helpText = new Text(20,20, "The rules are as follows:\n" +
+"●	There are two players, the attackers (24 fighter pieces, shown in black) and the defenders (12 fighter pieces and one king, shown in white)\n" +
+"●	The attackers are trying to capture the king, and the defenders are trying move the King to a corner square.\n" +
+"●	It is played typically on a 11x11 board, \n" +
+"●	If a piece is flanked by two opposing pieces, it is removed from the board\n" +
+"●	If the king is flanked on all sides by opposing pieces, that king loses. \n" +
+"●	Pieces can only move in straight lines, but at whatever distance they want (like a rook in chess)\n" +
+"●	Turns must alternate, and each player can only move one piece per turn.\n" +
+"●	The King starts in the center, surrounded by its defenders. The attackers start along the edges of the board.");
+                helpText.setFont(Font.font(textFont, FontWeight.SEMI_BOLD, FontPosture.REGULAR,14));
+                helpText.setFill(Color.WHITESMOKE);
+                
+                Text helpText2 = new Text(20,20, "User Interaction:\n"+
+                        "The move pieces click on your desired piece and click on the square you want to move it to");
+                helpText2.setFont(Font.font(textFont, FontWeight.SEMI_BOLD, FontPosture.REGULAR,14));
+                helpText2.setFill(Color.WHITESMOKE);
+                
+                ///
                 VBox layout2 = new VBox(20);
-                layout2.getChildren().addAll(helpTitle, buttonBackToMenu);
+                layout2.getChildren().addAll(helpTitle, buttonBackToMenu, helpText, helpText2);
                 hboxTOPHelp.setSpacing(295);
                 helpBorder.setTop(layout2);
+                
                 //end of Help scene
                 
                 // Game Scene
@@ -215,41 +226,43 @@ Scene menu, game, help;
 					square.setEffect(new InnerShadow(10d, 0d, 0d, Color.BLACK));
 				});
 
-				// Gabe - Give every box an id
+                                // Gabe - Give every box an id
 				square.setId(i + "," + j);
-				square.setOnMouseClicked((MouseEvent event) -> {
-					System.out.println("Clicled a tile" + square);
+				square.setOnMouseClicked(event -> {
+					//System.out.println("Clicked a tile" + square);
+                                        String[] coordinates = square.getId().split(",");
 					if(selected!=null) {
-						String[] coordinates = selected.getId().split(",");
-						System.out.println("selected = " + selected);
-						System.out.println("coordinates for selected " +coordinates[0]+" "+coordinates[1]);
-						gridPaneGAME.getChildren().remove(selected);
-						GridPane.setRowIndex(selected,Integer.parseInt(coordinates[0]) );
-						GridPane.setColumnIndex(selected, Integer.parseInt(coordinates[1]));
-						GridPane.setHalignment(selected, HPos.CENTER);
-						gridPaneGAME.getChildren().add(selected);
-						selected = null;
+                                                //movePiece function verifies the move and updates board state.
+                                                if (KingsTableProgram.board.movePiece(GridPane.getRowIndex(selected), GridPane.getColumnIndex(selected),Integer.parseInt(coordinates[0]),Integer.parseInt(coordinates[1]))){
+                                                    System.out.println("Piece moved from (" +GridPane.getRowIndex(selected) +"," + GridPane.getColumnIndex(selected) +  ") to (" +coordinates[0]+","+coordinates[1]+").");
+                                                    //Display the text board for testing.
+                                                    KingsTableProgram.board.printBoard();
+                                                    //This stuff updates the display.
+                                                    gridPaneGAME.getChildren().remove(selected);
+                                                    GridPane.setRowIndex(selected,Integer.parseInt(coordinates[0]) );
+                                                    GridPane.setColumnIndex(selected, Integer.parseInt(coordinates[1]));
+                                                    GridPane.setHalignment(selected, HPos.CENTER);
+                                                    gridPaneGAME.getChildren().add(selected);
+                                                    selected.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK));
+                                                    selected = null;
+                                                }
+                                                else{
+                                                    System.out.println("This move is invalid.");
+                                                }
+  
 					}
-					//TODO update overlay just clicked, remove previous
-
-//							Rectangle square1 = new Rectangle();
-//							square.setWidth(KingsTableProgram.tileSize);
-//							square.setHeight(KingsTableProgram.tileSize);
-//							square.setStroke(Color.BLACK);
-//							ImageView image = new ImageView("file:darkWood.jpg");
-//							imageContainer.set
-//							imageContainer.getChi.getChildren().setAll(square1,image);
 
 				});
-				StackPane imageContainer = new StackPane();
+                                StackPane imageContainer = new StackPane();
 				if ((i == 0 && (j == 0 || j == (boardSize - 1)))
 						|| (i == (boardSize - 1) && (j == 0 || j == (boardSize - 1)))
 						|| (i == (boardSize / 2) && j == (boardSize / 2))) {
+					fileName = "darkWood.jpg";
 				}
-				//ImageView image = new ImageView(fileName);
-				//image.setFitHeight(KingsTableProgram.tileSize);
-				//image.setFitWidth(KingsTableProgram.tileSize);
-				imageContainer.getChildren().addAll(square);
+				ImageView image = new ImageView(fileName);
+				image.setFitHeight(KingsTableProgram.tileSize);
+				image.setFitWidth(KingsTableProgram.tileSize);
+				imageContainer.getChildren().addAll(image, square);
 				if (i == KingsTableProgram.board.getSelectedTileX()
 						&& j == KingsTableProgram.board.getSelectedTileY()) {
 					Rectangle highlight = new Rectangle();
@@ -310,84 +323,59 @@ Scene menu, game, help;
 		primaryStage.setResizable(false);
 		primaryStage.show();
 
-		// Piece GUI experiment
-		// Set Up initial table
-		// Attackers TOP | LEFT | RIGHT | BOTTOM
-		int[] xCoor = new int[] { 3, 4, 5, 6, 7, 5, 0, 0, 0, 0, 0, 1, 10, 10, 10, 10, 10, 9, 3, 4, 5, 6, 7, 5,
-				// Defenders
-				5, 4, 5, 6, 3, 4, 6, 7, 4, 5, 6, 5 };
-		int[] yCoor = new int[] { 0, 0, 0, 0, 0, 1, 3, 4, 5, 6, 7, 5, 3, 4, 5, 6, 7, 5, 10, 10, 10, 10, 10, 9,
-				// Defenders
-				3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 7 };
-		Image dpImage = new Image("defenderPiece.jpg");
+		// Draw Pieces
+                Image dpImage = new Image("defenderPiece.jpg");
 		Image apImage = new Image("attackerPiece.jpg");
-		for (int i = 0; i < xCoor.length; i++) {
-
-			Circle piece = new Circle(KingsTableProgram.tileSize / 3);
-
-			if (i > 23) {
-				piece.setFill(new ImagePattern(dpImage));
-			} else {
-				piece.setFill(new ImagePattern(apImage));
-			}
-			GridPane.setRowIndex(piece, yCoor[i]);
-			GridPane.setColumnIndex(piece, xCoor[i]);
-			GridPane.setHalignment(piece, HPos.CENTER);
-			piece.setId(yCoor[i]+","+xCoor[i]);
-			piece.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK)); // Radius, offsetX, offsetY, color
-			piece.setOnMouseEntered(event -> { // we can add a thing here where if it is the player's piece it will
-												// highlight
-				piece.setEffect(new InnerShadow(+30d, 0d, 0d, Color.GOLD));
-			});
-			// Click this piece, save to a global last clicked value
-			// Remove last clicked image location replace on new clicked location
-			piece.setOnMouseClicked(event ->{
-				if(selected==piece) { //piece is already selected
-					selected = null;
-					piece.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK));
-					System.out.println("Unclicked");
-				}
-				else if(selected==null){ //selecting new piece (Does not let you select a piece if you've already selected something)
-					selected = piece;
-					piece.setEffect(new InnerShadow(+30d, 0d, 0d, Color.GOLD));
-					System.out.println("clicked piece" + piece);
-				}
-			});
-			piece.setOnMouseExited(event -> {
-				if(selected!=piece) {
-					piece.setEffect(new InnerShadow(+6d, 0d, 0d, Color.BLACK));
-				}
-			});
-			gridPaneGAME.getChildren().addAll(piece);
+                
+                for (int i = 0; i < KingsTableProgram.boardSize; i++) {
+			for (int j = 0; j < KingsTableProgram.boardSize; j++) {
+                            if (KingsTableProgram.board.boardState[i][j]!= 0){
+                                Circle piece = new Circle(KingsTableProgram.tileSize / 3);
+                                //Defender
+                                if (KingsTableProgram.board.boardState[i][j] == 1) {
+                                        piece.setFill(new ImagePattern(dpImage));
+                                //Attacker
+                                } else if (KingsTableProgram.board.boardState[i][j] == 2){
+                                        piece.setFill(new ImagePattern(apImage));
+                                //King
+                                }else if (KingsTableProgram.board.boardState[i][j] == 3){
+                                        piece.setRadius(KingsTableProgram.tileSize / 2);
+                                        piece.setFill(new ImagePattern(dpImage));       
+                                }
+                                GridPane.setRowIndex(piece,i);
+                                GridPane.setColumnIndex(piece,j);
+                                GridPane.setHalignment(piece, HPos.CENTER);
+                                piece.setId(i+","+j);
+                                piece.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK)); // Radius, offsetX, offsetY, color
+                                piece.setOnMouseEntered(event -> { // we can add a thing here where if it is the player's piece it will
+                                                                 // highlight
+                                        piece.setEffect(new InnerShadow(+30d, 0d, 0d, Color.GOLD));
+                                });
+                                // Click this piece, save to a global last clicked value
+                                // Remove last clicked image location replace on new clicked location
+                                piece.setOnMouseClicked(event ->{
+                                	if(selected==piece) { //piece is already selected
+                            			selected = null;
+                            			piece.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK));
+                            			//System.out.println("Uncliked");
+                            		}
+                            		else if(selected==null){ //selecting new piece (Does not let you select a piece if you've already selected something)
+                            			selected = piece;
+                            			piece.setEffect(new InnerShadow(+30d, 0d, 0d, Color.GOLD));
+                            			//System.out.println("clicked piece" + piece);
+                            		}
+                                });
+                                piece.setOnMouseExited(event -> {
+                                	if(selected!=piece) {
+                            			piece.setEffect(new InnerShadow(+6d, 0d, 0d, Color.BLACK));
+                            		}
+                                });
+                                gridPaneGAME.getChildren().addAll(piece);
+                            }
 		}
-		// King
-		Circle king = new Circle(KingsTableProgram.tileSize / 2);
-		king.setFill(new ImagePattern(dpImage));
-		GridPane.setRowIndex(king, 5);
-		GridPane.setColumnIndex(king, 5);
-		GridPane.setHalignment(king, HPos.CENTER);
-		king.setOnMouseClicked(event ->{
-			if(selected!=null) { //piece is already selected
-				selected = null;
-				king.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK));
-				System.out.println("Uncliked");
-			}
-			else if(selected==null){ //selecting new piece (Does not let you select a piece if you've already selected something)
-				selected = king;
-				king.setEffect(new InnerShadow(+30d, 0d, 0d, Color.GOLD));
-				System.out.println("clicked piece" + king);
-			}
-		});
-		king.setOnMouseEntered(event -> { // we can add a thing here where if it is the player's piece it will highlight
-			king.setEffect(new InnerShadow(+50d, 0d, 0d, Color.GOLD));
-		});
-		king.setOnMouseExited(event -> {
-			king.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK));
-		});
-		king.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK)); //Radius, offsetX, offsetY, color
-		gridPaneGAME.getChildren().addAll(king);
+            }
+		
 	}
-	
 	
 	public static void createPiece(int team, int level, int selected) { //Player (0=attacker,1=defender) | Level (0=normal,1=king) | selected(0=no,1=yes)
 		if(level==1) {

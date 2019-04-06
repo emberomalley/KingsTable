@@ -1,7 +1,4 @@
-
 import java.awt.Button;
-import javafx.event.EventHandler;
-import javafx.event.ActionEvent;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.GridLayout;
@@ -12,12 +9,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 
-
 public class gameScreen {
+	
 	//Constructor
 	public gameScreen() {
 		Board board = new Board();
