@@ -101,6 +101,9 @@ public class Board {
     public int getSelectedTileY(){
         return this.selectedTileY;
     }
+    public int getPieceType(int i, int j) {
+    	return boardState[i][j];
+    }
     public void printBoard(){
         for (int i=0;i<size;i++){
             for (int j=0;j<size;j++){
@@ -110,5 +113,8 @@ public class Board {
         }
     }
     
+    public void tests() {
+    	
+    }
     
 }

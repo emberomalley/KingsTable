@@ -50,7 +50,7 @@ public class KingsTableProgram extends Application {
 		launch(args);
 	}
 
-Scene menu, game, help;       
+Scene menu, game, help, dWin, aWin;       
 	@Override
 	public void start(Stage primaryStage) throws Exception {
                 //Menu Scene
@@ -163,7 +163,7 @@ Scene menu, game, help;
                 gameBgImage.setFitHeight(gameHeight + 100);
   		gameBgImage.setFitWidth(gameWidth + 500);
 		gameBackgroundImgContainer.getChildren().addAll(gameBgImage, gameBorder);
-                game = new Scene(gameBackgroundImgContainer, gameWidth, gameHeight);
+        game = new Scene(gameBackgroundImgContainer, gameWidth, gameHeight);
                 
 		// TOP (Menu Button and Title of Game Scene)------------
 		HBox hboxTOP = new HBox();
@@ -194,6 +194,33 @@ Scene menu, game, help;
 		hboxTOP.setSpacing(295);
 		gameBorder.setTop(hboxTOP);
 
+		// Center Pause Menu/Game Over Screen ---------------------
+		StackPane PauseScreen = new StackPane();
+		VBox pauseScreenItems = new VBox();
+		//PauseScreen.setAlignment(Pos.TOP_LEFT);
+		PauseScreen.setPadding(new Insets(15, 15, 15, 15));// top,right,bottom,left
+		Label pauseScreenText = new Label();
+		//Button buttonMenu = new Button("Menu"); // Menu Button
+		pauseScreenText.setText("Pause Menu");
+		pauseScreenText.setTextFill(KingsTableProgram.textColor);
+		pauseScreenText.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 50));
+		PauseScreen.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5)");
+		Button exitButton = new Button("Exit"); // Menu Button
+		//exitButton.resize(50, 50);
+		exitButton.setStyle("-fx-background-color: #B8860B");
+		exitButton.setOnMouseEntered(event -> { //  
+			// highlight
+			exitButton.setStyle("-fx-background-color: #FFD700");
+		});
+		exitButton.setOnMouseExited(event -> {
+			exitButton.setStyle("-fx-background-color: #B8860B");
+		});
+		exitButton.setOnAction(event -> primaryStage.getScene().getWindow().hide());
+		pauseScreenItems.getChildren().addAll(pauseScreenText,exitButton);
+		PauseScreen.getChildren().addAll(pauseScreenItems);
+		pauseScreenItems.setAlignment(Pos.TOP_CENTER);
+		
+		
 		// CENTER (Game Table)------------
 		GridPane gridPaneGAME = new GridPane();
 		gridPaneGAME.setAlignment(Pos.CENTER);
@@ -214,16 +241,30 @@ Scene menu, game, help;
 
                                 // Gabe - Give every box an id
 				square.setId(i + "," + j);
+				StackPane imageContainer = new StackPane();
 				square.setOnMouseClicked(event -> {
 					//System.out.println("Clicked a tile" + square);
                                         String[] coordinates = square.getId().split(",");
 					if(selected!=null) {
                                                 //movePiece function verifies the move and updates board state.
                                                 if (KingsTableProgram.board.movePiece(GridPane.getRowIndex(selected), GridPane.getColumnIndex(selected),Integer.parseInt(coordinates[0]),Integer.parseInt(coordinates[1]))){
-                                                    System.out.println("Piece moved from (" +GridPane.getRowIndex(selected) +"," + GridPane.getColumnIndex(selected) +  ") to (" +coordinates[0]+","+coordinates[1]+").");
+                                                    System.out.println("Piece " + KingsTableProgram.board.getPieceType(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1])) + " moved from (" +GridPane.getRowIndex(selected) +"," + GridPane.getColumnIndex(selected) +  ") to (" +coordinates[0]+","+coordinates[1]+").");
                                                     //Display the text board for testing.
                                                     KingsTableProgram.board.printBoard();
                                                     //This stuff updates the display.
+                                                    //if Piece is King
+                                                    if(KingsTableProgram.board.getPieceType(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]))==3) {
+                                                    	//if King Moved to Kings Square
+                                                    	if((Integer.parseInt(coordinates[0]) == 0 && (Integer.parseInt(coordinates[1]) == 0 || Integer.parseInt(coordinates[1]) == (boardSize - 1)))
+                                        						|| (Integer.parseInt(coordinates[0]) == (boardSize - 1) && (Integer.parseInt(coordinates[1]) == 0 || Integer.parseInt(coordinates[1]) == (boardSize - 1)))) {
+                                                    		System.out.println("Defenders Win!");
+                                                    		pauseScreenText.setText("Defenders Win!");
+                                                    		gridPaneGAME.getChildren().addAll(PauseScreen);
+                                                    		gameBorder.setCenter(PauseScreen);
+                                                    	}
+                                                    }
+                                                    
+                                                    
                                                     gridPaneGAME.getChildren().remove(selected);
                                                     GridPane.setRowIndex(selected,Integer.parseInt(coordinates[0]) );
                                                     GridPane.setColumnIndex(selected, Integer.parseInt(coordinates[1]));
@@ -239,7 +280,7 @@ Scene menu, game, help;
 					}
 
 				});
-                                StackPane imageContainer = new StackPane();
+                                
 				if ((i == 0 && (j == 0 || j == (boardSize - 1)))
 						|| (i == (boardSize - 1) && (j == 0 || j == (boardSize - 1)))
 						|| (i == (boardSize / 2) && j == (boardSize / 2))) {
