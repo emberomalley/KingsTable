@@ -264,7 +264,6 @@ Scene menu, game, help, dWin, aWin;
                                                     	}
                                                     }
                                                     
-                                                    
                                                     gridPaneGAME.getChildren().remove(selected);
                                                     GridPane.setRowIndex(selected,Integer.parseInt(coordinates[0]) );
                                                     GridPane.setColumnIndex(selected, Integer.parseInt(coordinates[1]));
@@ -272,6 +271,8 @@ Scene menu, game, help, dWin, aWin;
                                                     gridPaneGAME.getChildren().add(selected);
                                                     selected.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK));
                                                     selected = null;
+                                                    
+                                                    //Check captures.
                                                 }
                                                 else{
                                                     System.out.println("This move is invalid.");
@@ -375,8 +376,10 @@ Scene menu, game, help, dWin, aWin;
                                 piece.setId(i+","+j);
                                 piece.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK)); // Radius, offsetX, offsetY, color
                                 piece.setOnMouseEntered(event -> { // we can add a thing here where if it is the player's piece it will
-                                                                 // highlight
-                                        piece.setEffect(new InnerShadow(+30d, 0d, 0d, Color.GOLD));
+                                        // highlight
+                                        if (KingsTableProgram.board.boardState[GridPane.getRowIndex(piece)][GridPane.getColumnIndex(piece)] != 2){
+                                            piece.setEffect(new InnerShadow(+30d, 0d, 0d, Color.GOLD));
+                                        }
                                 });
                                 // Click this piece, save to a global last clicked value
                                 // Remove last clicked image location replace on new clicked location
@@ -386,7 +389,7 @@ Scene menu, game, help, dWin, aWin;
                             			piece.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK));
                             			//System.out.println("Uncliked");
                             		}
-                            		else if(selected==null){ //selecting new piece (Does not let you select a piece if you've already selected something)
+                            		else if(selected==null && KingsTableProgram.board.boardState[GridPane.getRowIndex(piece)][GridPane.getColumnIndex(piece)] != 2){ //selecting new piece (Does not let you select a piece if you've already selected something)
                             			selected = piece;
                             			piece.setEffect(new InnerShadow(+30d, 0d, 0d, Color.GOLD));
                             			//System.out.println("clicked piece" + piece);
