@@ -286,7 +286,10 @@ public class KingsTableProgram extends Application {
                             //Display the text board for testing.
                             KingsTableProgram.board.printBoard();
                             
-
+                            //TODO: Make Enemy Move
+                            
+                            
+                            
                         } else {
                             System.out.println("This move is invalid.");
                         }
