@@ -1,4 +1,6 @@
 import javafx.application.Application;
+import javafx.concurrent.Task;
+
 import static javafx.application.Application.launch;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -20,6 +22,9 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.effect.DropShadow;
@@ -156,7 +161,9 @@ Scene menu, game, help, dWin, aWin;
 		// Screen Size
 		int gameWidth = 1000;
 		int gameHeight = 700;
-                
+		
+		
+		
 		// Background Image--------------
 		StackPane gameBackgroundImgContainer = new StackPane();
                 ImageView gameBgImage = new ImageView("stoneBG.jpg");
@@ -391,6 +398,9 @@ Scene menu, game, help, dWin, aWin;
                             			piece.setEffect(new InnerShadow(+30d, 0d, 0d, Color.GOLD));
                             			//System.out.println("clicked piece" + piece);
                             		}
+                                	// Background Music --------------
+                                	AudioClip sound = new AudioClip("Podington_Bear_-_Dark_Matter_mp3.mp3");
+                                	sound.play();
                                 });
                                 piece.setOnMouseExited(event -> {
                                 	if(selected!=piece) {
