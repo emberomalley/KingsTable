@@ -203,11 +203,11 @@ Scene menu, game, help, dWin, aWin;
 
 		// Center Pause Menu/Game Over Screen ---------------------
 		StackPane PauseScreen = new StackPane();
-		VBox pauseScreenItems = new VBox();
+		BorderPane PauseScreenBorder = new BorderPane();
+		VBox pauseScreenItems = new VBox(30);
 		//PauseScreen.setAlignment(Pos.TOP_LEFT);
 		PauseScreen.setPadding(new Insets(15, 15, 15, 15));// top,right,bottom,left
 		Label pauseScreenText = new Label();
-		//Button buttonMenu = new Button("Menu"); // Menu Button
 		pauseScreenText.setText("Pause Menu");
 		pauseScreenText.setTextFill(KingsTableProgram.textColor);
 		pauseScreenText.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 50));
@@ -222,9 +222,33 @@ Scene menu, game, help, dWin, aWin;
 		exitButton.setOnMouseExited(event -> {
 			exitButton.setStyle("-fx-background-color: #B8860B");
 		});
+		Button restartButton = new Button("Restart"); // Menu Button
+		//exitButton.resize(50, 50);
+		restartButton.setStyle("-fx-background-color: #B8860B");
+		restartButton.setOnMouseEntered(event -> { //  
+			// highlight
+			restartButton.setStyle("-fx-background-color: #FFD700");
+		});
+		restartButton.setOnMouseExited(event -> {
+			restartButton.setStyle("-fx-background-color: #B8860B");
+		});
+		Button mainMenuButton = new Button("Main Menu"); // Menu Button
+		//exitButton.resize(50, 50);
+		mainMenuButton.setStyle("-fx-background-color: #B8860B");
+		mainMenuButton.setOnMouseEntered(event -> { //  
+			// highlight
+			mainMenuButton.setStyle("-fx-background-color: #FFD700");
+		});
+		mainMenuButton.setOnMouseExited(event -> {
+			mainMenuButton.setStyle("-fx-background-color: #B8860B");
+		});
 		exitButton.setOnAction(event -> primaryStage.getScene().getWindow().hide());
-		pauseScreenItems.getChildren().addAll(pauseScreenText,exitButton);
-		PauseScreen.getChildren().addAll(pauseScreenItems);
+		pauseScreenItems.getChildren().addAll(pauseScreenText,mainMenuButton,restartButton);
+		//PauseScreenBorder.getChildren().addAll(pauseScreenItems,exitButton);
+		PauseScreenBorder.setCenter(pauseScreenItems);
+		PauseScreenBorder.setBottom(exitButton);
+		exitButton.setAlignment(Pos.BOTTOM_CENTER);
+		PauseScreen.getChildren().addAll(PauseScreenBorder);
 		pauseScreenItems.setAlignment(Pos.TOP_CENTER);
 		
 		
@@ -398,9 +422,6 @@ Scene menu, game, help, dWin, aWin;
                             			piece.setEffect(new InnerShadow(+30d, 0d, 0d, Color.GOLD));
                             			//System.out.println("clicked piece" + piece);
                             		}
-                                	// Background Music --------------
-                                	AudioClip sound = new AudioClip("Podington_Bear_-_Dark_Matter_mp3.mp3");
-                                	sound.play();
                                 });
                                 piece.setOnMouseExited(event -> {
                                 	if(selected!=piece) {
