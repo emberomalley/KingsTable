@@ -69,34 +69,46 @@ Scene menu, game, help;
                 menuBackgroundImgContainer.getChildren().addAll(menuBgImage,menuBorder);
                 menu = new Scene(menuBackgroundImgContainer, menuWidth,menuHeight);
                 
-                Button buttonPlayGame = new Button("Play Game"); // play game button
-                buttonPlayGame.resize(menuWidth*.05, menuHeight*.1);
-                buttonPlayGame.setStyle("-fx-background-color: #B8860B");
-                buttonPlayGame.setOnMouseEntered(highlightOnPlayGame -> { 
-			// highlight
-			buttonPlayGame.setStyle("-fx-background-color: #FFD700");
-		});
-		buttonPlayGame.setOnMouseExited(highlightOff -> {
-			buttonPlayGame.setStyle("-fx-background-color: #B8860B");
-		});
-                Button buttonHelp = new Button("Help Screen"); // goes to help screen
-                buttonHelp.resize(menuWidth*.05, menuHeight*.1);
-                buttonHelp.setStyle("-fx-background-color: #B8860B");
-                buttonHelp.setOnMouseEntered(highlightOnHelpScreen -> { 
+                
+		 Button button1Player = new Button("Play 1 player"); // play game button
+         button1Player.resize(menuWidth*.05, menuHeight*.1);
+         button1Player.setStyle("-fx-background-color: #B8860B");
+         button1Player.setOnMouseEntered(highlightOnPlayGame -> { 
+		// highlight
+		button1Player.setStyle("-fx-background-color: #FFD700");
+         });
+         button1Player.setOnMouseExited(highlightOff -> {
+		 button1Player.setStyle("-fx-background-color: #B8860B");
+         });
+         Button button2Player = new Button("Play 2 player"); // play game button
+         button2Player.resize(menuWidth*.05, menuHeight*.1);
+         button2Player.setStyle("-fx-background-color: #B8860B");
+         button2Player.setOnMouseEntered(highlightOnPlayGame -> { 
+		 // highlight
+        	 button2Player.setStyle("-fx-background-color: #FFD700");
+         });
+         button2Player.setOnMouseExited(highlightOff -> {
+		 button2Player.setStyle("-fx-background-color: #B8860B");
+         });
+         Button buttonHelp = new Button("Help Screen"); // goes to help screen
+         buttonHelp.resize(menuWidth*.05, menuHeight*.1);
+         buttonHelp.setStyle("-fx-background-color: #B8860B");
+         buttonHelp.setOnMouseEntered(highlightOnHelpScreen -> { 
 			// highlight
 			buttonHelp.setStyle("-fx-background-color: #FFD700");
-		});
-		buttonHelp.setOnMouseExited(highlightOff -> {
+                });
+         buttonHelp.setOnMouseExited(highlightOff -> {
 			buttonHelp.setStyle("-fx-background-color: #B8860B");
-		});
+         });
                 Text menuTitle = new Text("King's Table");
                 menuTitle.setFont(new Font(textFont, 80));
                 menuTitle.setFill(Color.ORANGERED);
                 menuTitle.setStroke(Color.RED);
-                buttonPlayGame.setOnAction(clickToGame -> primaryStage.setScene(game));//click button go to Game screen
+                button1Player.setOnAction(clickToGame -> primaryStage.setScene(game));//click button go to Game screen
+                button2Player.setOnAction(clickToGame -> primaryStage.setScene(game));//click button go to Game screen
                 buttonHelp.setOnAction(clickToHelpScreen -> primaryStage.setScene(help));//click button go to Help screen
                 VBox layout1 = new VBox(20);
-                layout1.getChildren().addAll(buttonPlayGame, buttonHelp, menuTitle);
+                layout1.getChildren().addAll(button1Player, button2Player, buttonHelp, menuTitle);
                 menuBorder.setBottom(layout1);
                 ///////////// end of menu scene
 
