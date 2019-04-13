@@ -118,7 +118,7 @@ Scene menu, game, help;
                 
                 // Screen Size
                 int helpWidth = 1000;
-		int helpHeight = 700;
+                int helpHeight = 700;
                 
                 // Background Image--------------
                 StackPane helpBackgroundImgContainer = new StackPane();
@@ -369,7 +369,7 @@ Scene menu, game, help;
                                 	if(selected==piece) { //piece is already selected
                             			selected = null;
                             			piece.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK));
-                            			//System.out.println("Uncliked");
+                            			//System.out.println("Unclicked");
                             		}
                             		else if(selected==null){ //selecting new piece (Does not let you select a piece if you've already selected something)
                             			selected = piece;
