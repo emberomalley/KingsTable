@@ -70,16 +70,27 @@ public class KingsTableProgram extends Application {
         menuBackgroundImgContainer.getChildren().addAll(menuBgImage, menuBorder);
         menu = new Scene(menuBackgroundImgContainer, menuWidth, menuHeight);
 
-        Button buttonPlayGame = new Button("Play Game"); // play game button
-        buttonPlayGame.resize(menuWidth * .05, menuHeight * .1);
-        buttonPlayGame.setStyle("-fx-background-color: #B8860B");
-        buttonPlayGame.setOnMouseEntered(highlightOnPlayGame -> {
-            // highlight
-            buttonPlayGame.setStyle("-fx-background-color: #FFD700");
-        });
-        buttonPlayGame.setOnMouseExited(highlightOff -> {
-            buttonPlayGame.setStyle("-fx-background-color: #B8860B");
-        });
+        Button button1Player = new Button("Play 1 player"); // 1 player game button
+         button1Player.resize(menuWidth*.05, menuHeight*.1);
+         button1Player.setStyle("-fx-background-color: #B8860B");
+         button1Player.setOnMouseEntered(highlightOnPlayGame -> {
+		      // highlight
+		        button1Player.setStyle("-fx-background-color: #FFD700");
+         });
+         button1Player.setOnMouseExited(highlightOff -> {
+		         button1Player.setStyle("-fx-background-color: #B8860B");
+         });
+         Button button2Player = new Button("Play 2 player"); // 2 player game button
+         button2Player.resize(menuWidth*.05, menuHeight*.1);
+         button2Player.setStyle("-fx-background-color: #B8860B");
+         button2Player.setOnMouseEntered(highlightOnPlayGame -> {
+		         // highlight
+        	 button2Player.setStyle("-fx-background-color: #FFD700");
+         });
+         button2Player.setOnMouseExited(highlightOff -> {
+		         button2Player.setStyle("-fx-background-color: #B8860B");
+         });
+
         Button buttonHelp = new Button("Help Screen"); // goes to help screen
         buttonHelp.resize(menuWidth * .05, menuHeight * .1);
         buttonHelp.setStyle("-fx-background-color: #B8860B");
@@ -94,10 +105,11 @@ public class KingsTableProgram extends Application {
         menuTitle.setFont(new Font(textFont, 80));
         menuTitle.setFill(Color.ORANGERED);
         menuTitle.setStroke(Color.RED);
-        buttonPlayGame.setOnAction(clickToGame -> primaryStage.setScene(game));//click button go to Game screen
+        button1Player.setOnAction(clickToGame -> primaryStage.setScene(game));//click button go to Game screen for now
+        button2Player.setOnAction(clickToGame -> primaryStage.setScene(game));//click button go to Game screen for now
         buttonHelp.setOnAction(clickToHelpScreen -> primaryStage.setScene(help));//click button go to Help screen
         VBox layout1 = new VBox(20);
-        layout1.getChildren().addAll(buttonPlayGame, buttonHelp, menuTitle);
+        layout1.getChildren().addAll(button1Player, button2Player, buttonHelp, menuTitle);
         menuBorder.setBottom(layout1);
         ///////////// end of menu scene
 
@@ -125,7 +137,7 @@ public class KingsTableProgram extends Application {
         Button buttonBackToMenu = new Button("Menu");
         buttonBackToMenu.resize(50, 50);
         buttonBackToMenu.setStyle("-fx-background-color: #FFFFFF");
-        buttonBackToMenu.setOnMouseEntered(highlightOnMenu -> { //  
+        buttonBackToMenu.setOnMouseEntered(highlightOnMenu -> { //
             // highlight
             buttonBackToMenu.setStyle("-fx-text-fill: #FFFFFF");
             buttonBackToMenu.setStyle("-fx-border-color: red");
@@ -138,14 +150,26 @@ public class KingsTableProgram extends Application {
         helpTitle.setFill(Color.WHITESMOKE);
         helpTitle.setStroke(Color.DARKGOLDENROD);
         buttonBackToMenu.setOnAction(backToMenu -> primaryStage.setScene(menu));//click button and go back to menu screen
-        /*
-                Text t = new Text(10,50, "Test");
-                t.setText("TEST");
-                t.setFont(Font.font("Verdana",20));
-                t.setFill(Color.WHITESMOKE);
-         */
+        //rules and instructions
+        Text helpText = new Text(20,20, "The rules are as follows:\n" +
+"●	There are two players, the attackers (24 fighter pieces, shown in black) and the defenders (12 fighter pieces and one king, shown in white)\n" +
+"●	The attackers are trying to capture the king, and the defenders are trying move the King to a corner square.\n" +
+"●	It is played typically on a 11x11 board, \n" +
+"●	If a piece is flanked by two opposing pieces, it is removed from the board\n" +
+"●	If the king is flanked on all sides by opposing pieces, that king loses. \n" +
+"●	Pieces can only move in straight lines, but at whatever distance they want (like a rook in chess)\n" +
+"●	Turns must alternate, and each player can only move one piece per turn.\n" +
+"●	The King starts in the center, surrounded by its defenders. The attackers start along the edges of the board.");
+              helpText.setFont(Font.font(textFont, FontWeight.SEMI_BOLD, FontPosture.REGULAR,14));
+              helpText.setFill(Color.WHITESMOKE);
+
+              Text helpText2 = new Text(20,20, "User Interaction:\n"+
+                      "The move pieces click on your desired piece and click on the square you want to move it to");
+              helpText2.setFont(Font.font(textFont, FontWeight.SEMI_BOLD, FontPosture.REGULAR,14));
+              helpText2.setFill(Color.WHITESMOKE);
+
         VBox layout2 = new VBox(20);
-        layout2.getChildren().addAll(helpTitle, buttonBackToMenu);
+        layout2.getChildren().addAll(helpTitle, buttonBackToMenu, helpText, helpText2);
         hboxTOPHelp.setSpacing(295);
         helpBorder.setTop(layout2);
 
@@ -173,7 +197,7 @@ public class KingsTableProgram extends Application {
         Button buttonMenu = new Button("Menu"); // Menu Button
         buttonMenu.resize(50, 50);
         buttonMenu.setStyle("-fx-background-color: #B8860B");
-        buttonMenu.setOnMouseEntered(event -> { //  
+        buttonMenu.setOnMouseEntered(event -> { //
             // highlight
             buttonMenu.setStyle("-fx-background-color: #FFD700");
         });
@@ -208,7 +232,7 @@ public class KingsTableProgram extends Application {
         Button exitButton = new Button("Exit"); // Menu Button
         //exitButton.resize(50, 50);
         exitButton.setStyle("-fx-background-color: #B8860B");
-        exitButton.setOnMouseEntered(event -> { //  
+        exitButton.setOnMouseEntered(event -> { //
             // highlight
             exitButton.setStyle("-fx-background-color: #FFD700");
         });
@@ -247,7 +271,7 @@ public class KingsTableProgram extends Application {
                         //movePiece function verifies the move and updates board state.
                         if (KingsTableProgram.board.movePiece(GridPane.getRowIndex(selected), GridPane.getColumnIndex(selected), Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]))) {
                             System.out.println("Piece " + KingsTableProgram.board.getPieceType(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1])) + " moved from (" + GridPane.getRowIndex(selected) + "," + GridPane.getColumnIndex(selected) + ") to (" + coordinates[0] + "," + coordinates[1] + ").");
-                            
+
                             //This stuff updates the display.
                             //if Piece is King
                             if (KingsTableProgram.board.getPieceType(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1])) == 3) {
@@ -282,14 +306,14 @@ public class KingsTableProgram extends Application {
                             if (KingsTableProgram.board.checkCapture(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]), "up")) {
                                 gridPaneGAME.getChildren().remove(getPieceAtPosition(Integer.parseInt(coordinates[0])-1,Integer.parseInt(coordinates[1]),gridPaneGAME));
                             }
-                            
+
                             //Display the text board for testing.
                             KingsTableProgram.board.printBoard();
-                            
+
                             //TODO: Make Enemy Move
-                            
-                            
-                            
+
+
+
                         } else {
                             System.out.println("This move is invalid.");
                         }
@@ -423,7 +447,7 @@ public class KingsTableProgram extends Application {
         }
 
     }
-    
+
     //Function to get the the piece at a given position in the GridPane.
     public Node getPieceAtPosition(int x, int y, GridPane gridPane) {
         Node piece = null;
