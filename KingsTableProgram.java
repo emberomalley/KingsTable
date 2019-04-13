@@ -29,6 +29,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.control.Label;
+import javafx.scene.text.FontPosture;
 
 public class KingsTableProgram extends Application {
 
