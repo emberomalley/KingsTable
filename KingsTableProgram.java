@@ -308,6 +308,15 @@ public class KingsTableProgram extends Application {
                                 gridPaneGAME.getChildren().remove(getPieceAtPosition(Integer.parseInt(coordinates[0])-1,Integer.parseInt(coordinates[1]),gridPaneGAME));
                             }
 
+                            //Check King Capture
+                            if(KingsTableProgram.board.checkKingCapture(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]))){
+                                //Attackers win.
+                                System.out.println("Attackers Win!");
+                                pauseScreenText.setText("Attackers Win!");
+                                gridPaneGAME.getChildren().addAll(PauseScreen);
+                                gameBorder.setCenter(PauseScreen);
+                            }
+           
                             //Display the text board for testing.
                             KingsTableProgram.board.printBoard();
 
