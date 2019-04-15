@@ -31,16 +31,27 @@ public class MenuScreen {
 	        menuBackgroundImgContainer.getChildren().addAll(menuBgImage, menuBorder);
 	        Config.menu = new Scene(menuBackgroundImgContainer, menuWidth, menuHeight);
 
-	        Button buttonPlayGame = new Button("Play Game"); // play game button
-	        buttonPlayGame.resize(menuWidth * .05, menuHeight * .1);
-	        buttonPlayGame.setStyle("-fx-background-color: #B8860B");
-	        buttonPlayGame.setOnMouseEntered(highlightOnPlayGame -> {
-	            // highlight
-	            buttonPlayGame.setStyle("-fx-background-color: #FFD700");
-	        });
-	        buttonPlayGame.setOnMouseExited(highlightOff -> {
-	            buttonPlayGame.setStyle("-fx-background-color: #B8860B");
-	        });
+	        Button button1Player = new Button("Play 1 player"); // 1 player game button
+	         button1Player.resize(menuWidth*.05, menuHeight*.1);
+	         button1Player.setStyle("-fx-background-color: #B8860B");
+	         button1Player.setOnMouseEntered(highlightOnPlayGame -> {
+			      // highlight
+			        button1Player.setStyle("-fx-background-color: #FFD700");
+	         });
+	         button1Player.setOnMouseExited(highlightOff -> {
+			         button1Player.setStyle("-fx-background-color: #B8860B");
+	         });
+	         Button button2Player = new Button("Play 2 player"); // 2 player game button
+	         button2Player.resize(menuWidth*.05, menuHeight*.1);
+	         button2Player.setStyle("-fx-background-color: #B8860B");
+	         button2Player.setOnMouseEntered(highlightOnPlayGame -> {
+			         // highlight
+	        	 button2Player.setStyle("-fx-background-color: #FFD700");
+	         });
+	         button2Player.setOnMouseExited(highlightOff -> {
+			         button2Player.setStyle("-fx-background-color: #B8860B");
+	         });
+
 	        Button buttonHelp = new Button("Help Screen"); // goes to help screen
 	        buttonHelp.resize(menuWidth * .05, menuHeight * .1);
 	        buttonHelp.setStyle("-fx-background-color: #B8860B");
@@ -55,12 +66,12 @@ public class MenuScreen {
 	        menuTitle.setFont(new Font(Config.textFont, 80));
 	        menuTitle.setFill(Color.ORANGERED);
 	        menuTitle.setStroke(Color.RED);
-	        buttonPlayGame.setOnAction(clickToGame -> primaryStage.setScene(Config.game));//click button go to Game screen
+	        button1Player.setOnAction(clickToGame -> primaryStage.setScene(Config.game));//click button go to Game screen for now
+	        button2Player.setOnAction(clickToGame -> primaryStage.setScene(Config.game));//click button go to Game screen for now
 	        buttonHelp.setOnAction(clickToHelpScreen -> primaryStage.setScene(Config.help));//click button go to Help screen
 	        VBox layout1 = new VBox(20);
-	        layout1.getChildren().addAll(buttonPlayGame, buttonHelp, menuTitle);
+	        layout1.getChildren().addAll(button1Player, button2Player, buttonHelp, menuTitle);
 	        menuBorder.setBottom(layout1);
-        ///////////// end of menu scene
 	}
 	///////////// end of menu scene
 }
