@@ -1,36 +1,35 @@
 
 import javafx.application.Application;
-import static javafx.application.Application.launch;
-import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
+import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.InnerShadow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.InnerShadow;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.scene.control.Label;
 import javafx.scene.text.FontPosture;
-
 public class KingsTableProgram extends Application {
 
     public static Board board = new Board();
@@ -52,129 +51,20 @@ public class KingsTableProgram extends Application {
         launch(args);
     }
 
-    Scene menu, game, help, dWin, aWin;
+    
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        //Menu Scene
-        // set up background border pane (Top/Left/Right/Center/Bottom)
-        BorderPane menuBorder = new BorderPane();
-        menuBorder.setPadding(new Insets(15, 520, 100, 150));
-        // Screen Size
-        int menuWidth = 1000;
-        int menuHeight = 700;
 
-        StackPane menuBackgroundImgContainer = new StackPane();
-        ImageView menuBgImage = new ImageView("vikingFire.jpg");//background image
-        menuBgImage.setFitHeight(menuHeight + 10);
-        menuBgImage.setFitWidth(menuWidth + 10);
-        menuBackgroundImgContainer.getChildren().addAll(menuBgImage, menuBorder);
-        menu = new Scene(menuBackgroundImgContainer, menuWidth, menuHeight);
-
-        Button button1Player = new Button("Play 1 player"); // 1 player game button
-         button1Player.resize(menuWidth*.05, menuHeight*.1);
-         button1Player.setStyle("-fx-background-color: #B8860B");
-         button1Player.setOnMouseEntered(highlightOnPlayGame -> {
-		      // highlight
-		        button1Player.setStyle("-fx-background-color: #FFD700");
-         });
-         button1Player.setOnMouseExited(highlightOff -> {
-		         button1Player.setStyle("-fx-background-color: #B8860B");
-         });
-         Button button2Player = new Button("Play 2 player"); // 2 player game button
-         button2Player.resize(menuWidth*.05, menuHeight*.1);
-         button2Player.setStyle("-fx-background-color: #B8860B");
-         button2Player.setOnMouseEntered(highlightOnPlayGame -> {
-		         // highlight
-        	 button2Player.setStyle("-fx-background-color: #FFD700");
-         });
-         button2Player.setOnMouseExited(highlightOff -> {
-		         button2Player.setStyle("-fx-background-color: #B8860B");
-         });
-
-        Button buttonHelp = new Button("Help Screen"); // goes to help screen
-        buttonHelp.resize(menuWidth * .05, menuHeight * .1);
-        buttonHelp.setStyle("-fx-background-color: #B8860B");
-        buttonHelp.setOnMouseEntered(highlightOnHelpScreen -> {
-            // highlight
-            buttonHelp.setStyle("-fx-background-color: #FFD700");
-        });
-        buttonHelp.setOnMouseExited(highlightOff -> {
-            buttonHelp.setStyle("-fx-background-color: #B8860B");
-        });
-        Text menuTitle = new Text("King's Table");
-        menuTitle.setFont(new Font(textFont, 80));
-        menuTitle.setFill(Color.ORANGERED);
-        menuTitle.setStroke(Color.RED);
-        button1Player.setOnAction(clickToGame -> primaryStage.setScene(game));//click button go to Game screen for now
-        button2Player.setOnAction(clickToGame -> primaryStage.setScene(game));//click button go to Game screen for now
-        buttonHelp.setOnAction(clickToHelpScreen -> primaryStage.setScene(help));//click button go to Help screen
-        VBox layout1 = new VBox(20);
-        layout1.getChildren().addAll(button1Player, button2Player, buttonHelp, menuTitle);
-        menuBorder.setBottom(layout1);
-        ///////////// end of menu scene
-
-        // Help Scene
-        // set up background border pane (Top/Left/Right/Center/Bottom)
-        BorderPane helpBorder = new BorderPane();
-
-        // Screen Size
-        int helpWidth = 1000;
-        int helpHeight = 700;
-
-        // Background Image--------------
-        StackPane helpBackgroundImgContainer = new StackPane();
-        ImageView helpBgImage = new ImageView("torch.GIF");//background image
-        helpBgImage.setFitHeight(helpHeight);
-        helpBgImage.setFitWidth(helpWidth);
-        helpBackgroundImgContainer.getChildren().addAll(helpBgImage, helpBorder);
-        help = new Scene(helpBackgroundImgContainer, helpWidth, helpHeight);
-
-        // TOP (Menu Button and Title of Help Scene)------------
-        HBox hboxTOPHelp = new HBox();
-        hboxTOPHelp.setAlignment(Pos.TOP_LEFT);
-        // set up for HBox containing the title and the button: (Top/Left/Right/Center/Bottom)
-        hboxTOPHelp.setPadding(new Insets(15, 0, 15, 5));
-        Button buttonBackToMenu = new Button("Menu");
-        buttonBackToMenu.resize(50, 50);
-        buttonBackToMenu.setStyle("-fx-background-color: #FFFFFF");
-        buttonBackToMenu.setOnMouseEntered(highlightOnMenu -> { //
-            // highlight
-            buttonBackToMenu.setStyle("-fx-text-fill: #FFFFFF");
-            buttonBackToMenu.setStyle("-fx-border-color: red");
-        });
-        buttonBackToMenu.setOnMouseExited(highlightOff -> {
-            buttonBackToMenu.setStyle("-fx-background-color: #FFFFFF");
-        });
-        Text helpTitle = new Text("Help");
-        helpTitle.setFont(new Font(textFont, 80));//setting font and its size
-        helpTitle.setFill(Color.WHITESMOKE);
-        helpTitle.setStroke(Color.DARKGOLDENROD);
-        buttonBackToMenu.setOnAction(backToMenu -> primaryStage.setScene(menu));//click button and go back to menu screen
-        //rules and instructions
-        Text helpText = new Text(20,20, "The rules are as follows:\n" +
-"●	There are two players, the attackers (24 fighter pieces, shown in black) and the defenders (12 fighter pieces and one king, shown in white)\n" +
-"●	The attackers are trying to capture the king, and the defenders are trying move the King to a corner square.\n" +
-"●	It is played typically on a 11x11 board, \n" +
-"●	If a piece is flanked by two opposing pieces, it is removed from the board\n" +
-"●	If the king is flanked on all sides by opposing pieces, that king loses. \n" +
-"●	Pieces can only move in straight lines, but at whatever distance they want (like a rook in chess)\n" +
-"●	Turns must alternate, and each player can only move one piece per turn.\n" +
-"●	The King starts in the center, surrounded by its defenders. The attackers start along the edges of the board.");
-              helpText.setFont(Font.font(textFont, FontWeight.SEMI_BOLD, FontPosture.REGULAR,14));
-              helpText.setFill(Color.WHITESMOKE);
-
-              Text helpText2 = new Text(20,20, "User Interaction:\n"+
-                      "The move pieces click on your desired piece and click on the square you want to move it to");
-              helpText2.setFont(Font.font(textFont, FontWeight.SEMI_BOLD, FontPosture.REGULAR,14));
-              helpText2.setFill(Color.WHITESMOKE);
-
-        VBox layout2 = new VBox(20);
-        layout2.getChildren().addAll(helpTitle, buttonBackToMenu, helpText, helpText2);
-        hboxTOPHelp.setSpacing(295);
-        helpBorder.setTop(layout2);
-
-        //end of Help scene
+        // Creates all screens
+        MenuScreen.display(primaryStage);
+        HelpScreen.display(primaryStage);
+        
+        // Initialize primary display
+        primaryStage.setScene(Config.menu);
+        primaryStage.setTitle("King's Table");
+        primaryStage.setResizable(false);
+        primaryStage.show();
         // Game Scene
         // set up background border pane (Top/Left/Right/Center/Bottom)
         BorderPane gameBorder = new BorderPane();
@@ -189,7 +79,7 @@ public class KingsTableProgram extends Application {
         gameBgImage.setFitHeight(gameHeight + 100);
         gameBgImage.setFitWidth(gameWidth + 500);
         gameBackgroundImgContainer.getChildren().addAll(gameBgImage, gameBorder);
-        game = new Scene(gameBackgroundImgContainer, gameWidth, gameHeight);
+        Config.game = new Scene(gameBackgroundImgContainer, gameWidth, gameHeight);
 
         // TOP (Menu Button and Title of Game Scene)------------
         HBox hboxTOP = new HBox();
@@ -207,7 +97,7 @@ public class KingsTableProgram extends Application {
         });
 
         Text gameTitle = new Text("King's Table");
-        buttonMenu.setOnAction(event -> primaryStage.setScene(menu));//click button and go back to menu screen
+        buttonMenu.setOnAction(event -> primaryStage.setScene(Config.menu));//click button and go back to menu screen
         VBox layout3 = new VBox(20);
         layout3.getChildren().addAll(buttonMenu);
         ////
@@ -322,8 +212,6 @@ public class KingsTableProgram extends Application {
 
                             //TODO: Make Enemy Move
 
-
-
                         } else {
                             System.out.println("This move is invalid.");
                         }
@@ -396,10 +284,7 @@ public class KingsTableProgram extends Application {
         gameBorder.setBottom(hboxBOTTOM);
 
         // Show Game ------------
-        primaryStage.setScene(menu);
-        primaryStage.setTitle("King's Table");
-        primaryStage.setResizable(false);
-        primaryStage.show();
+
 
         // Draw Pieces
         Image dpImage = new Image("defenderPiece.jpg");
