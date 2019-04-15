@@ -28,6 +28,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.scene.control.Label;
+import javafx.scene.text.FontPosture;
 public class KingsTableProgram extends Application {
 
     public static Board board = new Board();
@@ -53,6 +55,7 @@ public class KingsTableProgram extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
         // Creates all screens
         MenuScreen.display(primaryStage);
         HelpScreen.display(primaryStage);
@@ -62,8 +65,6 @@ public class KingsTableProgram extends Application {
         primaryStage.setTitle("King's Table");
         primaryStage.setResizable(false);
         primaryStage.show();
-
-
         // Game Scene
         // set up background border pane (Top/Left/Right/Center/Bottom)
         BorderPane gameBorder = new BorderPane();
@@ -87,7 +88,7 @@ public class KingsTableProgram extends Application {
         Button buttonMenu = new Button("Menu"); // Menu Button
         buttonMenu.resize(50, 50);
         buttonMenu.setStyle("-fx-background-color: #B8860B");
-        buttonMenu.setOnMouseEntered(event -> { //  
+        buttonMenu.setOnMouseEntered(event -> { //
             // highlight
             buttonMenu.setStyle("-fx-background-color: #FFD700");
         });
@@ -122,7 +123,7 @@ public class KingsTableProgram extends Application {
         Button exitButton = new Button("Exit"); // Menu Button
         //exitButton.resize(50, 50);
         exitButton.setStyle("-fx-background-color: #B8860B");
-        exitButton.setOnMouseEntered(event -> { //  
+        exitButton.setOnMouseEntered(event -> { //
             // highlight
             exitButton.setStyle("-fx-background-color: #FFD700");
         });
@@ -161,7 +162,7 @@ public class KingsTableProgram extends Application {
                         //movePiece function verifies the move and updates board state.
                         if (KingsTableProgram.board.movePiece(GridPane.getRowIndex(selected), GridPane.getColumnIndex(selected), Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]))) {
                             System.out.println("Piece " + KingsTableProgram.board.getPieceType(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1])) + " moved from (" + GridPane.getRowIndex(selected) + "," + GridPane.getColumnIndex(selected) + ") to (" + coordinates[0] + "," + coordinates[1] + ").");
-                            
+
                             //This stuff updates the display.
                             //if Piece is King
                             if (KingsTableProgram.board.getPieceType(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1])) == 3) {
@@ -196,14 +197,21 @@ public class KingsTableProgram extends Application {
                             if (KingsTableProgram.board.checkCapture(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]), "up")) {
                                 gridPaneGAME.getChildren().remove(getPieceAtPosition(Integer.parseInt(coordinates[0])-1,Integer.parseInt(coordinates[1]),gridPaneGAME));
                             }
-                            
+
+                            //Check King Capture
+                            if(KingsTableProgram.board.checkKingCapture(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]))){
+                                //Attackers win.
+                                System.out.println("Attackers Win!");
+                                pauseScreenText.setText("Attackers Win!");
+                                gridPaneGAME.getChildren().addAll(PauseScreen);
+                                gameBorder.setCenter(PauseScreen);
+                            }
+           
                             //Display the text board for testing.
                             KingsTableProgram.board.printBoard();
-                            
+
                             //TODO: Make Enemy Move
-                            System.out.println("ENEMY MOVE");
-                            
-                            
+
                         } else {
                             System.out.println("This move is invalid.");
                         }
@@ -334,7 +342,7 @@ public class KingsTableProgram extends Application {
         }
 
     }
-    
+
     //Function to get the the piece at a given position in the GridPane.
     public Node getPieceAtPosition(int x, int y, GridPane gridPane) {
         Node piece = null;
