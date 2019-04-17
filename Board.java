@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 import java.lang.Math;
 import java.util.Arrays;
@@ -260,35 +259,30 @@ public class Board {
                     if (dChoice == 0 && movableLeft) {
                         returnCoords.set(2, i);
                         returnCoords.set(3, j - 1);
-                        return returnCoords;
                     }
-                    if (dChoice == 1 && movableRight) {
+                    else if (dChoice == 1 && movableRight) {
                         returnCoords.set(2, i);
                         returnCoords.set(3, j + 1);
-                        return returnCoords;
                     }
-                    if (dChoice == 2 && movableDown) {
+                    else if (dChoice == 2 && movableDown) {
                         returnCoords.set(2, i + 1);
                         returnCoords.set(3, j);
-                        return returnCoords;
                     }
-                    if (dChoice == 3 && movableUp) {
+                    else if (dChoice == 3 && movableUp) {
                         returnCoords.set(2, i - 1);
                         returnCoords.set(3, j);
+                    }
+                    if (movePiece(i,j,returnCoords.get(2),returnCoords.get(3))){
                         return returnCoords;
                     }
-                    
-                    directions.remove(dIndex);                    
+                    else{
+                        enemyPositions.remove(coords);
+                    }
+                    directions.remove(dIndex);
                 }
             }
-
         }
-        
-        returnCoords.set(0, 0);
-        returnCoords.set(1, 0);
-        returnCoords.set(2, 0);
-        returnCoords.set(3, 0);
-        return returnCoords;
+        return null;
     }
 
     public void tests() {

@@ -50,11 +50,10 @@ public class KingsTableProgram extends Application {
     public static void game() {
 
     }
+
     public static void main(String[] args) {
         launch(args);
     }
-
-    
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -62,7 +61,7 @@ public class KingsTableProgram extends Application {
         // Creates all screens
         MenuScreen.display(primaryStage);
         HelpScreen.display(primaryStage);
-        
+
         // Initialize primary display
         primaryStage.setScene(Config.menu);
         primaryStage.setTitle("King's Table");
@@ -189,40 +188,68 @@ public class KingsTableProgram extends Application {
 
                             //Check captures.
                             if (KingsTableProgram.board.checkCapture(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]), "right")) {
-                                gridPaneGAME.getChildren().remove(getPieceAtPosition(Integer.parseInt(coordinates[0]),Integer.parseInt(coordinates[1])+1,gridPaneGAME));
+                                gridPaneGAME.getChildren().remove(getPieceAtPosition(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]) + 1, gridPaneGAME));
                             }
                             if (KingsTableProgram.board.checkCapture(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]), "left")) {
-                                gridPaneGAME.getChildren().remove(getPieceAtPosition(Integer.parseInt(coordinates[0]),Integer.parseInt(coordinates[1])-1,gridPaneGAME));
+                                gridPaneGAME.getChildren().remove(getPieceAtPosition(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]) - 1, gridPaneGAME));
                             }
                             if (KingsTableProgram.board.checkCapture(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]), "down")) {
-                                gridPaneGAME.getChildren().remove(getPieceAtPosition(Integer.parseInt(coordinates[0])+1,Integer.parseInt(coordinates[1]),gridPaneGAME));
+                                gridPaneGAME.getChildren().remove(getPieceAtPosition(Integer.parseInt(coordinates[0]) + 1, Integer.parseInt(coordinates[1]), gridPaneGAME));
                             }
                             if (KingsTableProgram.board.checkCapture(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]), "up")) {
-                                gridPaneGAME.getChildren().remove(getPieceAtPosition(Integer.parseInt(coordinates[0])-1,Integer.parseInt(coordinates[1]),gridPaneGAME));
+                                gridPaneGAME.getChildren().remove(getPieceAtPosition(Integer.parseInt(coordinates[0]) - 1, Integer.parseInt(coordinates[1]), gridPaneGAME));
                             }
 
                             //Check King Capture
-                            if(KingsTableProgram.board.checkKingCapture(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]))){
+                            if (KingsTableProgram.board.checkKingCapture(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]))) {
                                 //Attackers win.
                                 System.out.println("Attackers Win!");
                                 pauseScreenText.setText("Attackers Win!");
                                 gridPaneGAME.getChildren().addAll(PauseScreen);
                                 gameBorder.setCenter(PauseScreen);
                             }
-           
-                            //This returns the coordinates of the piece to move and the coordinates of where to move it.
-                            List<Integer> coords = KingsTableProgram.board.moveAttacker();
-                            if (KingsTableProgram.board.movePiece(coords.get(0),coords.get(1), coords.get(2),coords.get(3))){
-                                selected = getPieceAtPosition(coords.get(0),coords.get(1),gridPaneGAME);
-                                System.out.println("Piece " + KingsTableProgram.board.getPieceType(coords.get(2), coords.get(3)) + " moved from (" + GridPane.getRowIndex(selected) + "," + GridPane.getColumnIndex(selected) + ") to (" + coords.get(2) + "," + coords.get(3) + ").");
-                                GridPane.setRowIndex(selected, coords.get(2));
-                                GridPane.setColumnIndex(selected,coords.get(3));
-                                selected = null;
+                            
+                            //Check if the user is playing the AI here.
+                            if (true){
+                                //This returns the coordinates of the piece to move and the coordinates of where to move it.
+                                List<Integer> coords = KingsTableProgram.board.moveAttacker();
+                                if (coords != null) {
+                                    selected = getPieceAtPosition(coords.get(0), coords.get(1), gridPaneGAME);
+                                    System.out.println("Piece " + KingsTableProgram.board.getPieceType(coords.get(2), coords.get(3)) + " moved from (" + GridPane.getRowIndex(selected) + "," + GridPane.getColumnIndex(selected) + ") to (" + coords.get(2) + "," + coords.get(3) + ").");
+                                    GridPane.setRowIndex(selected, coords.get(2));
+                                    GridPane.setColumnIndex(selected, coords.get(3));
+                                    selected = null;
+                                } else {
+                                    System.out.println("The attackers are unable to move.");
+                                }
+
+                                //Check captures.
+                                if (KingsTableProgram.board.checkCapture(coords.get(2), coords.get(3), "right")) {
+                                    gridPaneGAME.getChildren().remove(getPieceAtPosition(coords.get(2), coords.get(3) + 1, gridPaneGAME));
+                                }
+                                if (KingsTableProgram.board.checkCapture(coords.get(2), coords.get(3), "left")) {
+                                    gridPaneGAME.getChildren().remove(getPieceAtPosition(coords.get(2), coords.get(3) - 1, gridPaneGAME));
+                                }
+                                if (KingsTableProgram.board.checkCapture(coords.get(2), coords.get(3), "down")) {
+                                    gridPaneGAME.getChildren().remove(getPieceAtPosition(coords.get(2) + 1, coords.get(3), gridPaneGAME));
+                                }
+                                if (KingsTableProgram.board.checkCapture(coords.get(2), coords.get(3), "up")) {
+                                    gridPaneGAME.getChildren().remove(getPieceAtPosition(coords.get(2) - 1, coords.get(3), gridPaneGAME));
+                                }
+
+                                //Check King Capture
+                                if (KingsTableProgram.board.checkKingCapture(coords.get(2), coords.get(3))) {
+                                    //Attackers win.
+                                    System.out.println("Attackers Win!");
+                                    pauseScreenText.setText("Attackers Win!");
+                                    gridPaneGAME.getChildren().addAll(PauseScreen);
+                                    gameBorder.setCenter(PauseScreen);
+                                }
                             }
-                          
+
                             //Display the text board for testing.
                             KingsTableProgram.board.printBoard();
-                           
+
                         } else {
                             System.out.println("This move is invalid.");
                         }
@@ -295,8 +322,6 @@ public class KingsTableProgram extends Application {
         gameBorder.setBottom(hboxBOTTOM);
 
         // Show Game ------------
-
-
         // Draw Pieces
         Image dpImage = new Image("defenderPiece.jpg");
         Image apImage = new Image("attackerPiece.jpg");
@@ -335,7 +360,7 @@ public class KingsTableProgram extends Application {
                             selected = null;
                             piece.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK));
                             //System.out.println("Uncliked");
-                        //Change this condition to specify which pieces can be selected
+                            //Change this condition to specify which pieces can be selected
                         } else if (selected == null && KingsTableProgram.board.boardState[GridPane.getRowIndex(piece)][GridPane.getColumnIndex(piece)] != -1) { //selecting new piece (Does not let you select a piece if you've already selected something)
                             selected = piece;
                             piece.setEffect(new InnerShadow(+30d, 0d, 0d, Color.GOLD));
