@@ -1,6 +1,16 @@
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.TimerTask;
+
+import javax.swing.Timer;
+
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -11,6 +21,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import javafx.scene.control.Button;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -173,8 +184,8 @@ public class KingsTableProgram extends Application {
         layout2.getChildren().addAll(helpTitle, buttonBackToMenu, helpText, helpText2);
         hboxTOPHelp.setSpacing(295);
         helpBorder.setTop(layout2);
-
         //end of Help scene
+        
         // Game Scene
         // set up background border pane (Top/Left/Right/Center/Bottom)
         BorderPane gameBorder = new BorderPane();
@@ -182,7 +193,24 @@ public class KingsTableProgram extends Application {
         // Screen Size
         int gameWidth = 1000;
         int gameHeight = 700;
-
+        //Timer
+        long endTime = System.currentTimeMillis();
+        Label timeLabel = new Label();
+        DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+        final Timeline timeline = new Timeline(
+        		new KeyFrame(
+        				Duration.seconds(1),
+        				event -> {
+        					final long diff = endTime - System.currentTimeMillis();
+        		            if ( diff < 0 ) {
+        		            //  timeLabel.setText( "00:00:00" );
+        		                timeLabel.setText( timeFormat.format( 0 ) );
+        		            } else {
+        		                timeLabel.setText( timeFormat.format( diff ) );
+        		            }
+        				}));
+		timeline.setCycleCount(Timeline.INDEFINITE);
+		timeline.play();
         // Background Image--------------
         StackPane gameBackgroundImgContainer = new StackPane();
         ImageView gameBgImage = new ImageView("stoneBG.jpg");
@@ -383,7 +411,7 @@ public class KingsTableProgram extends Application {
         userScore.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
         userScore.setFill(KingsTableProgram.textColor);
         userScore.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
-        hboxBOTTOM.getChildren().addAll(highScore, region1, timer, region2, userScore);
+        hboxBOTTOM.getChildren().addAll(highScore, region1, timer, region2, userScore, timeLabel);
         gameBorder.setBottom(hboxBOTTOM);
 
         // Show Game ------------
@@ -461,3 +489,4 @@ public class KingsTableProgram extends Application {
         return piece;
     }
 }
+
