@@ -1,4 +1,5 @@
 
+import java.util.Arrays;
 import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -30,6 +31,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
 import javafx.scene.text.FontPosture;
+import java.util.List;
+
 public class KingsTableProgram extends Application {
 
     public static Board board = new Board();
@@ -207,11 +210,19 @@ public class KingsTableProgram extends Application {
                                 gameBorder.setCenter(PauseScreen);
                             }
            
+                            //This returns the coordinates of the piece to move and the coordinates of where to move it.
+                            List<Integer> coords = KingsTableProgram.board.moveAttacker();
+                            if (KingsTableProgram.board.movePiece(coords.get(0),coords.get(1), coords.get(2),coords.get(3))){
+                                selected = getPieceAtPosition(coords.get(0),coords.get(1),gridPaneGAME);
+                                System.out.println("Piece " + KingsTableProgram.board.getPieceType(coords.get(2), coords.get(3)) + " moved from (" + GridPane.getRowIndex(selected) + "," + GridPane.getColumnIndex(selected) + ") to (" + coords.get(2) + "," + coords.get(3) + ").");
+                                GridPane.setRowIndex(selected, coords.get(2));
+                                GridPane.setColumnIndex(selected,coords.get(3));
+                                selected = null;
+                            }
+                          
                             //Display the text board for testing.
                             KingsTableProgram.board.printBoard();
-
-                            //TODO: Make Enemy Move
-
+                           
                         } else {
                             System.out.println("This move is invalid.");
                         }
