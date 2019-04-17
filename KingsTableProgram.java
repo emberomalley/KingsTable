@@ -194,16 +194,19 @@ public class KingsTableProgram extends Application {
         int gameWidth = 1000;
         int gameHeight = 700;
         //Timer
-        long endTime = System.currentTimeMillis();
+        long startTime = System.currentTimeMillis();
         Label timeLabel = new Label();
-        DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+        //DateFormat timeFormat = new SimpleDateFormat("hh:mm:ss");
+        DateFormat timeFormat = new SimpleDateFormat("mm:ss");        
         final Timeline timeline = new Timeline(
         		new KeyFrame(
         				Duration.seconds(1),
         				event -> {
-        					final long diff = endTime - System.currentTimeMillis();
-        		            if ( diff < 0 ) {
-        		            //  timeLabel.setText( "00:00:00" );
+        					System.out.println("Event happening");
+        					long currentTime = System.currentTimeMillis();
+        					final long diff = currentTime - startTime ;
+        		            if ( diff <= 0 ) {
+        		            timeLabel.setText( "00:00" );
         		                timeLabel.setText( timeFormat.format( 0 ) );
         		            } else {
         		                timeLabel.setText( timeFormat.format( diff ) );
