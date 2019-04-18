@@ -193,6 +193,7 @@ public class KingsTableProgram extends Application {
         // Screen Size
         int gameWidth = 1000;
         int gameHeight = 700;
+        
         //Timer
         long startTime = System.currentTimeMillis();
         Label timeLabel = new Label();
@@ -202,7 +203,6 @@ public class KingsTableProgram extends Application {
         		new KeyFrame(
         				Duration.seconds(1),
         				event -> {
-        					System.out.println("Event happening");
         					long currentTime = System.currentTimeMillis();
         					final long diff = currentTime - startTime ;
         		            if ( diff <= 0 ) {
@@ -214,6 +214,7 @@ public class KingsTableProgram extends Application {
         				}));
 		timeline.setCycleCount(Timeline.INDEFINITE);
 		timeline.play();
+		
         // Background Image--------------
         StackPane gameBackgroundImgContainer = new StackPane();
         ImageView gameBgImage = new ImageView("stoneBG.jpg");
@@ -399,7 +400,7 @@ public class KingsTableProgram extends Application {
         hboxBOTTOM.setPadding(new Insets(25, 10, 25, 20));// top,right,bottom,left
         // hboxBOTTOM.setStyle("-fx-background-color: #D3D3D3;"); //for visual testing
         Text highScore = new Text("High Score");
-        Text timer = new Text("Timer");
+        Text timer = new Text("Timer:");
         Text userScore = new Text("Score");
         Region region1 = new Region(); // spacer
         HBox.setHgrow(region1, Priority.ALWAYS);
@@ -410,11 +411,14 @@ public class KingsTableProgram extends Application {
         highScore.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
         timer.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
         timer.setFill(KingsTableProgram.textColor);
-        timer.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 30));
+        timer.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
+        timeLabel.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
+        timeLabel.setTextFill(KingsTableProgram.textColor);
+        timeLabel.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
         userScore.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
         userScore.setFill(KingsTableProgram.textColor);
         userScore.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
-        hboxBOTTOM.getChildren().addAll(highScore, region1, timer, region2, userScore, timeLabel);
+        hboxBOTTOM.getChildren().addAll(highScore, region1, timer, timeLabel, region2, userScore);
         gameBorder.setBottom(hboxBOTTOM);
 
         // Show Game ------------
@@ -460,7 +464,7 @@ public class KingsTableProgram extends Application {
                         if (selected == piece) { //piece is already selected
                             selected = null;
                             piece.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK));
-                            //System.out.println("Uncliked");
+                            //System.out.println("Unclicked");
                         //Change this condition to specify which pieces can be selected
                         } else if (selected == null && KingsTableProgram.board.boardState[GridPane.getRowIndex(piece)][GridPane.getColumnIndex(piece)] != -1) { //selecting new piece (Does not let you select a piece if you've already selected something)
                             selected = piece;
