@@ -1,5 +1,4 @@
 
-import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -7,9 +6,6 @@ import static javafx.application.Application.launch;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.TimerTask;
-
-import javax.swing.Timer;
 
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -197,13 +193,12 @@ public class KingsTableProgram extends Application {
         //Timer
         long startTime = System.currentTimeMillis();
         Label timeLabel = new Label();
-        //DateFormat timeFormat = new SimpleDateFormat("hh:mm:ss");
         DateFormat timeFormat = new SimpleDateFormat("mm:ss");        
         final Timeline timeline = new Timeline(
         		new KeyFrame(
         				Duration.seconds(1),
         				event -> {
-        					long currentTime = System.currentTimeMillis();
+        					long currentTime = System.currentTimeMillis();// stores system time into the currentTime variable
         					final long diff = currentTime - startTime ;
         		            if ( diff <= 0 ) {
         		            timeLabel.setText( "00:00" );
