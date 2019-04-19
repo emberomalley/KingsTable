@@ -1,9 +1,12 @@
 
-import java.util.Arrays;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.geometry.HPos;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+import static javafx.application.Application.launch;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -17,6 +20,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+import javafx.scene.control.Button;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
@@ -74,6 +85,26 @@ public class KingsTableProgram extends Application {
         // Screen Size
         int gameWidth = 1000;
         int gameHeight = 700;
+
+        //Timer
+        long startTime = System.currentTimeMillis();
+        Label timeLabel = new Label();
+        DateFormat timeFormat = new SimpleDateFormat("mm:ss");
+        final Timeline timeline = new Timeline(
+        		new KeyFrame(
+        				Duration.seconds(1),
+        				event -> {
+        					long currentTime = System.currentTimeMillis();// stores system time into the currentTime variable
+        					final long diff = currentTime - startTime ;
+        		            if ( diff <= 0 ) {
+        		            timeLabel.setText( "00:00" );
+        		                timeLabel.setText( timeFormat.format( 0 ) );
+        		            } else {
+        		                timeLabel.setText( timeFormat.format( diff ) );
+        		            }
+        				}));
+		timeline.setCycleCount(Timeline.INDEFINITE);
+		timeline.play();
 
         // Background Image--------------
         StackPane gameBackgroundImgContainer = new StackPane();
@@ -208,7 +239,7 @@ public class KingsTableProgram extends Application {
                                 gridPaneGAME.getChildren().addAll(PauseScreen);
                                 gameBorder.setCenter(PauseScreen);
                             }
-                            
+
                             //Check if the user is playing the AI here.
                             if (true){
                                 //This returns the coordinates of the piece to move and the coordinates of where to move it.
@@ -303,7 +334,7 @@ public class KingsTableProgram extends Application {
         hboxBOTTOM.setPadding(new Insets(25, 10, 25, 20));// top,right,bottom,left
         // hboxBOTTOM.setStyle("-fx-background-color: #D3D3D3;"); //for visual testing
         Text highScore = new Text("High Score");
-        Text timer = new Text("Timer");
+        Text timer = new Text("Timer:");
         Text userScore = new Text("Score");
         Region region1 = new Region(); // spacer
         HBox.setHgrow(region1, Priority.ALWAYS);
@@ -314,11 +345,14 @@ public class KingsTableProgram extends Application {
         highScore.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
         timer.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
         timer.setFill(KingsTableProgram.textColor);
-        timer.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 30));
+        timer.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
+        timeLabel.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
+        timeLabel.setTextFill(KingsTableProgram.textColor);
+        timeLabel.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
         userScore.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
         userScore.setFill(KingsTableProgram.textColor);
         userScore.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
-        hboxBOTTOM.getChildren().addAll(highScore, region1, timer, region2, userScore);
+        hboxBOTTOM.getChildren().addAll(highScore, region1, timer, timeLabel, region2, userScore);
         gameBorder.setBottom(hboxBOTTOM);
 
         // Show Game ------------
