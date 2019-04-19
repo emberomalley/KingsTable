@@ -2,6 +2,10 @@
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+
 import static javafx.application.Application.launch;
 
 import java.text.DateFormat;
