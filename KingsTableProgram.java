@@ -113,8 +113,8 @@ public class KingsTableProgram extends Application {
         menuTitle.setFont(new Font(textFont, 80));
         menuTitle.setFill(Color.ORANGERED);
         menuTitle.setStroke(Color.RED);
-        button1Player.setOnAction(clickToGame -> primaryStage.setScene(game));//click button go to Game screen for now
-        button2Player.setOnAction(clickToGame -> primaryStage.setScene(game));//click button go to Game screen for now
+        button1Player.setOnAction(clickToSinglePlayerGame -> primaryStage.setScene(game));//click button go to Game screen for now
+        button2Player.setOnAction(clickTo2PlayerGame -> primaryStage.setScene(game));//click button go to Game screen for now
         buttonHelp.setOnAction(clickToHelpScreen -> primaryStage.setScene(help));//click button go to Help screen
         VBox layout1 = new VBox(20);
         layout1.getChildren().addAll(button1Player, button2Player, buttonHelp, menuTitle);
@@ -235,6 +235,7 @@ public class KingsTableProgram extends Application {
 
         Text gameTitle = new Text("King's Table");
         buttonMenu.setOnAction(event -> primaryStage.setScene(menu));//click button and go back to menu screen
+
         VBox layout3 = new VBox(20);
         layout3.getChildren().addAll(buttonMenu);
         ////
