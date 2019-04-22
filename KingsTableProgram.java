@@ -5,12 +5,9 @@ import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-
 import static javafx.application.Application.launch;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -54,7 +51,6 @@ public class KingsTableProgram extends Application {
     public static Node selected;
     public static int boardSize = board.getSize(); // always Odd# x Odd#, usually 11x11 or 13x13
     public static int tileSize = board.getTileSize(); // px size of the grid boxes
-
     private Group tileGroup = new Group();
     private Group pieceGroup = new Group();
     public static Color regSquareColor = Color.WHITE; // default colors
@@ -72,6 +68,8 @@ public class KingsTableProgram extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        //Two player variable.
+        boolean twoPlayer = false;
 
         // Creates all screens
         MenuScreen.display(primaryStage);
@@ -95,20 +93,20 @@ public class KingsTableProgram extends Application {
         Label timeLabel = new Label();
         DateFormat timeFormat = new SimpleDateFormat("mm:ss");
         final Timeline timeline = new Timeline(
-        		new KeyFrame(
-        				Duration.seconds(1),
-        				event -> {
-        					long currentTime = System.currentTimeMillis();// stores system time into the currentTime variable
-        					final long diff = currentTime - startTime ;
-        		            if ( diff <= 0 ) {
-        		            timeLabel.setText( "00:00" );
-        		                timeLabel.setText( timeFormat.format( 0 ) );
-        		            } else {
-        		                timeLabel.setText( timeFormat.format( diff ) );
-        		            }
-        				}));
-		timeline.setCycleCount(Timeline.INDEFINITE);
-		timeline.play();
+                new KeyFrame(
+                        Duration.seconds(1),
+                        event -> {
+                            long currentTime = System.currentTimeMillis();// stores system time into the currentTime variable
+                            final long diff = currentTime - startTime;
+                            if (diff <= 0) {
+                                timeLabel.setText("00:00");
+                                timeLabel.setText(timeFormat.format(0));
+                            } else {
+                                timeLabel.setText(timeFormat.format(diff));
+                            }
+                        }));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
 
         // Background Image--------------
         StackPane gameBackgroundImgContainer = new StackPane();
@@ -199,7 +197,8 @@ public class KingsTableProgram extends Application {
                         //movePiece function verifies the move and updates board state.
                         if (KingsTableProgram.board.movePiece(GridPane.getRowIndex(selected), GridPane.getColumnIndex(selected), Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]))) {
                             System.out.println("Piece " + KingsTableProgram.board.getPieceType(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1])) + " moved from (" + GridPane.getRowIndex(selected) + "," + GridPane.getColumnIndex(selected) + ") to (" + coordinates[0] + "," + coordinates[1] + ").");
-
+                            KingsTableProgram.board.moves++;
+                            
                             //This stuff updates the display.
                             //if Piece is King
                             if (KingsTableProgram.board.getPieceType(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1])) == 3) {
@@ -222,17 +221,36 @@ public class KingsTableProgram extends Application {
                             selected = null;
 
                             //Check captures.
+                            int count = 0;
                             if (KingsTableProgram.board.checkCapture(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]), "right")) {
                                 gridPaneGAME.getChildren().remove(getPieceAtPosition(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]) + 1, gridPaneGAME));
+                                KingsTableProgram.board.score += 10;
+                                count++;
                             }
                             if (KingsTableProgram.board.checkCapture(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]), "left")) {
                                 gridPaneGAME.getChildren().remove(getPieceAtPosition(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]) - 1, gridPaneGAME));
+                                KingsTableProgram.board.score += 10;
+                                count++;
                             }
                             if (KingsTableProgram.board.checkCapture(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]), "down")) {
                                 gridPaneGAME.getChildren().remove(getPieceAtPosition(Integer.parseInt(coordinates[0]) + 1, Integer.parseInt(coordinates[1]), gridPaneGAME));
+                                KingsTableProgram.board.score += 10;
+                                count++;
                             }
                             if (KingsTableProgram.board.checkCapture(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]), "up")) {
                                 gridPaneGAME.getChildren().remove(getPieceAtPosition(Integer.parseInt(coordinates[0]) - 1, Integer.parseInt(coordinates[1]), gridPaneGAME));
+                                KingsTableProgram.board.score += 10;
+                                count++;
+                            }
+
+                            //Additional points for multiple captures.
+                            if (count == 2) {
+                                KingsTableProgram.board.score += 5;
+                                System.out.println("Double Capture! +5 points.");
+                            }
+                            else if (count == 3){
+                                KingsTableProgram.board.score += 10;
+                                System.out.println("Triple Capture!! +10 points.");
                             }
 
                             //Check King Capture
@@ -245,7 +263,7 @@ public class KingsTableProgram extends Application {
                             }
 
                             //Check if the user is playing the AI here.
-                            if (true){
+                            if (true) {
                                 //This returns the coordinates of the piece to move and the coordinates of where to move it.
                                 List<Integer> coords = KingsTableProgram.board.moveAttacker();
                                 if (coords != null) {
