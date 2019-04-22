@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 import java.lang.Math;
 import java.util.Arrays;
@@ -11,7 +12,8 @@ public class Board {
     private int tileSize = 45; //Size of tile of the board in pixels.
     //boardState: 0 - Empty, 1 - Defender, 2 - Attacker, 3 - King.
     public int[][] boardState = new int[size][size]; //Change to be an array of pieces later/
-
+    public int score = 0;
+    public int moves = 0;
     private int selectedTileX = -1; //Selected tile of the board.
     private int selectedTileY = -1;
 
@@ -91,7 +93,7 @@ public class Board {
             if (y + 2 >= size) {
                 return false;
             } else if (Math.abs(boardState[x][y] - boardState[x][y + 1]) == 1 && Math.abs(boardState[x][y] - boardState[x][y + 2]) != 1 && boardState[x][y + 1] != 0 && boardState[x][y + 1] != 3 && boardState[x][y + 2] != 0) {
-                System.out.println("Piece " + boardState[x][y + 1] + " captured from (" + x + "," + (y + 1) + ").");
+                System.out.println("Piece " + boardState[x][y + 1] + " captured from (" + x + "," + (y + 1) + "). +10 points.");
                 boardState[x][y + 1] = 0;
                 return true;
             }
@@ -99,7 +101,7 @@ public class Board {
             if (y - 2 < 0) {
                 return false;
             } else if (Math.abs(boardState[x][y] - boardState[x][y - 1]) == 1 && Math.abs(boardState[x][y] - boardState[x][y - 2]) != 1 && boardState[x][y - 1] != 0 && boardState[x][y - 1] != 3 && boardState[x][y - 2] != 0) {
-                System.out.println("Piece " + boardState[x][y - 1] + " captured from (" + x + "," + (y - 1) + ").");
+                System.out.println("Piece " + boardState[x][y - 1] + " captured from (" + x + "," + (y - 1) + "). +10 points.");
                 boardState[x][y - 1] = 0;
                 return true;
             }
@@ -107,7 +109,7 @@ public class Board {
             if (x + 2 >= size) {
                 return false;
             } else if (Math.abs(boardState[x][y] - boardState[x + 1][y]) == 1 && Math.abs(boardState[x + 2][y] - boardState[x][y]) != 1 && boardState[x + 1][y] != 0 && boardState[x + 1][y] != 3 && boardState[x + 2][y] != 0) {
-                System.out.println("Piece " + boardState[x + 1][y] + " captured from (" + (x + 1) + "," + y + ").");
+                System.out.println("Piece " + boardState[x + 1][y] + " captured from (" + (x + 1) + "," + y + "). +10 points.");
                 boardState[x + 1][y] = 0;
                 return true;
             }
@@ -115,7 +117,7 @@ public class Board {
             if (x - 2 < 0) {
                 return false;
             } else if (Math.abs(boardState[x][y] - boardState[x - 1][y]) == 1 && Math.abs(boardState[x - 2][y] - boardState[x][y]) != 1 && boardState[x - 1][y] != 0 && boardState[x - 1][y] != 3 && boardState[x - 2][y] != 0) {
-                System.out.println("Piece " + boardState[x - 1][y] + " captured from (" + (x - 1) + "," + y + ").");
+                System.out.println("Piece " + boardState[x - 1][y] + " captured from (" + (x - 1) + "," + y + "). +10 points.");
                 boardState[x - 1][y] = 0;
                 return true;
             }
@@ -175,6 +177,71 @@ public class Board {
         return true;
     }
 
+    //Randomly pick an enemy piece and move it.
+    public List moveAttacker() {
+        //This will be useful for AI.
+        List<List<Integer>> enemyPositions = new ArrayList<List<Integer>>();
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (boardState[i][j] == 2) {
+                    List<Integer> t = Arrays.asList(i, j);
+                    enemyPositions.add(t);
+                }
+            }
+        }
+
+        List<Integer> returnCoords = Arrays.asList(0, 0, 0, 0);
+        // Pick a random attacker. 
+        while (enemyPositions.size() > 0) {
+            Random rand = new Random();
+            int index = rand.nextInt(enemyPositions.size());
+            List<Integer> coords = enemyPositions.get(index);
+            int i = coords.get(0);
+            int j = coords.get(1);
+            returnCoords.set(0, i);
+            returnCoords.set(1, j);
+
+            boolean movableUp = (i > 0 && boardState[i - 1][j] == 0);
+            boolean movableDown = (i < size - 1 && boardState[i + 1][j] == 0);
+            boolean movableRight = (j < size - 1 && boardState[i][j + 1] == 0);
+            boolean movableLeft = (j > 0 && boardState[i][j - 1] == 0);
+            boolean movable = movableUp || movableDown || movableRight || movableLeft;
+
+            if (!movable) {
+                enemyPositions.remove(coords);
+            } else {
+                //Choose a direction to move the piece.
+                ArrayList<Integer> directions = new ArrayList<Integer>(Arrays.asList(0, 1, 2, 3));
+                while (directions.size() > 0) {
+                    Random r = new Random();
+                    int dIndex = rand.nextInt(directions.size());
+                    int dChoice = directions.get(dIndex);
+
+                    if (dChoice == 0 && movableLeft) {
+                        returnCoords.set(2, i);
+                        returnCoords.set(3, j - 1);
+                    } else if (dChoice == 1 && movableRight) {
+                        returnCoords.set(2, i);
+                        returnCoords.set(3, j + 1);
+                    } else if (dChoice == 2 && movableDown) {
+                        returnCoords.set(2, i + 1);
+                        returnCoords.set(3, j);
+                    } else if (dChoice == 3 && movableUp) {
+                        returnCoords.set(2, i - 1);
+                        returnCoords.set(3, j);
+                    }
+                    if (movePiece(i, j, returnCoords.get(2), returnCoords.get(3))) {
+                        return returnCoords;
+                    } else {
+                        enemyPositions.remove(coords);
+                    }
+                    directions.remove(dIndex);
+                }
+            }
+        }
+        return null;
+    }
+
     //Getters and Setters.
     //Set and get the size of the board.
     public void setSize(int size) {
@@ -213,76 +280,8 @@ public class Board {
             }
             System.out.println();
         }
-    }
-
-    //Randomly pick an enemy piece and move it.
-    public List moveAttacker() {
-        //This will be useful for AI.
-        List<List<Integer>> enemyPositions = new ArrayList<List<Integer>>();
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                if (boardState[i][j] == 2) {
-                    List<Integer> t = Arrays.asList(i, j);
-                    enemyPositions.add(t);
-                }
-            }
-        }
-
-        List<Integer> returnCoords = Arrays.asList(0, 0, 0, 0);
-        // Pick a random attacker. 
-        while (enemyPositions.size() > 0) {
-            Random rand = new Random();
-            int index = rand.nextInt(enemyPositions.size());
-            List<Integer> coords = enemyPositions.get(index);
-            int i = coords.get(0);
-            int j = coords.get(1);
-            returnCoords.set(0, i);
-            returnCoords.set(1, j);
-
-            boolean movableUp = (i > 0 && boardState[i - 1][j] == 0);
-            boolean movableDown = (i < size - 1 && boardState[i + 1][j] == 0);
-            boolean movableRight = (j < size - 1 && boardState[i][j + 1] == 0);
-            boolean movableLeft = (j > 0 && boardState[i][j - 1] == 0);
-            boolean movable = movableUp || movableDown || movableRight || movableLeft;
-
-            if (!movable) {
-                enemyPositions.remove(coords);
-            } 
-            else {
-                //Choose a direction to move the piece.
-                ArrayList<Integer> directions = new ArrayList<Integer>(Arrays.asList(0, 1, 2, 3));
-                while (directions.size() > 0) {
-                    Random r = new Random();
-                    int dIndex = rand.nextInt(directions.size());
-                    int dChoice = directions.get(dIndex);
-
-                    if (dChoice == 0 && movableLeft) {
-                        returnCoords.set(2, i);
-                        returnCoords.set(3, j - 1);
-                    }
-                    else if (dChoice == 1 && movableRight) {
-                        returnCoords.set(2, i);
-                        returnCoords.set(3, j + 1);
-                    }
-                    else if (dChoice == 2 && movableDown) {
-                        returnCoords.set(2, i + 1);
-                        returnCoords.set(3, j);
-                    }
-                    else if (dChoice == 3 && movableUp) {
-                        returnCoords.set(2, i - 1);
-                        returnCoords.set(3, j);
-                    }
-                    if (movePiece(i,j,returnCoords.get(2),returnCoords.get(3))){
-                        return returnCoords;
-                    }
-                    else{
-                        enemyPositions.remove(coords);
-                    }
-                    directions.remove(dIndex);
-                }
-            }
-        }
-        return null;
+        System.out.println("Score: "+ score +", Moves: "+ moves);
+        System.out.println();
     }
 
     public void tests() {
