@@ -25,7 +25,10 @@ import javafx.util.Duration;
 
 public class MenuScreen {
 	// Menu Scene
+    public final static long startTime = System.currentTimeMillis();
+
 	public static void display(Stage primaryStage) {
+
 		 BorderPane menuBorder = new BorderPane();
 	        menuBorder.setPadding(new Insets(15, 520, 100, 150));
 	        // Screen Size
@@ -76,7 +79,7 @@ public class MenuScreen {
 	        menuTitle.setStroke(Color.RED);
 	        button1Player.setOnAction(clickToGame -> {
 	        	primaryStage.setScene(Config.game);//click button go to Game screen for now
-	           
+
 	        });
 	        	
 	        button2Player.setOnAction(clickToGame -> primaryStage.setScene(Config.game));//click button go to Game screen for now
