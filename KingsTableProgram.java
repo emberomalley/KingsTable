@@ -2,6 +2,8 @@
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.beans.property.LongProperty;
+import javafx.beans.property.SimpleLongProperty;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -57,6 +59,7 @@ public class KingsTableProgram extends Application {
     public static Color kingSquareColor = Color.GRAY;
     public static Color textColor = Color.DARKGOLDENROD;
     public static String textFont = "Rockwell";
+    private LongProperty playerScore = new SimpleLongProperty(0);
 
     public static void game() {
 
@@ -251,8 +254,9 @@ public class KingsTableProgram extends Application {
                             else if (count == 3){
                                 KingsTableProgram.board.score += 10;
                                 System.out.println("Triple Capture!! +10 points.");
+                                
                             }
-
+                           
                             //Check King Capture
                             if (KingsTableProgram.board.checkKingCapture(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]))) {
                                 //Attackers win.
