@@ -19,7 +19,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
+
 
 public class MenuScreen {
 	// Menu Scene
@@ -63,7 +65,7 @@ public class MenuScreen {
 	        buttonHelp.setStyle("-fx-background-color: #B8860B");
 	        buttonHelp.setOnMouseEntered(highlightOnHelpScreen -> {
 	            // highlight
-	            buttonHelp.setStyle("-fx-background-color: #FFD700");
+	            buttonHelp.setStyle("-fx-ba ckground-color: #FFD700");
 	        });
 	        buttonHelp.setOnMouseExited(highlightOff -> {
 	            buttonHelp.setStyle("-fx-background-color: #B8860B");
@@ -74,7 +76,7 @@ public class MenuScreen {
 	        menuTitle.setStroke(Color.RED);
 	        button1Player.setOnAction(clickToGame -> {
 	        	primaryStage.setScene(Config.game);//click button go to Game screen for now
-	        
+	           
 	        });
 	        	
 	        button2Player.setOnAction(clickToGame -> primaryStage.setScene(Config.game));//click button go to Game screen for now
