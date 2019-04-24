@@ -48,6 +48,9 @@ import javafx.scene.control.Label;
 import javafx.scene.text.FontPosture;
 import java.util.List;
 
+import javax.management.timer.Timer;
+import javax.swing.JLabel;
+
 public class KingsTableProgram extends Application {
 
     public static Board board = new Board();
@@ -61,7 +64,9 @@ public class KingsTableProgram extends Application {
     public static Color textColor = Color.DARKGOLDENROD;
     public static String textFont = "Rockwell";
     private LongProperty playerScore = new SimpleLongProperty(0);
+    //public JLabel userScore = new JLabel("Score " + KingsTableProgram.board.score);
 
+    
     public static void game() {
 
     }
@@ -73,7 +78,7 @@ public class KingsTableProgram extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         //Two player variable.
-        boolean twoPlayer = false;
+        boolean gameMode = false;
 
         // Creates all screens
         MenuScreen.display(primaryStage);
@@ -108,7 +113,7 @@ public class KingsTableProgram extends Application {
                             } else {
                                 timeLabel.setText(timeFormat.format(diff));
                             }
-                        }));
+        }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
 
@@ -231,7 +236,7 @@ public class KingsTableProgram extends Application {
                                 gridPaneGAME.getChildren().remove(getPieceAtPosition(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]) + 1, gridPaneGAME));
                                 KingsTableProgram.board.score += 10;
                                 //KingsTableProgram.board.playerScore.textProperty().bind(Bindings.createStringBinding(()->("Score: "+ KingsTableProgram.board.score)));
-                                count++;
+                                count++;                                
                             }
                             if (KingsTableProgram.board.checkCapture(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]), "left")) {
                                 gridPaneGAME.getChildren().remove(getPieceAtPosition(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]) - 1, gridPaneGAME));
@@ -364,7 +369,8 @@ public class KingsTableProgram extends Application {
         // hboxBOTTOM.setStyle("-fx-background-color: #D3D3D3;"); //for visual testing
         Text highScore = new Text("High Score");
         Text timer = new Text("Timer:");
-        Text userScore = new Text("Score " + KingsTableProgram.board.score);
+        Text userScore = new Text("Score: " + KingsTableProgram.board.score);
+        int currentScore = KingsTableProgram.board.getScore();
         Region region1 = new Region(); // spacer
         HBox.setHgrow(region1, Priority.ALWAYS);
         Region region2 = new Region();
@@ -383,12 +389,17 @@ public class KingsTableProgram extends Application {
         userScore.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
         hboxBOTTOM.getChildren().addAll(highScore, region1, timer, timeLabel, region2, userScore);
         gameBorder.setBottom(hboxBOTTOM);
-
+        
         // Show Game ------------
         // Draw Pieces
         Image dpImage = new Image("defenderPiece.jpg");
         Image apImage = new Image("attackerPiece.jpg");
-
+        
+        if (KingsTableProgram.board.score > currentScore ) {
+        	currentScore = KingsTableProgram.board.getScore();
+        	userScore = new Text("Score: " + KingsTableProgram.board.score);
+        }
+        
         for (int i = 0; i < KingsTableProgram.boardSize; i++) {
             for (int j = 0; j < KingsTableProgram.boardSize; j++) {
                 if (KingsTableProgram.board.boardState[i][j] != 0) {
@@ -453,4 +464,6 @@ public class KingsTableProgram extends Application {
         }
         return piece;
     }
+
 }
+
