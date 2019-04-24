@@ -2,6 +2,7 @@
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.geometry.HPos;
@@ -222,12 +223,14 @@ public class KingsTableProgram extends Application {
                             gridPaneGAME.getChildren().add(selected);
                             selected.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK));
                             selected = null;
+                            
 
                             //Check captures.
                             int count = 0;
                             if (KingsTableProgram.board.checkCapture(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]), "right")) {
                                 gridPaneGAME.getChildren().remove(getPieceAtPosition(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]) + 1, gridPaneGAME));
                                 KingsTableProgram.board.score += 10;
+                                //KingsTableProgram.board.playerScore.textProperty().bind(Bindings.createStringBinding(()->("Score: "+ KingsTableProgram.board.score)));
                                 count++;
                             }
                             if (KingsTableProgram.board.checkCapture(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]), "left")) {
@@ -361,7 +364,7 @@ public class KingsTableProgram extends Application {
         // hboxBOTTOM.setStyle("-fx-background-color: #D3D3D3;"); //for visual testing
         Text highScore = new Text("High Score");
         Text timer = new Text("Timer:");
-        Text userScore = new Text("Score");
+        Text userScore = new Text("Score " + KingsTableProgram.board.score);
         Region region1 = new Region(); // spacer
         HBox.setHgrow(region1, Priority.ALWAYS);
         Region region2 = new Region();

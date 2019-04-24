@@ -5,6 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import javafx.beans.property.LongProperty;
+import javafx.beans.property.SimpleLongProperty;
+
 public class Board {
 
     //Fields.
@@ -14,6 +17,8 @@ public class Board {
     public int[][] boardState = new int[size][size]; //Change to be an array of pieces later/
     public int score = 0;
     public int moves = 0;
+    public LongProperty playerScore = new SimpleLongProperty(0);
+    //private LongProperty playerScore = new SimpleLongProperty(0);
     private int selectedTileX = -1; //Selected tile of the board.
     private int selectedTileY = -1;
 
@@ -272,6 +277,11 @@ public class Board {
     public int getPieceType(int i, int j) {
         return boardState[i][j];
     }
+    
+    public int getScore() {
+        return this.score;
+    }  
+    
 
     public void printBoard() {
         for (int i = 0; i < size; i++) {
