@@ -237,35 +237,219 @@ public class KingsTableProgram extends Application {
 
                             //Check captures.
                             int count = 0;
+                            //TODO1
                             if (KingsTableProgram.board.checkCapture(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]), "right")) {
                                 gridPaneGAME.getChildren().remove(getPieceAtPosition(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]) + 1, gridPaneGAME));
+                                
                                 KingsTableProgram.board.score += 10;
-                                //KingsTableProgram.board.playerScore.textProperty().bind(Bindings.createStringBinding(()->("Score: "+ KingsTableProgram.board.score)));
+                                //
+                                HBox hboxBOTTOM = new HBox();
+                                hboxBOTTOM.setAlignment(Pos.BOTTOM_CENTER);
+                                hboxBOTTOM.setPadding(new Insets(25, 10, 25, 20));// top,right,bottom,left
+                                // hboxBOTTOM.setStyle("-fx-background-color: #D3D3D3;"); //for visual testing
+                                Text highScore = new Text("High Score");
+                                Text timer = new Text("Timer:");
+                                //TODO2
+                                Text userScore = new Text("Score: " + KingsTableProgram.board.score);
+                                int currentScore = KingsTableProgram.board.getScore();
+                                Region region1 = new Region(); // spacer
+                                HBox.setHgrow(region1, Priority.ALWAYS);
+                                Region region2 = new Region();
+                                HBox.setHgrow(region2, Priority.ALWAYS);
+                                highScore.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK)); // Radius, offsetX, offsetY, color;
+                                highScore.setFill(KingsTableProgram.textColor);
+                                highScore.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
+                                timer.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
+                                timer.setFill(KingsTableProgram.textColor);
+                                timer.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
+                                timeLabel.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
+                                timeLabel.setTextFill(KingsTableProgram.textColor);
+                                timeLabel.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
+                                userScore.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
+                                userScore.setFill(KingsTableProgram.textColor);
+                                userScore.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
+                                //THIS IS IT! THE UPDATE UI
+                                hboxBOTTOM.getChildren().addAll(highScore, region1, timer, timeLabel, region2, userScore);
+                                gameBorder.setBottom(hboxBOTTOM);
+                                System.out.println("DONE\n\n\n");
+
                                 count++;   
                             }
                             if (KingsTableProgram.board.checkCapture(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]), "left")) {
                                 gridPaneGAME.getChildren().remove(getPieceAtPosition(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]) - 1, gridPaneGAME));
                                 KingsTableProgram.board.score += 10;
+                                System.out.println("CAP2");
+                                System.out.println("CAP3");
+                                
+                                HBox hboxBOTTOM = new HBox();
+                                hboxBOTTOM.setAlignment(Pos.BOTTOM_CENTER);
+                                hboxBOTTOM.setPadding(new Insets(25, 10, 25, 20));// top,right,bottom,left
+                                // hboxBOTTOM.setStyle("-fx-background-color: #D3D3D3;"); //for visual testing
+                                Text highScore = new Text("High Score");
+                                Text timer = new Text("Timer:");
+                                //TODO2
+                                Text userScore = new Text("Score: " + KingsTableProgram.board.score);
+                                int currentScore = KingsTableProgram.board.getScore();
+                                Region region1 = new Region(); // spacer
+                                HBox.setHgrow(region1, Priority.ALWAYS);
+                                Region region2 = new Region();
+                                HBox.setHgrow(region2, Priority.ALWAYS);
+                                highScore.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK)); // Radius, offsetX, offsetY, color;
+                                highScore.setFill(KingsTableProgram.textColor);
+                                highScore.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
+                                timer.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
+                                timer.setFill(KingsTableProgram.textColor);
+                                timer.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
+                                timeLabel.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
+                                timeLabel.setTextFill(KingsTableProgram.textColor);
+                                timeLabel.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
+                                userScore.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
+                                userScore.setFill(KingsTableProgram.textColor);
+                                userScore.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
+                                //THIS IS IT! THE UPDATE UI
+                                hboxBOTTOM.getChildren().addAll(highScore, region1, timer, timeLabel, region2, userScore);
+                                gameBorder.setBottom(hboxBOTTOM);
                                 count++;
                             }
                             if (KingsTableProgram.board.checkCapture(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]), "down")) {
                                 gridPaneGAME.getChildren().remove(getPieceAtPosition(Integer.parseInt(coordinates[0]) + 1, Integer.parseInt(coordinates[1]), gridPaneGAME));
                                 KingsTableProgram.board.score += 10;
+                                System.out.println("CAP3");
+                                System.out.println("CAP3");
+                                
+                                HBox hboxBOTTOM = new HBox();
+                                hboxBOTTOM.setAlignment(Pos.BOTTOM_CENTER);
+                                hboxBOTTOM.setPadding(new Insets(25, 10, 25, 20));// top,right,bottom,left
+                                // hboxBOTTOM.setStyle("-fx-background-color: #D3D3D3;"); //for visual testing
+                                Text highScore = new Text("High Score");
+                                Text timer = new Text("Timer:");
+                                //TODO2
+                                Text userScore = new Text("Score: " + KingsTableProgram.board.score);
+                                int currentScore = KingsTableProgram.board.getScore();
+                                Region region1 = new Region(); // spacer
+                                HBox.setHgrow(region1, Priority.ALWAYS);
+                                Region region2 = new Region();
+                                HBox.setHgrow(region2, Priority.ALWAYS);
+                                highScore.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK)); // Radius, offsetX, offsetY, color;
+                                highScore.setFill(KingsTableProgram.textColor);
+                                highScore.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
+                                timer.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
+                                timer.setFill(KingsTableProgram.textColor);
+                                timer.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
+                                timeLabel.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
+                                timeLabel.setTextFill(KingsTableProgram.textColor);
+                                timeLabel.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
+                                userScore.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
+                                userScore.setFill(KingsTableProgram.textColor);
+                                userScore.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
+                                //THIS IS IT! THE UPDATE UI
+                                hboxBOTTOM.getChildren().addAll(highScore, region1, timer, timeLabel, region2, userScore);
+                                gameBorder.setBottom(hboxBOTTOM);
                                 count++;
                             }
                             if (KingsTableProgram.board.checkCapture(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]), "up")) {
                                 gridPaneGAME.getChildren().remove(getPieceAtPosition(Integer.parseInt(coordinates[0]) - 1, Integer.parseInt(coordinates[1]), gridPaneGAME));
                                 KingsTableProgram.board.score += 10;
+                                System.out.println("CAP3");
+                                
+                                HBox hboxBOTTOM = new HBox();
+                                hboxBOTTOM.setAlignment(Pos.BOTTOM_CENTER);
+                                hboxBOTTOM.setPadding(new Insets(25, 10, 25, 20));// top,right,bottom,left
+                                // hboxBOTTOM.setStyle("-fx-background-color: #D3D3D3;"); //for visual testing
+                                Text highScore = new Text("High Score");
+                                Text timer = new Text("Timer:");
+                                //TODO2
+                                Text userScore = new Text("Score: " + KingsTableProgram.board.score);
+                                int currentScore = KingsTableProgram.board.getScore();
+                                Region region1 = new Region(); // spacer
+                                HBox.setHgrow(region1, Priority.ALWAYS);
+                                Region region2 = new Region();
+                                HBox.setHgrow(region2, Priority.ALWAYS);
+                                highScore.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK)); // Radius, offsetX, offsetY, color;
+                                highScore.setFill(KingsTableProgram.textColor);
+                                highScore.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
+                                timer.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
+                                timer.setFill(KingsTableProgram.textColor);
+                                timer.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
+                                timeLabel.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
+                                timeLabel.setTextFill(KingsTableProgram.textColor);
+                                timeLabel.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
+                                userScore.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
+                                userScore.setFill(KingsTableProgram.textColor);
+                                userScore.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
+                                //THIS IS IT! THE UPDATE UI
+                                hboxBOTTOM.getChildren().addAll(highScore, region1, timer, timeLabel, region2, userScore);
+                                gameBorder.setBottom(hboxBOTTOM);
                                 count++;
                             }
 
                             //Additional points for multiple captures.
                             if (count == 2) {
                                 KingsTableProgram.board.score += 5;
+                                System.out.println("CAP3");
+                                
+                                HBox hboxBOTTOM = new HBox();
+                                hboxBOTTOM.setAlignment(Pos.BOTTOM_CENTER);
+                                hboxBOTTOM.setPadding(new Insets(25, 10, 25, 20));// top,right,bottom,left
+                                // hboxBOTTOM.setStyle("-fx-background-color: #D3D3D3;"); //for visual testing
+                                Text highScore = new Text("High Score");
+                                Text timer = new Text("Timer:");
+                                //TODO2
+                                Text userScore = new Text("Score: " + KingsTableProgram.board.score);
+                                int currentScore = KingsTableProgram.board.getScore();
+                                Region region1 = new Region(); // spacer
+                                HBox.setHgrow(region1, Priority.ALWAYS);
+                                Region region2 = new Region();
+                                HBox.setHgrow(region2, Priority.ALWAYS);
+                                highScore.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK)); // Radius, offsetX, offsetY, color;
+                                highScore.setFill(KingsTableProgram.textColor);
+                                highScore.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
+                                timer.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
+                                timer.setFill(KingsTableProgram.textColor);
+                                timer.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
+                                timeLabel.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
+                                timeLabel.setTextFill(KingsTableProgram.textColor);
+                                timeLabel.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
+                                userScore.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
+                                userScore.setFill(KingsTableProgram.textColor);
+                                userScore.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
+                                //THIS IS IT! THE UPDATE UI
+                                hboxBOTTOM.getChildren().addAll(highScore, region1, timer, timeLabel, region2, userScore);
+                                gameBorder.setBottom(hboxBOTTOM);
                                 System.out.println("Double Capture! +5 points.");
                             }
                             else if (count == 3){
                                 KingsTableProgram.board.score += 10;
+                                System.out.println("CAP3");
+                                
+                                HBox hboxBOTTOM = new HBox();
+                                hboxBOTTOM.setAlignment(Pos.BOTTOM_CENTER);
+                                hboxBOTTOM.setPadding(new Insets(25, 10, 25, 20));// top,right,bottom,left
+                                // hboxBOTTOM.setStyle("-fx-background-color: #D3D3D3;"); //for visual testing
+                                Text highScore = new Text("High Score");
+                                Text timer = new Text("Timer:");
+                                //TODO2
+                                Text userScore = new Text("Score: " + KingsTableProgram.board.score);
+                                int currentScore = KingsTableProgram.board.getScore();
+                                Region region1 = new Region(); // spacer
+                                HBox.setHgrow(region1, Priority.ALWAYS);
+                                Region region2 = new Region();
+                                HBox.setHgrow(region2, Priority.ALWAYS);
+                                highScore.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK)); // Radius, offsetX, offsetY, color;
+                                highScore.setFill(KingsTableProgram.textColor);
+                                highScore.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
+                                timer.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
+                                timer.setFill(KingsTableProgram.textColor);
+                                timer.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
+                                timeLabel.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
+                                timeLabel.setTextFill(KingsTableProgram.textColor);
+                                timeLabel.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
+                                userScore.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
+                                userScore.setFill(KingsTableProgram.textColor);
+                                userScore.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
+                                //THIS IS IT! THE UPDATE UI
+                                hboxBOTTOM.getChildren().addAll(highScore, region1, timer, timeLabel, region2, userScore);
+                                gameBorder.setBottom(hboxBOTTOM);
                                 System.out.println("Triple Capture!! +10 points.");
                                 
                             }
@@ -374,7 +558,8 @@ public class KingsTableProgram extends Application {
         // hboxBOTTOM.setStyle("-fx-background-color: #D3D3D3;"); //for visual testing
         Text highScore = new Text("High Score");
         Text timer = new Text("Timer:");
-        Label userScore = new Label("Score: " + KingsTableProgram.board.score);
+        //TODO2
+        Text userScore = new Text("Score: " + KingsTableProgram.board.score);
         int currentScore = KingsTableProgram.board.getScore();
         Region region1 = new Region(); // spacer
         HBox.setHgrow(region1, Priority.ALWAYS);
@@ -390,8 +575,9 @@ public class KingsTableProgram extends Application {
         timeLabel.setTextFill(KingsTableProgram.textColor);
         timeLabel.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
         userScore.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
-        userScore.setTextFill(KingsTableProgram.textColor);
+        userScore.setFill(KingsTableProgram.textColor);
         userScore.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
+        //THIS IS IT! THE UPDATE UI
         hboxBOTTOM.getChildren().addAll(highScore, region1, timer, timeLabel, region2, userScore);
         gameBorder.setBottom(hboxBOTTOM);
         
@@ -399,10 +585,13 @@ public class KingsTableProgram extends Application {
         // Draw Pieces
         Image dpImage = new Image("defenderPiece.jpg");
         Image apImage = new Image("attackerPiece.jpg");
-        
-        if (KingsTableProgram.board.score > currentScore ) { // logic for incrementing score in GUI
+        System.out.println("Before "+ KingsTableProgram.board.score +" "+ currentScore);
+        if (KingsTableProgram.board.score > currentScore ) { 
+        	System.out.println("update score");
+        	// logic for incrementing score in GUI
         	currentScore = KingsTableProgram.board.getScore();
-        	userScore = new Label("Score: " + KingsTableProgram.board.score);
+        	userScore = new Text("Score: " + KingsTableProgram.board.score);
+        	hboxBOTTOM.getChildren().addAll(highScore, region1, timer, timeLabel, region2, userScore);
         }
         
         for (int i = 0; i < KingsTableProgram.boardSize; i++) {
