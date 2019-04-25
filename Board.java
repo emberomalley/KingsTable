@@ -18,8 +18,6 @@ public class Board {
     public int[][] boardState = new int[size][size]; //Change to be an array of pieces later/
     public int score = 0;
     public int moves = 0;
-    //public LongProperty playerScore = new SimpleLongProperty(0);
-    private LongProperty playerScore = new SimpleLongProperty(0);
     private int selectedTileX = -1; //Selected tile of the board.
     private int selectedTileY = -1;
 
