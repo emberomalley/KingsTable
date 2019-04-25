@@ -54,6 +54,7 @@ import javax.swing.JLabel;
 public class KingsTableProgram extends Application {
 
     public static Board board = new Board();
+   // public static gameScreen gameScreen = new gameScreen();
     public static Node selected;
     public static int boardSize = board.getSize(); // always Odd# x Odd#, usually 11x11 or 13x13
     public static int tileSize = board.getTileSize(); // px size of the grid boxes
@@ -68,6 +69,10 @@ public class KingsTableProgram extends Application {
 
     
     public static void game() {
+
+    }
+    
+    public static void gameScreen() {
 
     }
 
@@ -236,7 +241,7 @@ public class KingsTableProgram extends Application {
                                 gridPaneGAME.getChildren().remove(getPieceAtPosition(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]) + 1, gridPaneGAME));
                                 KingsTableProgram.board.score += 10;
                                 //KingsTableProgram.board.playerScore.textProperty().bind(Bindings.createStringBinding(()->("Score: "+ KingsTableProgram.board.score)));
-                                count++;                                
+                                count++;   
                             }
                             if (KingsTableProgram.board.checkCapture(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]), "left")) {
                                 gridPaneGAME.getChildren().remove(getPieceAtPosition(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]) - 1, gridPaneGAME));
@@ -369,7 +374,7 @@ public class KingsTableProgram extends Application {
         // hboxBOTTOM.setStyle("-fx-background-color: #D3D3D3;"); //for visual testing
         Text highScore = new Text("High Score");
         Text timer = new Text("Timer:");
-        Text userScore = new Text("Score: " + KingsTableProgram.board.score);
+        Label userScore = new Label("Score: " + KingsTableProgram.board.score);
         int currentScore = KingsTableProgram.board.getScore();
         Region region1 = new Region(); // spacer
         HBox.setHgrow(region1, Priority.ALWAYS);
@@ -385,7 +390,7 @@ public class KingsTableProgram extends Application {
         timeLabel.setTextFill(KingsTableProgram.textColor);
         timeLabel.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
         userScore.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
-        userScore.setFill(KingsTableProgram.textColor);
+        userScore.setTextFill(KingsTableProgram.textColor);
         userScore.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
         hboxBOTTOM.getChildren().addAll(highScore, region1, timer, timeLabel, region2, userScore);
         gameBorder.setBottom(hboxBOTTOM);
@@ -395,9 +400,9 @@ public class KingsTableProgram extends Application {
         Image dpImage = new Image("defenderPiece.jpg");
         Image apImage = new Image("attackerPiece.jpg");
         
-        if (KingsTableProgram.board.score > currentScore ) {
+        if (KingsTableProgram.board.score > currentScore ) { // logic for incrementing score in GUI
         	currentScore = KingsTableProgram.board.getScore();
-        	userScore = new Text("Score: " + KingsTableProgram.board.score);
+        	userScore = new Label("Score: " + KingsTableProgram.board.score);
         }
         
         for (int i = 0; i < KingsTableProgram.boardSize; i++) {

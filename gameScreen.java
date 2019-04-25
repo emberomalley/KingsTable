@@ -6,6 +6,7 @@ import java.awt.Label;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javafx.scene.Group;
 import javafx.scene.layout.BorderPane;
