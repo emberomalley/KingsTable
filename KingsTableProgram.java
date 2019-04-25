@@ -1,6 +1,8 @@
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -53,6 +55,10 @@ public class KingsTableProgram extends Application {
     public static int boardSize = board.getSize(); // always Odd# x Odd#, usually 11x11 or 13x13
     public static int tileSize = board.getTileSize(); // px size of the grid boxes
     public final long startTime = System.currentTimeMillis();
+    //private static final Integer STARTTIME = 15;
+    private Timeline timeline;
+    private Label timerLabel = new Label();
+    private IntegerProperty timeSeconds = new SimpleIntegerProperty(0);
 
     private Group tileGroup = new Group();
     private Group pieceGroup = new Group();
@@ -111,7 +117,6 @@ public class KingsTableProgram extends Application {
         DateFormat timeFormat = new SimpleDateFormat("mm:ss");
 
         final Timeline timeline = new Timeline(
-
         		new KeyFrame(
 
         				Duration.seconds(1),
@@ -132,7 +137,7 @@ public class KingsTableProgram extends Application {
 
         		                timeLabel.setText( timeFormat.format( diff ) );
 
-        		            }
+       		            }
 
         				}));
 
@@ -140,7 +145,6 @@ public class KingsTableProgram extends Application {
 
 		timeline.play();
 
-        
 
         // Background Image--------------
 
@@ -203,7 +207,6 @@ public class KingsTableProgram extends Application {
         layout3.getChildren().addAll(buttonMenu);
 
         ////
-
         gameTitle.setFill(KingsTableProgram.textColor);
 
         gameTitle.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK)); // Radius, offsetX, offsetY, color

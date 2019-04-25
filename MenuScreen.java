@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -25,23 +27,23 @@ import javafx.util.Duration;
 
 public class MenuScreen {
 	// Menu Scene
+	public static KingsTableProgram KingsTableProgram = new KingsTableProgram();
     public final static long startTime = System.currentTimeMillis();
 
-	public static void display(Stage primaryStage) {
+    public static void display(Stage primaryStage) {
 
 		 BorderPane menuBorder = new BorderPane();
 	        menuBorder.setPadding(new Insets(15, 520, 100, 150));
 	        // Screen Size
 	        int menuWidth = 1000;
 	        int menuHeight = 700;
-
 	        StackPane menuBackgroundImgContainer = new StackPane();
 	        ImageView menuBgImage = new ImageView("vikingFire.jpg");//background image
 	        menuBgImage.setFitHeight(menuHeight + 10);
 	        menuBgImage.setFitWidth(menuWidth + 10);
 	        menuBackgroundImgContainer.getChildren().addAll(menuBgImage, menuBorder);
 	        Config.menu = new Scene(menuBackgroundImgContainer, menuWidth, menuHeight);
-
+	        
 	        Button button1Player = new Button("Play 1 player"); // 1 player game button
 	         button1Player.resize(menuWidth*.05, menuHeight*.1);
 	         button1Player.setStyle("-fx-background-color: #B8860B");
@@ -79,7 +81,7 @@ public class MenuScreen {
 	        menuTitle.setStroke(Color.RED);
 	        button1Player.setOnAction(clickToGame -> {
 	        	primaryStage.setScene(Config.game);//click button go to Game screen for now
-
+	        	
 	        });
 	        	
 	        button2Player.setOnAction(clickToGame -> primaryStage.setScene(Config.game));//click button go to Game screen for now
