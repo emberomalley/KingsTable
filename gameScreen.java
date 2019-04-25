@@ -6,10 +6,12 @@ import java.awt.Label;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javafx.scene.Group;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 
 public class gameScreen {
 	
@@ -38,6 +40,7 @@ public class gameScreen {
 		kingsBoard.setTitle("King's Table");
 		Container pane = kingsBoard.getContentPane();
 		pane.setLayout(new GridLayout(boardSize,boardSize));
+		
 		for(int i=0; i<boardSize; i++){
 			for(int j=0; j<boardSize; j++){
 				JPanel panel = new JPanel();

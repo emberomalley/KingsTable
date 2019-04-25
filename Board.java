@@ -5,6 +5,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import javafx.beans.property.LongProperty;
+import javafx.beans.property.SimpleLongProperty;
+import javafx.geometry.VPos;
+
 public class Board {
 
     //Fields.
@@ -272,6 +276,11 @@ public class Board {
     public int getPieceType(int i, int j) {
         return boardState[i][j];
     }
+    
+    public int getScore() {
+        return this.score;
+    }  
+    
 
     public void printBoard() {
         for (int i = 0; i < size; i++) {
@@ -284,7 +293,4 @@ public class Board {
         System.out.println();
     }
 
-    public void tests() {
-
-    }
 }
