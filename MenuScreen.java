@@ -66,8 +66,14 @@ public class MenuScreen {
 	        menuTitle.setFont(new Font(Config.textFont, 80));
 	        menuTitle.setFill(Color.ORANGERED);
 	        menuTitle.setStroke(Color.RED);
-	        button1Player.setOnAction(clickToGame -> primaryStage.setScene(Config.game));//click button go to Game screen for now
-	        button2Player.setOnAction(clickToGame -> primaryStage.setScene(Config.game));//click button go to Game screen for now
+	        button1Player.setOnAction(clickToGame -> {
+                    primaryStage.setScene(Config.game);
+                    primaryStage.setTitle("Kings Table: One Player Mode");
+                        });//click button go to Game screen for now
+	        button2Player.setOnAction(clickToGame -> {
+                    primaryStage.setScene(Config.game);
+                    primaryStage.setTitle("Kings Table: Two Player Mode");
+                        });//click button go to Game screen for now
 	        buttonHelp.setOnAction(clickToHelpScreen -> primaryStage.setScene(Config.help));//click button go to Help screen
 	        VBox layout1 = new VBox(20);
 	        layout1.getChildren().addAll(button1Player, button2Player, buttonHelp, menuTitle);
