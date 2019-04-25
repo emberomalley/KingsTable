@@ -194,7 +194,7 @@ public class KingsTableProgram extends Application {
 
         	primaryStage.setScene(Config.menu);//click button and go back to menu screen
 
-        	timeline.stop();
+        	timeline.pause();
 
         });
 
