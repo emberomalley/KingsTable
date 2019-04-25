@@ -250,7 +250,6 @@ public class KingsTableProgram extends Application {
                                 // hboxBOTTOM.setStyle("-fx-background-color: #D3D3D3;"); //for visual testing
                                 Text highScore = new Text("High Score");
                                 Text timer = new Text("Timer:");
-                                //TODO2
                                 Text userScore = new Text("Score: " + KingsTableProgram.board.score);
                                 int currentScore = KingsTableProgram.board.getScore();
                                 Region region1 = new Region(); // spacer
