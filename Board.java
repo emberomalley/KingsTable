@@ -93,7 +93,7 @@ public class Board {
             if (y + 2 >= size) {
                 return false;
             } else if (Math.abs(boardState[x][y] - boardState[x][y + 1]) == 1 && ((Math.abs(boardState[x][y] - boardState[x][y + 2]) != 1 && boardState[x][y + 2] != 0)|| (x == 0 && y == size-3) || (x == size-1 && y == size-3)) && boardState[x][y + 1] != 0 && boardState[x][y + 1] != 3 ) {
-                System.out.println("Piece " + boardState[x][y + 1] + " captured from (" + x + "," + (y + 1) + "). +10 points.");
+                System.out.println("Piece " + boardState[x][y + 1] + " captured from (" + x + "," + (y + 1) + "). ");
                 boardState[x][y + 1] = 0;
                 return true;
             }
@@ -101,7 +101,7 @@ public class Board {
             if (y - 2 < 0) {
                 return false;
             } else if (Math.abs(boardState[x][y] - boardState[x][y - 1]) == 1 && ((Math.abs(boardState[x][y] - boardState[x][y - 2]) != 1 && boardState[x][y - 2] != 0)|| (x == 0 && y == 2) || (x == size-1 && y == 2)) && boardState[x][y - 1] != 0 && boardState[x][y - 1] != 3) {
-                System.out.println("Piece " + boardState[x][y - 1] + " captured from (" + x + "," + (y - 1) + "). +10 points.");
+                System.out.println("Piece " + boardState[x][y - 1] + " captured from (" + x + "," + (y - 1) + ").");
                 boardState[x][y - 1] = 0;
                 return true;
             }
@@ -109,7 +109,7 @@ public class Board {
             if (x + 2 >= size) {
                 return false;
             } else if (Math.abs(boardState[x][y] - boardState[x + 1][y]) == 1 && ((Math.abs(boardState[x][y] - boardState[x+2][y]) != 1 && boardState[x+2][y] != 0)|| (x == size-3 && y == 0) || (x == size-3 && y == size-1)) && boardState[x + 1][y] != 0 && boardState[x + 1][y] != 3) {
-                System.out.println("Piece " + boardState[x + 1][y] + " captured from (" + (x + 1) + "," + y + "). +10 points.");
+                System.out.println("Piece " + boardState[x + 1][y] + " captured from (" + (x + 1) + "," + y + ").");
                 boardState[x + 1][y] = 0;
                 return true;
             }
@@ -117,7 +117,7 @@ public class Board {
             if (x - 2 < 0) {
                 return false;
             } else if (Math.abs(boardState[x][y] - boardState[x - 1][y]) == 1 && ((Math.abs(boardState[x][y] - boardState[x-2][y]) != 1 && boardState[x-2][y] != 0)|| (x == 2 && y == 0) || (x == 2 && y == size-1)) && boardState[x - 1][y] != 0 && boardState[x - 1][y] != 3) {
-                System.out.println("Piece " + boardState[x - 1][y] + " captured from (" + (x - 1) + "," + y + "). +10 points.");
+                System.out.println("Piece " + boardState[x - 1][y] + " captured from (" + (x - 1) + "," + y + ").");
                 boardState[x - 1][y] = 0;
                 return true;
             }
