@@ -55,6 +55,10 @@ public class KingsTableProgram extends Application {
     public static int boardSize = board.getSize(); // always Odd# x Odd#, usually 11x11 or 13x13
     public static int tileSize = board.getTileSize(); // px size of the grid boxes
     public final long startTime = System.currentTimeMillis(); 
+    public static final Integer STARTTIME = 0;
+    public Timeline timeline;
+    public Label timerLabel = new Label();
+    public IntegerProperty timeSeconds = new SimpleIntegerProperty(STARTTIME);
 
     private Group tileGroup = new Group();
     private Group pieceGroup = new Group();
@@ -632,7 +636,13 @@ public class KingsTableProgram extends Application {
         timeLabel.setTextFill(KingsTableProgram.textColor);
 
         timeLabel.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
-
+        
+//        timerLabel.textProperty().bind(timeSeconds.asString());
+//        
+//        timerLabel.setTextFill(Color.RED);
+//        
+//        timerLabel.setStyle("-fx-font-size: 4em");
+        
         userScore.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
 
         userScore.setFill(KingsTableProgram.textColor);
@@ -782,6 +792,43 @@ public class KingsTableProgram extends Application {
         return piece;
 
     }
+
+
+	public void startTime() {
+		  Label timeLabel = new Label();
+
+	        DateFormat timeFormat = new SimpleDateFormat("mm:ss");
+
+	        final Timeline timeline = new Timeline(
+	        		new KeyFrame(
+
+	        				Duration.seconds(1),
+
+	        				event -> {
+
+	        					long currentTime = System.currentTimeMillis();// stores system time into the currentTime variable
+
+	        					final long diff = currentTime - startTime ;
+
+	        		            if ( diff <= 0 ) {
+
+	        		            timeLabel.setText( "00:00" );
+
+	        		                timeLabel.setText( timeFormat.format( 0 ) );
+
+	        		            } else {
+
+	        		                timeLabel.setText( timeFormat.format( diff ) );
+
+	       		            }
+
+	        				}));
+
+			timeline.setCycleCount(Timeline.INDEFINITE);
+
+			timeline.play();
+		
+	}
     
 
 }

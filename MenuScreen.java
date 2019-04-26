@@ -35,7 +35,6 @@ public class MenuScreen {
   
 
     public static void display(Stage primaryStage) {
-
 		 BorderPane menuBorder = new BorderPane();
 	        menuBorder.setPadding(new Insets(15, 520, 100, 150));
 	        // Screen Size
@@ -47,7 +46,7 @@ public class MenuScreen {
 	        menuBgImage.setFitWidth(menuWidth + 10);
 	        menuBackgroundImgContainer.getChildren().addAll(menuBgImage, menuBorder);
 	        Config.menu = new Scene(menuBackgroundImgContainer, menuWidth, menuHeight);
-	       
+	        
 	        Button button1Player = new Button("Play 1 player"); // 1 player game button
 	         button1Player.resize(menuWidth*.05, menuHeight*.1);
 	         button1Player.setStyle("-fx-background-color: #B8860B");
@@ -85,9 +84,9 @@ public class MenuScreen {
 	        menuTitle.setStroke(Color.RED);
 	        button1Player.setOnAction(clickToGame -> {
 	        	primaryStage.setScene(Config.game);//click button go to Game screen for now
-	        	
+
 	        });
-	        	
+	        
 	        button2Player.setOnAction(clickToGame -> primaryStage.setScene(Config.game));//click button go to Game screen for now
 	        buttonHelp.setOnAction(clickToHelpScreen -> primaryStage.setScene(Config.help));//click button go to Help screen
 	        VBox layout1 = new VBox(20);
