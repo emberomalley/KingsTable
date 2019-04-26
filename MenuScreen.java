@@ -5,9 +5,11 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.LongProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -26,9 +28,11 @@ import javafx.util.Duration;
 
 
 public class MenuScreen {
+
 	// Menu Scene
 	public static KingsTableProgram KingsTableProgram = new KingsTableProgram();
     public final static long startTime = System.currentTimeMillis();
+  
 
     public static void display(Stage primaryStage) {
 
@@ -43,7 +47,7 @@ public class MenuScreen {
 	        menuBgImage.setFitWidth(menuWidth + 10);
 	        menuBackgroundImgContainer.getChildren().addAll(menuBgImage, menuBorder);
 	        Config.menu = new Scene(menuBackgroundImgContainer, menuWidth, menuHeight);
-	        
+	       
 	        Button button1Player = new Button("Play 1 player"); // 1 player game button
 	         button1Player.resize(menuWidth*.05, menuHeight*.1);
 	         button1Player.setStyle("-fx-background-color: #B8860B");
@@ -91,4 +95,5 @@ public class MenuScreen {
 	        menuBorder.setBottom(layout1);
 	        }
 	///////////// end of menu scene
+  
 };
