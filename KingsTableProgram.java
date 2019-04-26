@@ -105,7 +105,7 @@ public class KingsTableProgram extends Application {
         int gameHeight = 700;
 
         //Timer
-        long startTime = System.currentTimeMillis();
+        long startTime = System.currentTimeMillis(); // timeline logic to start timer on button press
         Label timeLabel = new Label();
         DateFormat timeFormat = new SimpleDateFormat("mm:ss");
         final Timeline timeline = new Timeline(
