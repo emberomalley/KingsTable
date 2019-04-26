@@ -1,5 +1,10 @@
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.Clock;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -16,10 +21,16 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class MenuScreen {
 	// Menu Scene
+    public static KingsTableProgram KingsTableProgram = new KingsTableProgram();
+    public static Timeline timeline = new Timeline();
+    public static Label timeLabel = new Label();
 	public static void display(Stage primaryStage) {
+		
+	   
 		 BorderPane menuBorder = new BorderPane();
 	        menuBorder.setPadding(new Insets(15, 520, 100, 150));
 	        // Screen Size
@@ -70,6 +81,23 @@ public class MenuScreen {
 	        menuTitle.setStroke(Color.RED);
 	        button1Player.setOnAction(clickToGame -> {
                     primaryStage.setScene(Config.game);
+                    long startTime = System.currentTimeMillis();
+            	    DateFormat timeFormat = new SimpleDateFormat("mm:ss");
+            	    MenuScreen.timeline = new Timeline(
+            	            new KeyFrame(
+            	                    Duration.seconds(1),
+            	                    event -> {
+            	                        long currentTime = System.currentTimeMillis();// stores system time into the currentTime variable
+            	                        final long diff = currentTime - startTime;
+            	                        if (diff <= 0) {
+            	                            timeLabel.setText("00:00");
+            	                            timeLabel.setText(timeFormat.format(0));
+            	                        } else {
+            	                            timeLabel.setText(timeFormat.format(diff));
+            	                        }
+            	    }));
+                    timeline.setCycleCount(Timeline.INDEFINITE);
+                    timeline.play();
                     primaryStage.setTitle("Kings Table: One Player Mode");
                         });//click button go to Game screen for now
 	        button2Player.setOnAction(clickToGame -> {
@@ -81,5 +109,8 @@ public class MenuScreen {
 	        layout1.getChildren().addAll(button1Player, button2Player, buttonHelp, menuTitle);
 	        menuBorder.setBottom(layout1);
 	}
+	
+		
+	}
 	///////////// end of menu scene
-}
+

@@ -3,7 +3,9 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.LongProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -54,6 +56,7 @@ import javax.swing.JLabel;
 public class KingsTableProgram extends Application {
 
     public static Board board = new Board();
+    public static MenuScreen MenuScreen = new MenuScreen();
    // public static gameScreen gameScreen = new gameScreen();
     public static Node selected;
     public static int boardSize = board.getSize(); // always Odd# x Odd#, usually 11x11 or 13x13
@@ -66,12 +69,15 @@ public class KingsTableProgram extends Application {
     public static String textFont = "Rockwell";
     public static int illegalPiece = 2;
 
-
     public static void game() {
 
     }
 
     public static void gameScreen() {
+
+    }
+    
+    public static void MenuScreen() {
 
     }
 
@@ -224,7 +230,8 @@ public class KingsTableProgram extends Application {
                                     pauseScreenText.setText("Defenders Win!");
                                     gridPaneGAME.getChildren().addAll(PauseScreen);
                                     gameBorder.setCenter(PauseScreen);
-                                    timeline.stop();
+                                    MenuScreen.timeline.stop();
+                                    
                                 }
                             }
 
@@ -262,14 +269,14 @@ public class KingsTableProgram extends Application {
                                 timer.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
                                 timer.setFill(KingsTableProgram.textColor);
                                 timer.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
-                                timeLabel.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
-                                timeLabel.setTextFill(KingsTableProgram.textColor);
-                                timeLabel.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
+                            //    timeLabel.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
+                              //  timeLabel.setTextFill(KingsTableProgram.textColor);
+                                //timeLabel.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
                                 userScore.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
                                 userScore.setFill(KingsTableProgram.textColor);
                                 userScore.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
                                 //THIS IS IT! THE UPDATE UI
-                                hboxBOTTOM.getChildren().addAll(highScore, region1, timer, timeLabel, region2, userScore);
+                                hboxBOTTOM.getChildren().addAll(highScore, region1, timer, MenuScreen.timeLabel, region2, userScore);
                                 gameBorder.setBottom(hboxBOTTOM);
                                 count++;
                             }
@@ -297,14 +304,14 @@ public class KingsTableProgram extends Application {
                                 timer.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
                                 timer.setFill(KingsTableProgram.textColor);
                                 timer.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
-                                timeLabel.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
-                                timeLabel.setTextFill(KingsTableProgram.textColor);
-                                timeLabel.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
+                                MenuScreen.timeLabel.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
+                                MenuScreen.timeLabel.setTextFill(KingsTableProgram.textColor);
+                                MenuScreen.timeLabel.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
                                 userScore.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
                                 userScore.setFill(KingsTableProgram.textColor);
                                 userScore.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
                                 //THIS IS IT! THE UPDATE UI
-                                hboxBOTTOM.getChildren().addAll(highScore, region1, timer, timeLabel, region2, userScore);
+                                hboxBOTTOM.getChildren().addAll(highScore, region1, timer, MenuScreen.timeLabel, region2, userScore);
                                 gameBorder.setBottom(hboxBOTTOM);
                                 count++;
                             }
@@ -331,14 +338,14 @@ public class KingsTableProgram extends Application {
                                 timer.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
                                 timer.setFill(KingsTableProgram.textColor);
                                 timer.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
-                                timeLabel.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
-                                timeLabel.setTextFill(KingsTableProgram.textColor);
-                                timeLabel.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
+                                MenuScreen.timeLabel.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
+                                MenuScreen.timeLabel.setTextFill(KingsTableProgram.textColor);
+                                MenuScreen.timeLabel.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
                                 userScore.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
                                 userScore.setFill(KingsTableProgram.textColor);
                                 userScore.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
                                 //THIS IS IT! THE UPDATE UI
-                                hboxBOTTOM.getChildren().addAll(highScore, region1, timer, timeLabel, region2, userScore);
+                                hboxBOTTOM.getChildren().addAll(highScore, region1, timer, MenuScreen.timeLabel, region2, userScore);
                                 gameBorder.setBottom(hboxBOTTOM);
                                 count++;
                             }
@@ -366,14 +373,14 @@ public class KingsTableProgram extends Application {
                                 timer.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
                                 timer.setFill(KingsTableProgram.textColor);
                                 timer.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
-                                timeLabel.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
-                                timeLabel.setTextFill(KingsTableProgram.textColor);
-                                timeLabel.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
+                                MenuScreen.timeLabel.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
+                                MenuScreen.timeLabel.setTextFill(KingsTableProgram.textColor);
+                                MenuScreen.timeLabel.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
                                 userScore.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
                                 userScore.setFill(KingsTableProgram.textColor);
                                 userScore.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
                                 //THIS IS IT! THE UPDATE UI
-                                hboxBOTTOM.getChildren().addAll(highScore, region1, timer, timeLabel, region2, userScore);
+                                hboxBOTTOM.getChildren().addAll(highScore, region1, timer, MenuScreen.timeLabel, region2, userScore);
                                 gameBorder.setBottom(hboxBOTTOM);
                                 count++;
                             }
@@ -402,14 +409,14 @@ public class KingsTableProgram extends Application {
                                 timer.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
                                 timer.setFill(KingsTableProgram.textColor);
                                 timer.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
-                                timeLabel.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
-                                timeLabel.setTextFill(KingsTableProgram.textColor);
-                                timeLabel.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
+                                MenuScreen.timeLabel.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
+                                MenuScreen.timeLabel.setTextFill(KingsTableProgram.textColor);
+                                MenuScreen.timeLabel.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
                                 userScore.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
                                 userScore.setFill(KingsTableProgram.textColor);
                                 userScore.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
                                 //THIS IS IT! THE UPDATE UI
-                                hboxBOTTOM.getChildren().addAll(highScore, region1, timer, timeLabel, region2, userScore);
+                                hboxBOTTOM.getChildren().addAll(highScore, region1, timer, MenuScreen.timeLabel, region2, userScore);
                                 gameBorder.setBottom(hboxBOTTOM);
                                 System.out.println("Double Capture! +5 points.");
                             }
@@ -435,14 +442,14 @@ public class KingsTableProgram extends Application {
                                 timer.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
                                 timer.setFill(KingsTableProgram.textColor);
                                 timer.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
-                                timeLabel.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
-                                timeLabel.setTextFill(KingsTableProgram.textColor);
-                                timeLabel.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
+                                MenuScreen.timeLabel.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
+                                MenuScreen.timeLabel.setTextFill(KingsTableProgram.textColor);
+                                MenuScreen.timeLabel.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
                                 userScore.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
                                 userScore.setFill(KingsTableProgram.textColor);
                                 userScore.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
                                 //THIS IS IT! THE UPDATE UI
-                                hboxBOTTOM.getChildren().addAll(highScore, region1, timer, timeLabel, region2, userScore);
+                                hboxBOTTOM.getChildren().addAll(highScore, region1, timer, MenuScreen.timeLabel, region2, userScore);
                                 gameBorder.setBottom(hboxBOTTOM);
                                 System.out.println("Triple Capture!! +10 points.");
 
@@ -492,7 +499,7 @@ public class KingsTableProgram extends Application {
                                     pauseScreenText.setText("Attackers Win!");
                                     gridPaneGAME.getChildren().addAll(PauseScreen);
                                     gameBorder.setCenter(PauseScreen);
-                                    timeline.stop();
+                                    MenuScreen.timeline.stop();
                                 }
                             } //Switch Turns
                             else if (KingsTableProgram.illegalPiece == 1) {
@@ -571,14 +578,14 @@ public class KingsTableProgram extends Application {
         timer.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
         timer.setFill(KingsTableProgram.textColor);
         timer.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
-        timeLabel.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
-        timeLabel.setTextFill(KingsTableProgram.textColor);
-        timeLabel.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
+        MenuScreen.timeLabel.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
+        MenuScreen.timeLabel.setTextFill(KingsTableProgram.textColor);
+        MenuScreen.timeLabel.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
         userScore.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
         userScore.setFill(KingsTableProgram.textColor);
         userScore.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
         //THIS IS IT! THE UPDATE UI
-        hboxBOTTOM.getChildren().addAll(highScore, region1, timer, timeLabel, region2, userScore);
+        hboxBOTTOM.getChildren().addAll(highScore, region1, timer, MenuScreen.timeLabel, region2, userScore);
         gameBorder.setBottom(hboxBOTTOM);
 
         // Show Game ------------
@@ -589,7 +596,7 @@ public class KingsTableProgram extends Application {
         	// logic for incrementing score in GUI
         	currentScore = KingsTableProgram.board.getScore();
         	userScore = new Text("Score: " + KingsTableProgram.board.score);
-        	hboxBOTTOM.getChildren().addAll(highScore, region1, timer, timeLabel, region2, userScore);
+        	hboxBOTTOM.getChildren().addAll(highScore, region1, timer, MenuScreen.timeLabel, region2, userScore);
         }
 
         for (int i = 0; i < KingsTableProgram.boardSize; i++) {
