@@ -79,7 +79,7 @@ public class MenuScreen {
 	        menuTitle.setFont(new Font(Config.textFont, 80));
 	        menuTitle.setFill(Color.ORANGERED);
 	        menuTitle.setStroke(Color.RED);
-	        button1Player.setOnAction(clickToGame -> {
+	        button1Player.setOnAction(clickToGame -> { // button goes to gameScreen and starts timer
                     primaryStage.setScene(Config.game);
                     long startTime = System.currentTimeMillis();
             	    DateFormat timeFormat = new SimpleDateFormat("mm:ss");
