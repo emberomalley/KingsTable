@@ -55,10 +55,10 @@ public class KingsTableProgram extends Application {
     public static int boardSize = board.getSize(); // always Odd# x Odd#, usually 11x11 or 13x13
     public static int tileSize = board.getTileSize(); // px size of the grid boxes
     public final long startTime = System.currentTimeMillis(); 
-    public static final Integer STARTTIME = 0;
-    public Timeline timeline;
-    public Label timerLabel = new Label();
-    public IntegerProperty timeSeconds = new SimpleIntegerProperty(STARTTIME);
+    //public static final Integer STARTTIME = 0;
+    //public Timeline timeline;
+    //public Label timerLabel = new Label();
+    //public IntegerProperty timeSeconds = new SimpleIntegerProperty(STARTTIME);
 
     private Group tileGroup = new Group();
     private Group pieceGroup = new Group();
