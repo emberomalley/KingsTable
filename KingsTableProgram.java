@@ -146,7 +146,6 @@ public class KingsTableProgram extends Application {
         buttonMenu.setOnAction(event -> {
             primaryStage.setTitle("Kings Table");
             primaryStage.setScene(Config.menu);
-            timeline.pause();
             KingsTableProgram.illegalPiece = 2;
         });
         VBox layout3 = new VBox(20);
@@ -225,6 +224,7 @@ public class KingsTableProgram extends Application {
                                     pauseScreenText.setText("Defenders Win!");
                                     gridPaneGAME.getChildren().addAll(PauseScreen);
                                     gameBorder.setCenter(PauseScreen);
+                                    timeline.stop();
                                 }
                             }
 
@@ -235,7 +235,6 @@ public class KingsTableProgram extends Application {
                             gridPaneGAME.getChildren().add(selected);
                             selected.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK));
                             selected = null;
-
 
                             //Check captures.
                             int count = 0;
@@ -272,15 +271,12 @@ public class KingsTableProgram extends Application {
                                 //THIS IS IT! THE UPDATE UI
                                 hboxBOTTOM.getChildren().addAll(highScore, region1, timer, timeLabel, region2, userScore);
                                 gameBorder.setBottom(hboxBOTTOM);
-                                System.out.println("DONE\n\n\n");
-
                                 count++;
                             }
                             if (KingsTableProgram.board.checkCapture(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]), "left")) {
                                 gridPaneGAME.getChildren().remove(getPieceAtPosition(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]) - 1, gridPaneGAME));
                                 KingsTableProgram.board.score += 10;
-                                System.out.println("CAP2");
-                                System.out.println("CAP3");
+                           
 
                                 HBox hboxBOTTOM = new HBox();
                                 hboxBOTTOM.setAlignment(Pos.BOTTOM_CENTER);
@@ -315,9 +311,7 @@ public class KingsTableProgram extends Application {
                             if (KingsTableProgram.board.checkCapture(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]), "down")) {
                                 gridPaneGAME.getChildren().remove(getPieceAtPosition(Integer.parseInt(coordinates[0]) + 1, Integer.parseInt(coordinates[1]), gridPaneGAME));
                                 KingsTableProgram.board.score += 10;
-                                System.out.println("CAP3");
-                                System.out.println("CAP3");
-
+                                
                                 HBox hboxBOTTOM = new HBox();
                                 hboxBOTTOM.setAlignment(Pos.BOTTOM_CENTER);
                                 hboxBOTTOM.setPadding(new Insets(25, 10, 25, 20));// top,right,bottom,left
@@ -351,7 +345,7 @@ public class KingsTableProgram extends Application {
                             if (KingsTableProgram.board.checkCapture(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]), "up")) {
                                 gridPaneGAME.getChildren().remove(getPieceAtPosition(Integer.parseInt(coordinates[0]) - 1, Integer.parseInt(coordinates[1]), gridPaneGAME));
                                 KingsTableProgram.board.score += 10;
-                                System.out.println("CAP3");
+                                
 
                                 HBox hboxBOTTOM = new HBox();
                                 hboxBOTTOM.setAlignment(Pos.BOTTOM_CENTER);
@@ -387,7 +381,7 @@ public class KingsTableProgram extends Application {
                             //Additional points for multiple captures.
                             if (count == 2) {
                                 KingsTableProgram.board.score += 5;
-                                System.out.println("CAP3");
+                               
 
                                 HBox hboxBOTTOM = new HBox();
                                 hboxBOTTOM.setAlignment(Pos.BOTTOM_CENTER);
@@ -421,7 +415,6 @@ public class KingsTableProgram extends Application {
                             }
                             else if (count == 3){
                                 KingsTableProgram.board.score += 10;
-                                System.out.println("CAP3");
 
                                 HBox hboxBOTTOM = new HBox();
                                 hboxBOTTOM.setAlignment(Pos.BOTTOM_CENTER);
@@ -499,6 +492,7 @@ public class KingsTableProgram extends Application {
                                     pauseScreenText.setText("Attackers Win!");
                                     gridPaneGAME.getChildren().addAll(PauseScreen);
                                     gameBorder.setCenter(PauseScreen);
+                                    timeline.stop();
                                 }
                             } //Switch Turns
                             else if (KingsTableProgram.illegalPiece == 1) {
@@ -591,9 +585,7 @@ public class KingsTableProgram extends Application {
         // Draw Pieces
         Image dpImage = new Image("defenderPiece.jpg");
         Image apImage = new Image("attackerPiece.jpg");
-        System.out.println("Before "+ KingsTableProgram.board.score +" "+ currentScore);
         if (KingsTableProgram.board.score > currentScore ) {
-        	System.out.println("update score");
         	// logic for incrementing score in GUI
         	currentScore = KingsTableProgram.board.getScore();
         	userScore = new Text("Score: " + KingsTableProgram.board.score);
