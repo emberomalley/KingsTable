@@ -2,15 +2,9 @@
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.LongProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleLongProperty;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import static javafx.application.Application.launch;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import javafx.scene.Group;
@@ -28,7 +22,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javafx.scene.control.Button;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -38,20 +31,10 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import javafx.scene.control.Label;
-import javafx.scene.text.FontPosture;
 import java.util.List;
 
-import javax.management.timer.Timer;
-import javax.swing.JLabel;
 
 public class KingsTableProgram extends Application {
 
@@ -103,26 +86,6 @@ public class KingsTableProgram extends Application {
         // Screen Size
         int gameWidth = 1000;
         int gameHeight = 700;
-
-        //Timer
-        long startTime = System.currentTimeMillis(); // timeline logic to start timer on button press
-        Label timeLabel = new Label();
-        DateFormat timeFormat = new SimpleDateFormat("mm:ss");
-        final Timeline timeline = new Timeline(
-                new KeyFrame(
-                        Duration.seconds(1),
-                        event -> {
-                            long currentTime = System.currentTimeMillis();// stores system time into the currentTime variable
-                            final long diff = currentTime - startTime;
-                            if (diff <= 0) {
-                                timeLabel.setText("00:00");
-                                timeLabel.setText(timeFormat.format(0));
-                            } else {
-                                timeLabel.setText(timeFormat.format(diff));
-                            }
-        }));
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
 
         // Background Image--------------
         StackPane gameBackgroundImgContainer = new StackPane();
