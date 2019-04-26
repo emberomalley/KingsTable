@@ -114,6 +114,7 @@ public class KingsTableProgram extends Application {
         buttonMenu.setOnAction(event -> {
             primaryStage.setTitle("Kings Table");
             primaryStage.setScene(Config.menu);
+            MenuScreen.timeline.pause();
             KingsTableProgram.illegalPiece = 2;
         });
         VBox layout3 = new VBox(20);
