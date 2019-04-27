@@ -1,8 +1,13 @@
+
 import java.util.ArrayList;
 import java.lang.Math;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+
+import javafx.beans.property.LongProperty;
+import javafx.beans.property.SimpleLongProperty;
+import javafx.geometry.VPos;
 
 public class Board {
 
@@ -11,7 +16,8 @@ public class Board {
     private int tileSize = 45; //Size of tile of the board in pixels.
     //boardState: 0 - Empty, 1 - Defender, 2 - Attacker, 3 - King.
     public int[][] boardState = new int[size][size]; //Change to be an array of pieces later/
-
+    public int score = 0;
+    public int moves = 0;
     private int selectedTileX = -1; //Selected tile of the board.
     private int selectedTileY = -1;
 
@@ -90,15 +96,15 @@ public class Board {
         if (direction == "right") {
             if (y + 2 >= size) {
                 return false;
-            } else if (Math.abs(boardState[x][y] - boardState[x][y + 1]) == 1 && Math.abs(boardState[x][y] - boardState[x][y + 2]) != 1 && boardState[x][y + 1] != 0 && boardState[x][y + 1] != 3 && boardState[x][y + 2] != 0) {
-                System.out.println("Piece " + boardState[x][y + 1] + " captured from (" + x + "," + (y + 1) + ").");
+            } else if (Math.abs(boardState[x][y] - boardState[x][y + 1]) == 1 && ((Math.abs(boardState[x][y] - boardState[x][y + 2]) != 1 && boardState[x][y + 2] != 0)|| (x == 0 && y == size-3) || (x == size-1 && y == size-3)) && boardState[x][y + 1] != 0 && boardState[x][y + 1] != 3 ) {
+                System.out.println("Piece " + boardState[x][y + 1] + " captured from (" + x + "," + (y + 1) + "). ");
                 boardState[x][y + 1] = 0;
                 return true;
             }
         } else if (direction == "left") {
             if (y - 2 < 0) {
                 return false;
-            } else if (Math.abs(boardState[x][y] - boardState[x][y - 1]) == 1 && Math.abs(boardState[x][y] - boardState[x][y - 2]) != 1 && boardState[x][y - 1] != 0 && boardState[x][y - 1] != 3 && boardState[x][y - 2] != 0) {
+            } else if (Math.abs(boardState[x][y] - boardState[x][y - 1]) == 1 && ((Math.abs(boardState[x][y] - boardState[x][y - 2]) != 1 && boardState[x][y - 2] != 0)|| (x == 0 && y == 2) || (x == size-1 && y == 2)) && boardState[x][y - 1] != 0 && boardState[x][y - 1] != 3) {
                 System.out.println("Piece " + boardState[x][y - 1] + " captured from (" + x + "," + (y - 1) + ").");
                 boardState[x][y - 1] = 0;
                 return true;
@@ -106,7 +112,7 @@ public class Board {
         } else if (direction == "down") {
             if (x + 2 >= size) {
                 return false;
-            } else if (Math.abs(boardState[x][y] - boardState[x + 1][y]) == 1 && Math.abs(boardState[x + 2][y] - boardState[x][y]) != 1 && boardState[x + 1][y] != 0 && boardState[x + 1][y] != 3 && boardState[x + 2][y] != 0) {
+            } else if (Math.abs(boardState[x][y] - boardState[x + 1][y]) == 1 && ((Math.abs(boardState[x][y] - boardState[x+2][y]) != 1 && boardState[x+2][y] != 0)|| (x == size-3 && y == 0) || (x == size-3 && y == size-1)) && boardState[x + 1][y] != 0 && boardState[x + 1][y] != 3) {
                 System.out.println("Piece " + boardState[x + 1][y] + " captured from (" + (x + 1) + "," + y + ").");
                 boardState[x + 1][y] = 0;
                 return true;
@@ -114,7 +120,7 @@ public class Board {
         } else if (direction == "up") {
             if (x - 2 < 0) {
                 return false;
-            } else if (Math.abs(boardState[x][y] - boardState[x - 1][y]) == 1 && Math.abs(boardState[x - 2][y] - boardState[x][y]) != 1 && boardState[x - 1][y] != 0 && boardState[x - 1][y] != 3 && boardState[x - 2][y] != 0) {
+            } else if (Math.abs(boardState[x][y] - boardState[x - 1][y]) == 1 && ((Math.abs(boardState[x][y] - boardState[x-2][y]) != 1 && boardState[x-2][y] != 0)|| (x == 2 && y == 0) || (x == 2 && y == size-1)) && boardState[x - 1][y] != 0 && boardState[x - 1][y] != 3) {
                 System.out.println("Piece " + boardState[x - 1][y] + " captured from (" + (x - 1) + "," + y + ").");
                 boardState[x - 1][y] = 0;
                 return true;
@@ -175,46 +181,6 @@ public class Board {
         return true;
     }
 
-    //Getters and Setters.
-    //Set and get the size of the board.
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    public int getSize() {
-        return this.size;
-    }
-
-    //Set and get the size of a tile.
-    public void setTileSize(int tileSize) {
-        this.tileSize = tileSize;
-    }
-
-    public int getTileSize() {
-        return this.tileSize;
-    }
-
-    public int getSelectedTileX() {
-        return this.selectedTileX;
-    }
-
-    public int getSelectedTileY() {
-        return this.selectedTileY;
-    }
-
-    public int getPieceType(int i, int j) {
-        return boardState[i][j];
-    }
-
-    public void printBoard() {
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                System.out.print(boardState[i][j]);
-            }
-            System.out.println();
-        }
-    }
-
     //Randomly pick an enemy piece and move it.
     public List moveAttacker() {
         //This will be useful for AI.
@@ -247,8 +213,7 @@ public class Board {
 
             if (!movable) {
                 enemyPositions.remove(coords);
-            } 
-            else {
+            } else {
                 //Choose a direction to move the piece.
                 ArrayList<Integer> directions = new ArrayList<Integer>(Arrays.asList(0, 1, 2, 3));
                 while (directions.size() > 0) {
@@ -259,23 +224,19 @@ public class Board {
                     if (dChoice == 0 && movableLeft) {
                         returnCoords.set(2, i);
                         returnCoords.set(3, j - 1);
-                    }
-                    else if (dChoice == 1 && movableRight) {
+                    } else if (dChoice == 1 && movableRight) {
                         returnCoords.set(2, i);
                         returnCoords.set(3, j + 1);
-                    }
-                    else if (dChoice == 2 && movableDown) {
+                    } else if (dChoice == 2 && movableDown) {
                         returnCoords.set(2, i + 1);
                         returnCoords.set(3, j);
-                    }
-                    else if (dChoice == 3 && movableUp) {
+                    } else if (dChoice == 3 && movableUp) {
                         returnCoords.set(2, i - 1);
                         returnCoords.set(3, j);
                     }
-                    if (movePiece(i,j,returnCoords.get(2),returnCoords.get(3))){
+                    if (movePiece(i, j, returnCoords.get(2), returnCoords.get(3))) {
                         return returnCoords;
-                    }
-                    else{
+                    } else {
                         enemyPositions.remove(coords);
                     }
                     directions.remove(dIndex);
@@ -285,7 +246,51 @@ public class Board {
         return null;
     }
 
-    public void tests() {
-
+    //Getters and Setters.
+    //Set and get the size of the board.
+    public void setSize(int size) {
+        this.size = size;
     }
+
+    public int getSize() {
+        return this.size;
+    }
+
+    //Set and get the size of a tile.
+    public void setTileSize(int tileSize) {
+        this.tileSize = tileSize;
+    }
+
+    public int getTileSize() {
+        return this.tileSize;
+    }
+
+    public int getSelectedTileX() {
+        return this.selectedTileX;
+    }
+
+    public int getSelectedTileY() {
+        return this.selectedTileY;
+    }
+
+    public int getPieceType(int i, int j) {
+        return boardState[i][j];
+    }
+    
+    public int getScore() {
+        return this.score;
+    }  
+    
+
+    public void printBoard() {
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                System.out.print(boardState[i][j]);
+            }
+            System.out.println();
+        }
+        System.out.println("Score: "+ score +", Moves: "+ moves);
+        System.out.println();
+    }
+
 }
