@@ -5,6 +5,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import javafx.beans.property.LongProperty;
+import javafx.beans.property.SimpleLongProperty;
+import javafx.geometry.VPos;
+
 public class Board {
 
     //Fields.
@@ -92,32 +96,32 @@ public class Board {
         if (direction == "right") {
             if (y + 2 >= size) {
                 return false;
-            } else if (Math.abs(boardState[x][y] - boardState[x][y + 1]) == 1 && Math.abs(boardState[x][y] - boardState[x][y + 2]) != 1 && boardState[x][y + 1] != 0 && boardState[x][y + 1] != 3 && boardState[x][y + 2] != 0) {
-                System.out.println("Piece " + boardState[x][y + 1] + " captured from (" + x + "," + (y + 1) + "). +10 points.");
+            } else if (Math.abs(boardState[x][y] - boardState[x][y + 1]) == 1 && ((Math.abs(boardState[x][y] - boardState[x][y + 2]) != 1 && boardState[x][y + 2] != 0)|| (x == 0 && y == size-3) || (x == size-1 && y == size-3)) && boardState[x][y + 1] != 0 && boardState[x][y + 1] != 3 ) {
+                System.out.println("Piece " + boardState[x][y + 1] + " captured from (" + x + "," + (y + 1) + "). ");
                 boardState[x][y + 1] = 0;
                 return true;
             }
         } else if (direction == "left") {
             if (y - 2 < 0) {
                 return false;
-            } else if (Math.abs(boardState[x][y] - boardState[x][y - 1]) == 1 && Math.abs(boardState[x][y] - boardState[x][y - 2]) != 1 && boardState[x][y - 1] != 0 && boardState[x][y - 1] != 3 && boardState[x][y - 2] != 0) {
-                System.out.println("Piece " + boardState[x][y - 1] + " captured from (" + x + "," + (y - 1) + "). +10 points.");
+            } else if (Math.abs(boardState[x][y] - boardState[x][y - 1]) == 1 && ((Math.abs(boardState[x][y] - boardState[x][y - 2]) != 1 && boardState[x][y - 2] != 0)|| (x == 0 && y == 2) || (x == size-1 && y == 2)) && boardState[x][y - 1] != 0 && boardState[x][y - 1] != 3) {
+                System.out.println("Piece " + boardState[x][y - 1] + " captured from (" + x + "," + (y - 1) + ").");
                 boardState[x][y - 1] = 0;
                 return true;
             }
         } else if (direction == "down") {
             if (x + 2 >= size) {
                 return false;
-            } else if (Math.abs(boardState[x][y] - boardState[x + 1][y]) == 1 && Math.abs(boardState[x + 2][y] - boardState[x][y]) != 1 && boardState[x + 1][y] != 0 && boardState[x + 1][y] != 3 && boardState[x + 2][y] != 0) {
-                System.out.println("Piece " + boardState[x + 1][y] + " captured from (" + (x + 1) + "," + y + "). +10 points.");
+            } else if (Math.abs(boardState[x][y] - boardState[x + 1][y]) == 1 && ((Math.abs(boardState[x][y] - boardState[x+2][y]) != 1 && boardState[x+2][y] != 0)|| (x == size-3 && y == 0) || (x == size-3 && y == size-1)) && boardState[x + 1][y] != 0 && boardState[x + 1][y] != 3) {
+                System.out.println("Piece " + boardState[x + 1][y] + " captured from (" + (x + 1) + "," + y + ").");
                 boardState[x + 1][y] = 0;
                 return true;
             }
         } else if (direction == "up") {
             if (x - 2 < 0) {
                 return false;
-            } else if (Math.abs(boardState[x][y] - boardState[x - 1][y]) == 1 && Math.abs(boardState[x - 2][y] - boardState[x][y]) != 1 && boardState[x - 1][y] != 0 && boardState[x - 1][y] != 3 && boardState[x - 2][y] != 0) {
-                System.out.println("Piece " + boardState[x - 1][y] + " captured from (" + (x - 1) + "," + y + "). +10 points.");
+            } else if (Math.abs(boardState[x][y] - boardState[x - 1][y]) == 1 && ((Math.abs(boardState[x][y] - boardState[x-2][y]) != 1 && boardState[x-2][y] != 0)|| (x == 2 && y == 0) || (x == 2 && y == size-1)) && boardState[x - 1][y] != 0 && boardState[x - 1][y] != 3) {
+                System.out.println("Piece " + boardState[x - 1][y] + " captured from (" + (x - 1) + "," + y + ").");
                 boardState[x - 1][y] = 0;
                 return true;
             }
@@ -272,6 +276,11 @@ public class Board {
     public int getPieceType(int i, int j) {
         return boardState[i][j];
     }
+    
+    public int getScore() {
+        return this.score;
+    }  
+    
 
     public void printBoard() {
         for (int i = 0; i < size; i++) {
@@ -284,7 +293,4 @@ public class Board {
         System.out.println();
     }
 
-    public void tests() {
-
-    }
 }
