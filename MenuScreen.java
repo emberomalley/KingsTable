@@ -25,10 +25,12 @@ import javafx.util.Duration;
 
 public class MenuScreen {
 	// Menu Scene
-    public static KingsTableProgram KingsTableProgram = new KingsTableProgram();
-    public static Timeline timeline = new Timeline();
-    public static Label timeLabel = new Label();
-	public static void display(Stage primaryStage) {
+    public static 		KingsTableProgram 	KingsTableProgram 	= new KingsTableProgram();  
+    public static 		Timeline 			timeline 			= new Timeline();
+    public static 		Timeline 			timepaused 			= new Timeline(); 
+    public static 		long 				timePauseValue		= 0;
+    public static 		Label 				timeLabel 			= new Label();
+	public static void 	display(Stage primaryStage) {
 		
 	   
 		 BorderPane menuBorder = new BorderPane();
@@ -79,25 +81,40 @@ public class MenuScreen {
 	        menuTitle.setFont(new Font(Config.textFont, 80));
 	        menuTitle.setFill(Color.ORANGERED);
 	        menuTitle.setStroke(Color.RED);
+	        
 	        button1Player.setOnAction(clickToGame -> { // button goes to gameScreen and starts timer
                     primaryStage.setScene(Config.game);
+        	    	/////MenuScreen.timepaused.pause();                    
                     long startTime = System.currentTimeMillis();
+                    
             	    DateFormat timeFormat = new SimpleDateFormat("mm:ss");
-            	    MenuScreen.timeline = new Timeline(
-            	            new KeyFrame(
-            	                    Duration.seconds(1),
-            	                    event -> {
-            	                        long currentTime = System.currentTimeMillis();// stores system time into the currentTime variable
-            	                        final long diff = currentTime - startTime;
-            	                        if (diff <= 0) {
-            	                            timeLabel.setText("00:00");
-            	                            timeLabel.setText(timeFormat.format(0));
-            	                        } else {
-            	                            timeLabel.setText(timeFormat.format(diff));
-            	                        }
-            	    }));
-                    timeline.setCycleCount(Timeline.INDEFINITE);
-                    timeline.play();
+    
+            	    if( !(MenuScreen.timeline.getStatus().valueOf("PAUSED")== MenuScreen.timeline.getStatus())) 
+            	    {	
+
+	            	    MenuScreen.timeline = new Timeline(
+	            	            new KeyFrame(
+	            	                    Duration.seconds(1),
+	            	                    event -> {
+	            	                        long currentTime = System.currentTimeMillis();// stores system time into the currentTime variable
+	            	                        final long diff = currentTime - startTime - timePauseValue;
+
+	            	                        if (diff <= 0) {
+	            	                            timeLabel.setText("00:00");
+	            	                            timeLabel.setText(timeFormat.format(0));
+	            	                        } else {
+	            	                            timeLabel.setText(timeFormat.format(diff));
+	            	                        }
+	            	    }));
+	                    timeline.setCycleCount(Timeline.INDEFINITE);
+	                    
+            	    }      
+            	    else 
+            	    {
+            	    	//timeline.playFrom(timeDuration);
+					}
+            	    timeline.play();
+            	    
                     primaryStage.setTitle("Kings Table: One Player Mode");
                         });//click button go to Game screen for now
 	        button2Player.setOnAction(clickToGame -> {

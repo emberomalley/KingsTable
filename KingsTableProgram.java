@@ -21,6 +21,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -116,6 +117,23 @@ public class KingsTableProgram extends Application {
             primaryStage.setScene(Config.menu);
             MenuScreen.timeline.pause();
             KingsTableProgram.illegalPiece = 2;
+/////
+//         long startPause = System.currentTimeMillis();            
+//    	    MenuScreen.timepaused = new Timeline(
+//    	            new KeyFrame(
+//    	                    Duration.seconds(1),
+//    	                    eventpause -> {
+//    	                        long currentTime = System.currentTimeMillis();// stores system time into the currentTime variable
+//    	                        MenuScreen.timePauseValue = currentTime - startPause;
+//    	    }));
+//    	    MenuScreen.timepaused.setCycleCount(Timeline.INDEFINITE);
+//    	    MenuScreen.timepaused.play();
+/////            
+///            double 		pauseDouble = 0.0;
+///            Duration	pauseStart;
+///            pauseStart.seconds(pauseDouble);
+///            MenuScreen.timepaused.playFrom(pauseStart);
+/////            
         });
         VBox layout3 = new VBox(20);
         layout3.getChildren().addAll(buttonMenu);
