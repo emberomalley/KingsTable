@@ -24,6 +24,7 @@ public class MenuScreen {
     public static 		Label 				timeLabel 			= new Label();
     public static       long                startTime;
     public static		long				timeDifference		= 0;
+    public static		int					playerMode			= 0;
 	public static void 	display(Stage primaryStage) {
 		
 	   
@@ -105,10 +106,12 @@ public class MenuScreen {
             	    timeline.play();//starts timer
             	    
                     primaryStage.setTitle("Kings Table: One Player Mode");
+                    playerMode = 1;
                         });//click button go to Game screen for now
 	        button2Player.setOnAction(clickToGame -> {
                     primaryStage.setScene(Config.game);
                     primaryStage.setTitle("Kings Table: Two Player Mode");
+                    playerMode = 2;
                         });//click button go to Game screen for now
 	        buttonHelp.setOnAction(clickToHelpScreen -> primaryStage.setScene(Config.help));//click button go to Help screen
 	        BorderPane buttonBorder = new BorderPane();
