@@ -62,7 +62,7 @@ public class KingsTableProgram extends Application {
     public static void gameScreen() {
 
     }
-    
+
     public static void MenuScreen() {
 
     }
@@ -76,7 +76,7 @@ public class KingsTableProgram extends Application {
         // Creates all screens
         MenuScreen.display(primaryStage);
         HelpScreen.display(primaryStage);
-        GridPane gridPaneGAME = new GridPane(); //main game's grid pane 
+        GridPane gridPaneGAME = new GridPane(); //main game's grid pane
         // Initialize primary display
         primaryStage.setScene(Config.menu);
         primaryStage.setTitle("King's Table");
@@ -89,7 +89,7 @@ public class KingsTableProgram extends Application {
         // Screen Size
         int gameWidth = 1000;
         int gameHeight = 700;
-        
+
         Image dpImage = new Image("defenderPiece.jpg");
         Image apImage = new Image("attackerPiece.jpg");
 
@@ -123,23 +123,7 @@ public class KingsTableProgram extends Application {
             primaryStage.setScene(Config.menu);
             MenuScreen.timeline.pause();
             KingsTableProgram.illegalPiece = 2;
-/////
-//         long startPause = System.currentTimeMillis();            
-//    	    MenuScreen.timepaused = new Timeline(
-//    	            new KeyFrame(
-//    	                    Duration.seconds(1),
-//    	                    eventpause -> {
-//    	                        long currentTime = System.currentTimeMillis();// stores system time into the currentTime variable
-//    	                        MenuScreen.timePauseValue = currentTime - startPause;
-//    	    }));
-//    	    MenuScreen.timepaused.setCycleCount(Timeline.INDEFINITE);
-//    	    MenuScreen.timepaused.play();
-/////            
-///            double 		pauseDouble = 0.0;
-///            Duration	pauseStart;
-///            pauseStart.seconds(pauseDouble);
-///            MenuScreen.timepaused.playFrom(pauseStart);
-/////            
+
         });
         VBox layout3 = new VBox(20);
         layout3.getChildren().addAll(buttonMenu);
@@ -152,8 +136,8 @@ public class KingsTableProgram extends Application {
         hboxTOP.setSpacing(295);
         gameBorder.setTop(hboxTOP);
 
-        
-        
+
+
      // LEFT (white Game Pieces graveyard)------------
         VBox vboxLeft = new VBox();
         vboxLeft.setSpacing(10);
@@ -177,11 +161,11 @@ public class KingsTableProgram extends Application {
         //vboxRight.setPrefHeight(100);
         // vboxRight.setStyle("-fx-background-color: #D3D3D3;"); //for visual testing
         gameBorder.setRight(vboxRight);
-        
-        
-        
-        
-        
+
+
+
+
+
         // Center Pause Menu/Game Over Screen ---------------------
         StackPane PauseScreen = new StackPane();
         VBox pauseScreenItems = new VBox();
@@ -196,7 +180,7 @@ public class KingsTableProgram extends Application {
         // Achievements
         Label achievementsText = new Label();
         Label winText = new Label();
-        
+
         //Button buttonMenu = new Button("Menu"); // Menu Button
         pauseScreenText.setText("Pause Menu");
         Region pauseSpacer1 = new Region(); // spacer
@@ -233,7 +217,7 @@ public class KingsTableProgram extends Application {
             exitButton.setStyle("-fx-background-color: #B8860B");
         });
         exitButton.setOnAction(event -> primaryStage.getScene().getWindow().hide());
-        
+
         Button restartButton = new Button("Restart"); // Menu Button
         //restartButton.resize(50, 50);
         restartButton.setStyle("-fx-background-color: #B8860B");
@@ -251,7 +235,7 @@ public class KingsTableProgram extends Application {
         											System.out.println("Restarted Game");});
         exitButton.setMaxSize(200, 150);
         restartButton.setMaxSize(200, 150);
-        
+
         pauseScreenItems.getChildren().addAll(pauseScreenText,
         										pauseSpacer1,
         										movesText,
@@ -266,9 +250,9 @@ public class KingsTableProgram extends Application {
         PauseScreen.getChildren().addAll(pauseScreenItems);
         pauseScreenItems.setAlignment(Pos.TOP_CENTER);
 
-        
-        
-        
+
+
+
         // CENTER (Game Table)-----------
         gridPaneGAME.setAlignment(Pos.CENTER);
         for (int i = 0; i < KingsTableProgram.boardSize; i++) {
@@ -325,7 +309,7 @@ public class KingsTableProgram extends Application {
                                     	timeScore = 20;
                                     }
                                     timePassedText.setText("Time..............."+(MenuScreen.timeDifference/1000)/60+"mins.... +"+timeScore+"pts");
-                                    
+
                                     if(doubleCaptureCounter > 0 || tripleCaptureCounter > 0) {
                                     	//Achievements
                                     	achievementsText.setText("Multiple Captures......."+
@@ -337,7 +321,7 @@ public class KingsTableProgram extends Application {
                                     gridPaneGAME.getChildren().addAll(PauseScreen);
                                     gameBorder.setCenter(PauseScreen);
                                     MenuScreen.timeline.stop();
-                               
+
                                 }
                             }
 
@@ -599,7 +583,7 @@ public class KingsTableProgram extends Application {
                                 	timeScore = 20;
                                 }
                                 timePassedText.setText("Time..............."+(MenuScreen.timeDifference/1000)/60+"mins.... +"+timeScore+"pts");
-                                
+
                                 if(doubleCaptureCounter > 0 || tripleCaptureCounter > 0) {
                                 	//Achievements
                                 	achievementsText.setText("Multiple Captures......."+
@@ -741,7 +725,7 @@ public class KingsTableProgram extends Application {
 
         // Show Game ------------
         // Draw Pieces
-        
+
         if (KingsTableProgram.board.score > currentScore ) {
         	// logic for incrementing score in GUI
         	currentScore = KingsTableProgram.board.getScore();
