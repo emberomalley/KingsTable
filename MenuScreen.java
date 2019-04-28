@@ -30,6 +30,7 @@ public class MenuScreen {
     public static 		Timeline 			timepaused 			= new Timeline(); 
     public static 		long 				timePauseValue		= 0;
     public static 		Label 				timeLabel 			= new Label();
+    public static		long				timeDifference		= 0;
 	public static void 	display(Stage primaryStage) {
 		
 	   
@@ -98,7 +99,7 @@ public class MenuScreen {
 	            	                    event -> {
 	            	                        long currentTime = System.currentTimeMillis();// stores system time into the currentTime variable
 	            	                        final long diff = currentTime - startTime - timePauseValue;
-
+	            	                        MenuScreen.timeDifference = diff;
 	            	                        if (diff <= 0) {
 	            	                            timeLabel.setText("00:00");
 	            	                            timeLabel.setText(timeFormat.format(0));
