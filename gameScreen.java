@@ -19,10 +19,6 @@ public class gameScreen {
 	public gameScreen() {
 		Board board = new Board();
 		int boardSize = board.getSize(); //always Odd# x Odd#, usually 11x11 or 13x13
-		int tileSize = board.getTileSize(); //px size of the grid boxes
-		   
-		Group titleGroup = new Group();
-		Group pieceGroup = new Group();
 		   
 		Color c1 = Color.WHITE; //default colors
 		Color c2 = Color.GRAY;
@@ -32,8 +28,6 @@ public class gameScreen {
 		hbox.setStyle("-fx-background-color: #336699;");
 	    Button buttonMenu = new Button("///");
 	    buttonMenu.setSize(50,50);
-	    Label gameTitle = new Label("Kings Table");
-	    //hbox.getChildren().addAll(buttonMenu,gameTitle);
 	    border.setTop(hbox);
 	    JFrame kingsBoard = new JFrame();
 		kingsBoard.setSize(800,800);
