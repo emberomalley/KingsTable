@@ -116,6 +116,7 @@ public class KingsTableProgram extends Application {
             primaryStage.setTitle("Kings Table");
             primaryStage.setScene(Config.menu);
             MenuScreen.timeline.pause();
+            MenuScreen.timePauseValue=MenuScreen.currentTime;
             KingsTableProgram.illegalPiece = 2;
 /////
 //         long startPause = System.currentTimeMillis();            
