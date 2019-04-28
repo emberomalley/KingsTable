@@ -28,7 +28,6 @@ public class MenuScreen {
     public static 		KingsTableProgram 	KingsTableProgram 	= new KingsTableProgram();  
     public static 		Timeline 			timeline 			= new Timeline();
     public static 		Timeline 			timepaused 			= new Timeline(); 
-    public static 		long 				timePauseValue		= 0;
     public static 		Label 				timeLabel 			= new Label();
     public static		long				timeDifference		= 0;
 	public static void 	display(Stage primaryStage) {
@@ -98,7 +97,7 @@ public class MenuScreen {
 	            	                    Duration.seconds(1),
 	            	                    event -> {
 	            	                        long currentTime = System.currentTimeMillis();// stores system time into the currentTime variable
-	            	                        final long diff = currentTime - startTime - timePauseValue;
+	            	                        final long diff = currentTime - startTime;
 	            	                        MenuScreen.timeDifference = diff;
 	            	                        if (diff <= 0) {
 	            	                            timeLabel.setText("00:00");
