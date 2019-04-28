@@ -1,13 +1,8 @@
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -21,7 +16,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -35,8 +29,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import java.util.List;
 
-import com.sun.glass.ui.Timer;
-
 public class KingsTableProgram extends Application {
 
     public static Board board = new Board();
@@ -45,8 +37,6 @@ public class KingsTableProgram extends Application {
     public static Node selected;
     public static int boardSize = board.getSize(); // always Odd# x Odd#, usually 11x11 or 13x13
     public static int tileSize = board.getTileSize(); // px size of the grid boxes
-    private Group tileGroup = new Group();
-    private Group pieceGroup = new Group();
     public static Color regSquareColor = Color.WHITE; // default colors
     public static Color kingSquareColor = Color.GRAY;
     public static Color textColor = Color.DARKGOLDENROD;
