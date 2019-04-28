@@ -85,6 +85,7 @@ public class KingsTableProgram extends Application {
         Label userScore = new Label("Score: " + KingsTableProgram.board.score);
         Label timerText = new Label("");
 
+
         // Screen Size
         int gameWidth = 1000;
         int gameHeight = 700;
@@ -557,7 +558,7 @@ public class KingsTableProgram extends Application {
 
                             //Check if the user is playing the AI here.
                             if (primaryStage.getTitle() == "Kings Table: One Player Mode") {
-                                timerText.setText("Timer: ");
+                                
                                 //This returns the coordinates of the piece to move and the coordinates of where to move it.
                                 List<Integer> coords = KingsTableProgram.board.moveAttacker();
                                 if (coords != null) {
