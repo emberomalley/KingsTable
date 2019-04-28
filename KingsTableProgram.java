@@ -93,42 +93,37 @@ public class KingsTableProgram extends Application {
 
         
         
-        // TOP PROTION OF GAME SCREEN (Menu Button and Title of Game Scene)------------
+        // TOP PROTION OF GAME SCREEN (Menu Button and Title of Game Scene)-------------------------------------------
         HBox hboxTOP = new HBox();
         hboxTOP.setAlignment(Pos.TOP_LEFT);
         hboxTOP.setPadding(new Insets(15, 0, 15, 5));// top,right,bottom,left
         Button buttonMenu = new Button("Menu"); // Menu Button
         buttonMenu.resize(50, 50);
         buttonMenu.setStyle("-fx-background-color: #B8860B");
-        buttonMenu.setOnMouseEntered(event -> { //
-            // highlight
+        buttonMenu.setOnMouseEntered(event -> { //highlight when hovering
             buttonMenu.setStyle("-fx-background-color: #FFD700");
         });
         buttonMenu.setOnMouseExited(event -> {
             buttonMenu.setStyle("-fx-background-color: #B8860B");
         });
-
         Text gameTitle = new Text("King's Table");
-        //click button and go back to menu screen
-        buttonMenu.setOnAction(event -> {
+        buttonMenu.setOnAction(event -> { //click button and go back to menu screen
             primaryStage.setTitle("Kings Table");
             primaryStage.setScene(Config.menu);
             MenuScreen.timeline.pause();
             KingsTableProgram.illegalPiece = 2;
-
         });
-        VBox layout3 = new VBox(20);
-        layout3.getChildren().addAll(buttonMenu);
-        ////
         gameTitle.setFill(KingsTableProgram.textColor);
         gameTitle.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK)); // Radius, offsetX, offsetY, color
         gameTitle.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 50));
         hboxTOP.getChildren().addAll(buttonMenu, gameTitle);
-////////                hboxTOP.getChildren().addAll(buttonMenu, buttonHelp, gameTitle);
         hboxTOP.setSpacing(295);
         gameBorder.setTop(hboxTOP);
 
-        // LEFT PROTION OF GAME SCREEN (white Game Pieces graveyard)------------
+        
+        
+        
+        // LEFT PROTION OF GAME SCREEN (white Game Pieces graveyard)--------------------------------------------
         VBox vboxLeft = new VBox();
         vboxLeft.setSpacing(10);
         vboxLeft.setAlignment(Pos.BOTTOM_LEFT);
@@ -138,7 +133,7 @@ public class KingsTableProgram extends Application {
         vboxLeft.getChildren().addAll(placeHolderD);
         gameBorder.setLeft(vboxLeft);
 
-        // RIGHT PROTION OF GAME SCREEN (black Game Pieces graveyard)------------
+        // RIGHT PROTION OF GAME SCREEN (black Game Pieces graveyard)-------------------------------------------
         HBox rightSide = new HBox();
         VBox vboxRight = new VBox();
         vboxRight.setSpacing(10);
@@ -147,6 +142,7 @@ public class KingsTableProgram extends Application {
         Circle placeHolderA = new Circle(KingsTableProgram.tileSize / 3);
         placeHolderA.setFill(Color.TRANSPARENT);
         vboxRight.getChildren().addAll(placeHolderA);
+        
         VBox vboxRightOverflow = new VBox();
         vboxRightOverflow.setSpacing(10);
         vboxRightOverflow.setAlignment(Pos.BOTTOM_LEFT);
@@ -157,29 +153,20 @@ public class KingsTableProgram extends Application {
         rightSide.getChildren().addAll(vboxRight, vboxRightOverflow);
         gameBorder.setRight(rightSide);
 
-        // Center Pause Menu/Game Over Screen ---------------------
+        // ----- CENTER Game Over Screen --------------------------------------------------
         StackPane PauseScreen = new StackPane();
         VBox pauseScreenItems = new VBox();
         pauseScreenItems.setSpacing(20);
-        //PauseScreen.setAlignment(Pos.TOP_LEFT);
         PauseScreen.setPadding(new Insets(15, 15, 15, 15));// top,right,bottom,left
-        Label pauseScreenText = new Label();
-        Label movesText = new Label();
-        Label piecesCapturedText = new Label();
-        Label timePassedText = new Label();
-        Label totalScoreText = new Label();
+        Label pauseScreenText = new Label("Pause Menu"); //for implementation if this screen could also be used as pause menu
+        Label movesText = new Label("");
+        Label piecesCapturedText = new Label("");
+        Label timePassedText = new Label("");
+        Label totalScoreText = new Label("");
         // Achievements
-        Label achievementsText = new Label();
-        Label winText = new Label();
-
-        //Button buttonMenu = new Button("Menu"); // Menu Button
-        pauseScreenText.setText("Pause Menu");
-        Region pauseSpacer1 = new Region(); // spacer
-        VBox.setVgrow(pauseSpacer1, Priority.ALWAYS);
-        movesText.setText("");
-        piecesCapturedText.setText("");
-        timePassedText.setText("");
-        totalScoreText.setText("");
+        Label achievementsText = new Label("");
+        Label winText = new Label("");
+        // Label GUI
         movesText.setTextFill(KingsTableProgram.textColor);
         movesText.setFont(Font.font(KingsTableProgram.textFont, 20));
         piecesCapturedText.setTextFill(KingsTableProgram.textColor);
@@ -194,101 +181,93 @@ public class KingsTableProgram extends Application {
         winText.setFont(Font.font(KingsTableProgram.textFont, 20));
         pauseScreenText.setTextFill(KingsTableProgram.textColor);
         pauseScreenText.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 50));
-        PauseScreen.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5)");
+        // Spacers for styling and aesthetic
+        Region pauseSpacer1 = new Region();
+        VBox.setVgrow(pauseSpacer1, Priority.ALWAYS);
         Region pauseSpacer2 = new Region();
         VBox.setVgrow(pauseSpacer2, Priority.ALWAYS);
-        Button exitButton = new Button("Exit"); // Menu Button
-        //exitButton.resize(50, 50);
+        // Buttons
+        Button exitButton = new Button("Exit"); 
         exitButton.setStyle("-fx-background-color: #B8860B");
-        exitButton.setOnMouseEntered(event -> { //
-            // highlight
+        exitButton.setOnMouseEntered(event -> { //highlight
             exitButton.setStyle("-fx-background-color: #FFD700");
         });
         exitButton.setOnMouseExited(event -> {
             exitButton.setStyle("-fx-background-color: #B8860B");
         });
-        exitButton.setOnAction(event -> primaryStage.getScene().getWindow().hide());
+        exitButton.setOnAction(event -> primaryStage.getScene().getWindow().hide()); //close window
 
-        Button restartButton = new Button("Restart"); // Menu Button
-        //restartButton.resize(50, 50);
+        Button restartButton = new Button("Restart");
         restartButton.setStyle("-fx-background-color: #B8860B");
-        restartButton.setOnMouseEntered(event -> { //
-            // highlight
+        restartButton.setOnMouseEntered(event -> { //highlight
             restartButton.setStyle("-fx-background-color: #FFD700");
         });
         restartButton.setOnMouseExited(event -> {
             restartButton.setStyle("-fx-background-color: #B8860B");
         });
 
-        restartButton.setOnAction(clickToGame -> { //PauseScreen.setVisible(false);
-            MenuScreen.startTime = System.currentTimeMillis();
-            MenuScreen.timeline.play();
-            //gridPaneGAME.getChildren().remove(PauseScreen);
-            gameBorder.setCenter(gridPaneGAME); //TODO
-            for (int i = 0; i < KingsTableProgram.boardSize; i++) {
-                for (int j = 0; j < KingsTableProgram.boardSize; j++) {
-                    if ((KingsTableProgram.board.getPieceType(i, j)) > 0) {
-                        gridPaneGAME.getChildren().remove(getPieceAtPosition(i, j, gridPaneGAME));
-                    }
-                }
-            }
-            board = new Board();
-            userScore.setText("Score: " + KingsTableProgram.board.score);
-            for (int i = 0; i < KingsTableProgram.boardSize; i++) {
-                for (int j = 0; j < KingsTableProgram.boardSize; j++) {
-                    if (KingsTableProgram.board.boardState[i][j] != 0) {
-                        Circle piece = new Circle(KingsTableProgram.tileSize / 3);
-                        //Defender
-                        if (KingsTableProgram.board.boardState[i][j] == 1) {
-                            piece.setFill(new ImagePattern(dpImage));
-                            //Attacker
-                        } else if (KingsTableProgram.board.boardState[i][j] == 2) {
-                            piece.setFill(new ImagePattern(apImage));
-                            //King
-                        } else if (KingsTableProgram.board.boardState[i][j] == 3) {
-                            piece.setRadius(KingsTableProgram.tileSize / 2);
-                            piece.setFill(new ImagePattern(dpImage));
-                        }
-                        GridPane.setRowIndex(piece, i);
-                        GridPane.setColumnIndex(piece, j);
-                        GridPane.setHalignment(piece, HPos.CENTER);
-                        piece.setId("piece");
-                        piece.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK)); // Radius, offsetX, offsetY, color
-
-                        //Determine which pieces, if any, the player cannot control.
-                        piece.setOnMouseEntered(event -> { // we can add a thing here where if it is the player's piece it will
-                            // highlight
-                            //Change this condition to specify which pieces can be highlighted.
-                            if (KingsTableProgram.board.boardState[GridPane.getRowIndex(piece)][GridPane.getColumnIndex(piece)] != KingsTableProgram.illegalPiece
-                                    && KingsTableProgram.board.boardState[GridPane.getRowIndex(piece)][GridPane.getColumnIndex(piece)] != KingsTableProgram.illegalPiece + 2) {
-                                piece.setEffect(new InnerShadow(+30d, 0d, 0d, Color.GOLD));
-                            }
-                        });
-                        // Click this piece, save to a global last clicked value
-                        // Remove last clicked image location replace on new clicked location
-                        piece.setOnMouseClicked(event -> {
-                            if (selected == piece) { //piece is already selected
-                                selected = null;
-                                piece.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK));
-                                //Change this condition to specify which pieces can be selected
-                            } else if (selected == null && (KingsTableProgram.board.boardState[GridPane.getRowIndex(piece)][GridPane.getColumnIndex(piece)] != KingsTableProgram.illegalPiece)
-                                    && KingsTableProgram.board.boardState[GridPane.getRowIndex(piece)][GridPane.getColumnIndex(piece)] != KingsTableProgram.illegalPiece + 2) {
-                                selected = piece;
-                                piece.setEffect(new InnerShadow(+30d, 0d, 0d, Color.GOLD));
-                            }
-                        });
-                        piece.setOnMouseExited(event -> {
-                            if (selected != piece) {
-                                piece.setEffect(new InnerShadow(+6d, 0d, 0d, Color.BLACK));
-                            }
-                        });
-                        gridPaneGAME.getChildren().addAll(piece);
-                    }
-                }
-            }
-
-            System.out.println("Restarted Game");
-        });
+        restartButton.setOnAction(clickToGame -> { // Reset Entire Game
+										            MenuScreen.startTime = System.currentTimeMillis();
+										            MenuScreen.timeline.play();
+										            gameBorder.setCenter(gridPaneGAME); 
+										            for (int i = 0; i < KingsTableProgram.boardSize; i++) {
+										                for (int j = 0; j < KingsTableProgram.boardSize; j++) {
+										                    if ((KingsTableProgram.board.getPieceType(i, j)) > 0) {
+										                        gridPaneGAME.getChildren().remove(getPieceAtPosition(i, j, gridPaneGAME));
+										                    }
+										                }
+										            }
+										            board = new Board();
+										            userScore.setText("Score: " + KingsTableProgram.board.score);
+										            for (int i = 0; i < KingsTableProgram.boardSize; i++) {
+										                for (int j = 0; j < KingsTableProgram.boardSize; j++) {
+										                    if (KingsTableProgram.board.boardState[i][j] != 0) {
+										                        Circle piece = new Circle(KingsTableProgram.tileSize / 3);
+										                        //Defender
+										                        if (KingsTableProgram.board.boardState[i][j] == 1) {
+										                            piece.setFill(new ImagePattern(dpImage));
+										                            //Attacker
+										                        } else if (KingsTableProgram.board.boardState[i][j] == 2) {
+										                            piece.setFill(new ImagePattern(apImage));
+										                            //King
+										                        } else if (KingsTableProgram.board.boardState[i][j] == 3) {
+										                            piece.setRadius(KingsTableProgram.tileSize / 2);
+										                            piece.setFill(new ImagePattern(dpImage));
+										                        }
+										                        GridPane.setRowIndex(piece, i);
+										                        GridPane.setColumnIndex(piece, j);
+										                        GridPane.setHalignment(piece, HPos.CENTER);
+										                        piece.setId("piece");
+										                        piece.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK)); // Radius, offsetX, offsetY, color
+										                        piece.setOnMouseEntered(event -> {
+										                            if (KingsTableProgram.board.boardState[GridPane.getRowIndex(piece)][GridPane.getColumnIndex(piece)] != KingsTableProgram.illegalPiece
+										                                    && KingsTableProgram.board.boardState[GridPane.getRowIndex(piece)][GridPane.getColumnIndex(piece)] != KingsTableProgram.illegalPiece + 2) {
+										                                piece.setEffect(new InnerShadow(+30d, 0d, 0d, Color.GOLD));
+										                            }
+										                        });
+										                        piece.setOnMouseClicked(event -> {
+										                            if (selected == piece) { //piece is already selected
+										                                selected = null;
+										                                piece.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK));
+										                                //Change this condition to specify which pieces can be selected
+										                            } else if (selected == null && (KingsTableProgram.board.boardState[GridPane.getRowIndex(piece)][GridPane.getColumnIndex(piece)] != KingsTableProgram.illegalPiece)
+										                                    && KingsTableProgram.board.boardState[GridPane.getRowIndex(piece)][GridPane.getColumnIndex(piece)] != KingsTableProgram.illegalPiece + 2) {
+										                                selected = piece;
+										                                piece.setEffect(new InnerShadow(+30d, 0d, 0d, Color.GOLD));
+										                            }
+										                        });
+										                        piece.setOnMouseExited(event -> {
+										                            if (selected != piece) {
+										                                piece.setEffect(new InnerShadow(+6d, 0d, 0d, Color.BLACK));
+										                            }
+										                        });
+										                        gridPaneGAME.getChildren().addAll(piece);
+										                    }
+										                }
+										            }
+										
+										            System.out.println("Restarted Game");
+										        });
         exitButton.setMaxSize(200, 150);
         restartButton.setMaxSize(200, 150);
 
@@ -304,8 +283,14 @@ public class KingsTableProgram extends Application {
                 restartButton,
                 exitButton);
         PauseScreen.getChildren().addAll(pauseScreenItems);
+        PauseScreen.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5)"); // make pause screen opaque
         pauseScreenItems.setAlignment(Pos.TOP_CENTER);
 
+        
+        
+        
+        
+        
         // CENTER PROTION OF GAME SCREEN (Game Table)-----------
         gridPaneGAME.setAlignment(Pos.CENTER);
         for (int i = 0; i < KingsTableProgram.boardSize; i++) {
