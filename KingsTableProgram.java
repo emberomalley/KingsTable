@@ -40,7 +40,7 @@ import com.sun.glass.ui.Timer;
 public class KingsTableProgram extends Application {
 
     public static Board board = new Board();
-    public static MenuScreen MenuScreen = new MenuScreen();
+    //public static MenuScreen MenuScreen = new MenuScreen();
     // public static gameScreen gameScreen = new gameScreen();
     public static Node selected;
     public static int boardSize = board.getSize(); // always Odd# x Odd#, usually 11x11 or 13x13
@@ -58,6 +58,8 @@ public class KingsTableProgram extends Application {
     public static int currentScore = 0;
     public static int overflowRight = 0;
     public static int overflowLeft = 0;
+    public static boolean singlePlayerMode = true;
+    
 
     public static void game() {
 
@@ -193,10 +195,10 @@ public class KingsTableProgram extends Application {
         pauseScreenText.setText("Pause Menu");
         Region pauseSpacer1 = new Region(); // spacer
         VBox.setVgrow(pauseSpacer1, Priority.ALWAYS);
-        movesText.setText("Moves..............__.... x5pts");
-        piecesCapturedText.setText("Pieces Captured....__.... x5pts");
-        timePassedText.setText("Time...............__.... x5pts");
-        totalScoreText.setText("TOTAL SCORE........__.... x5pts");
+        movesText.setText("");
+        piecesCapturedText.setText("");
+        timePassedText.setText("");
+        totalScoreText.setText("");
         movesText.setTextFill(KingsTableProgram.textColor);
         movesText.setFont(Font.font(KingsTableProgram.textFont, 20));
         piecesCapturedText.setTextFill(KingsTableProgram.textColor);
@@ -355,31 +357,34 @@ public class KingsTableProgram extends Application {
                                         || (Integer.parseInt(coordinates[0]) == (boardSize - 1) && (Integer.parseInt(coordinates[1]) == 0 || Integer.parseInt(coordinates[1]) == (boardSize - 1)))) {
                                     System.out.println("Defenders Win!");
                                     pauseScreenText.setText("Defenders Win!");
-                                    winText.setText("Victory!..................... +500pts");
-                                    movesText.setText("Moves.............." + KingsTableProgram.board.moves + ".... x5pts");
-                                    piecesCapturedText.setText("Pieces Captured...." + pieceCaptureCounter + ".... x10pts");
-                                    int timeScore = 0;
-                                    if ((MenuScreen.timeDifference / 1000) / 60 <= 2) {
-                                        timeScore = 100;
-                                    } else if ((MenuScreen.timeDifference / 1000) / 60 <= 5) {
-                                        timeScore = 80;
-                                    } else if ((MenuScreen.timeDifference / 1000) / 60 <= 10) {
-                                        timeScore = 60;
-                                    } else if ((MenuScreen.timeDifference / 1000) / 60 <= 15) {
-                                        timeScore = 40;
-                                    } else if ((MenuScreen.timeDifference / 1000) / 60 <= 20) {
-                                        timeScore = 20;
-                                    }
-                                    timePassedText.setText("Time..............." + (MenuScreen.timeDifference / 1000) / 60 + "mins.... +" + timeScore + "pts");
+                                    if (MenuScreen.playerMode == 1) {
+                                    	winText.setText("Victory!..................... +500pts");
+                                        movesText.setText("Moves.............." + KingsTableProgram.board.moves + ".... x5pts");
+                                        piecesCapturedText.setText("Pieces Captured...." + pieceCaptureCounter + ".... x10pts");
+                                        int timeScore = 0;
+                                        if ((MenuScreen.timeDifference / 1000) / 60 <= 2) {
+                                            timeScore = 100;
+                                        } else if ((MenuScreen.timeDifference / 1000) / 60 <= 5) {
+                                            timeScore = 80;
+                                        } else if ((MenuScreen.timeDifference / 1000) / 60 <= 10) {
+                                            timeScore = 60;
+                                        } else if ((MenuScreen.timeDifference / 1000) / 60 <= 15) {
+                                            timeScore = 40;
+                                        } else if ((MenuScreen.timeDifference / 1000) / 60 <= 20) {
+                                            timeScore = 20;
+                                        }
+                                        timePassedText.setText("Time..............." + (MenuScreen.timeDifference / 1000) / 60 + "mins.... +" + timeScore + "pts");
 
-                                    if (doubleCaptureCounter > 0 || tripleCaptureCounter > 0) {
-                                        //Achievements
-                                        achievementsText.setText("Multiple Captures......."
-                                                + (doubleCaptureCounter + tripleCaptureCounter)
-                                                + "....+" + ((doubleCaptureCounter * 100) + (tripleCaptureCounter * 200))
-                                                + "pts");
+                                        if (doubleCaptureCounter > 0 || tripleCaptureCounter > 0) {
+                                            //Achievements
+                                            achievementsText.setText("Multiple Captures......."
+                                                    + (doubleCaptureCounter + tripleCaptureCounter)
+                                                    + "....+" + ((doubleCaptureCounter * 100) + (tripleCaptureCounter * 200))
+                                                    + "pts");
+                                        }
+                                        totalScoreText.setText("TOTAL SCORE........" + (500 + (KingsTableProgram.board.moves * 5) + KingsTableProgram.board.score + timeScore + (doubleCaptureCounter * 100) + (tripleCaptureCounter * 200)));
                                     }
-                                    totalScoreText.setText("TOTAL SCORE........" + (500 + (KingsTableProgram.board.moves * 5) + KingsTableProgram.board.score + timeScore + (doubleCaptureCounter * 100) + (tripleCaptureCounter * 200)));
+                                    
                                     gridPaneGAME.getChildren().addAll(PauseScreen);
                                     gameBorder.setCenter(PauseScreen);
                                     MenuScreen.timeline.stop();
@@ -524,30 +529,33 @@ public class KingsTableProgram extends Application {
                                 //Attackers win.
                                 System.out.println("Attackers Win!");
                                 pauseScreenText.setText("Attackers Win!");
-                                movesText.setText("Moves.............." + KingsTableProgram.board.moves + ".... x5pts");
-                                piecesCapturedText.setText("Pieces Captured...." + pieceCaptureCounter + ".... x10pts");
-                                int timeScore = 0;
-                                if ((MenuScreen.timeDifference / 1000) / 60 <= 2) {
-                                    timeScore = 100;
-                                } else if ((MenuScreen.timeDifference / 1000) / 60 <= 5) {
-                                    timeScore = 80;
-                                } else if ((MenuScreen.timeDifference / 1000) / 60 <= 10) {
-                                    timeScore = 60;
-                                } else if ((MenuScreen.timeDifference / 1000) / 60 <= 15) {
-                                    timeScore = 40;
-                                } else if ((MenuScreen.timeDifference / 1000) / 60 <= 20) {
-                                    timeScore = 20;
-                                }
-                                timePassedText.setText("Time..............." + (MenuScreen.timeDifference / 1000) / 60 + "mins.... +" + timeScore + "pts");
+                                if (MenuScreen.playerMode == 1) {
+                                	winText.setText("Victory!..................... +500pts");
+                                    movesText.setText("Moves.............." + KingsTableProgram.board.moves + ".... x5pts");
+                                    piecesCapturedText.setText("Pieces Captured...." + pieceCaptureCounter + ".... x10pts");
+                                    int timeScore = 0;
+                                    if ((MenuScreen.timeDifference / 1000) / 60 <= 2) {
+                                        timeScore = 100;
+                                    } else if ((MenuScreen.timeDifference / 1000) / 60 <= 5) {
+                                        timeScore = 80;
+                                    } else if ((MenuScreen.timeDifference / 1000) / 60 <= 10) {
+                                        timeScore = 60;
+                                    } else if ((MenuScreen.timeDifference / 1000) / 60 <= 15) {
+                                        timeScore = 40;
+                                    } else if ((MenuScreen.timeDifference / 1000) / 60 <= 20) {
+                                        timeScore = 20;
+                                    }
+                                    timePassedText.setText("Time..............." + (MenuScreen.timeDifference / 1000) / 60 + "mins.... +" + timeScore + "pts");
 
-                                if (doubleCaptureCounter > 0 || tripleCaptureCounter > 0) {
-                                    //Achievements
-                                    achievementsText.setText("Multiple Captures......."
-                                            + (doubleCaptureCounter + tripleCaptureCounter)
-                                            + "....+" + ((doubleCaptureCounter * 100) + (tripleCaptureCounter * 200))
-                                            + "pts");
+                                    if (doubleCaptureCounter > 0 || tripleCaptureCounter > 0) {
+                                        //Achievements
+                                        achievementsText.setText("Multiple Captures......."
+                                                + (doubleCaptureCounter + tripleCaptureCounter)
+                                                + "....+" + ((doubleCaptureCounter * 100) + (tripleCaptureCounter * 200))
+                                                + "pts");
+                                    }
+                                    totalScoreText.setText("TOTAL SCORE........" + (500 + (KingsTableProgram.board.moves * 5) + KingsTableProgram.board.score + timeScore + (doubleCaptureCounter * 100) + (tripleCaptureCounter * 200)));
                                 }
-                                totalScoreText.setText("TOTAL SCORE........" + ((KingsTableProgram.board.moves * 5) + KingsTableProgram.board.score + timeScore + (doubleCaptureCounter * 100) + (tripleCaptureCounter * 200)));
                                 gridPaneGAME.getChildren().addAll(PauseScreen);
                                 gameBorder.setCenter(PauseScreen);
                                 MenuScreen.timeline.stop();
