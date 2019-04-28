@@ -23,6 +23,7 @@ public class Board {
 
     //Constructor
     public Board() {
+    	score = 0;
         //Set up the empty board.
         //These are positions for the 11x11 board. Modify later to depend on board dimensions.
         for (int i = 3; i <= 7; i++) {
@@ -280,7 +281,9 @@ public class Board {
     public int getScore() {
         return this.score;
     }  
-    
+    public void resetScore() {
+    	score = 0;
+    }
 
     public void printBoard() {
         for (int i = 0; i < size; i++) {
