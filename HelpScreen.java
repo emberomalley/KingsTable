@@ -66,7 +66,7 @@ public class HelpScreen {
 "●	The King starts in the center, surrounded by its defenders. The attackers start along the edges of the board.");
               helpText.setFont(Font.font(Config.textFont, FontWeight.SEMI_BOLD, FontPosture.REGULAR,14));
               helpText.setFill(Color.WHITESMOKE);
-
+              //more rules and instructions
               Text helpText2 = new Text(20,20, "User Interaction:\n"+
                       "To move pieces click on your desired piece and click on the square you want to move it to.");
               helpText2.setFont(Font.font(Config.textFont, FontWeight.SEMI_BOLD, FontPosture.REGULAR,14));
