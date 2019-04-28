@@ -35,12 +35,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import java.util.List;
 
-
 public class KingsTableProgram extends Application {
 
     public static Board board = new Board();
     public static MenuScreen MenuScreen = new MenuScreen();
-   // public static gameScreen gameScreen = new gameScreen();
+    // public static gameScreen gameScreen = new gameScreen();
     public static Node selected;
     public static int boardSize = board.getSize(); // always Odd# x Odd#, usually 11x11 or 13x13
     public static int tileSize = board.getTileSize(); // px size of the grid boxes
@@ -139,10 +138,7 @@ public class KingsTableProgram extends Application {
         hboxTOP.setSpacing(295);
         gameBorder.setTop(hboxTOP);
 
-
-
-     // LEFT (white Game Pieces graveyard)------------
-        
+        // LEFT (white Game Pieces graveyard)------------
         VBox vboxLeft = new VBox();
         vboxLeft.setSpacing(10);
         vboxLeft.setAlignment(Pos.BOTTOM_LEFT);
@@ -165,10 +161,6 @@ public class KingsTableProgram extends Application {
         //vboxRight.setPrefHeight(100);
         // vboxRight.setStyle("-fx-background-color: #D3D3D3;"); //for visual testing
         gameBorder.setRight(vboxRight);
-
-
-
-
 
         // Center Pause Menu/Game Over Screen ---------------------
         StackPane PauseScreen = new StackPane();
@@ -227,93 +219,97 @@ public class KingsTableProgram extends Application {
         restartButton.setStyle("-fx-background-color: #B8860B");
         restartButton.setOnMouseEntered(event -> { //
             // highlight
-        	restartButton.setStyle("-fx-background-color: #FFD700");
+            restartButton.setStyle("-fx-background-color: #FFD700");
         });
         restartButton.setOnMouseExited(event -> {
-        	restartButton.setStyle("-fx-background-color: #B8860B");
+            restartButton.setStyle("-fx-background-color: #B8860B");
         });
-        restartButton.setOnAction(clickToGame -> { PauseScreen.setVisible(false);
-        											//gridPaneGAME.getChildren().remove(PauseScreen);
-        											gameBorder.setCenter(gridPaneGAME); //TODO
-        											for (int i=0; i<KingsTableProgram.boardSize; i++) {
-        												for (int j=0; j<KingsTableProgram.boardSize; j++) {
-        													if ((KingsTableProgram.board.getPieceType(i, j)) > 0) {
-        														gridPaneGAME.getChildren().remove(getPieceAtPosition(i, j, gridPaneGAME));
-        													}
-        												}
-        											}
-        											board = new Board();
-        											userScore.setText("Score: " + KingsTableProgram.board.score);
-        											for (int i = 0; i < KingsTableProgram.boardSize; i++) {
-        									            for (int j = 0; j < KingsTableProgram.boardSize; j++) {
-        									                if (KingsTableProgram.board.boardState[i][j] != 0) {
-        									                    Circle piece = new Circle(KingsTableProgram.tileSize / 3);
-        									                    //Defender
-        									                    if (KingsTableProgram.board.boardState[i][j] == 1) {
-        									                        piece.setFill(new ImagePattern(dpImage));
-        									                        //Attacker
-        									                    } else if (KingsTableProgram.board.boardState[i][j] == 2) {
-        									                        piece.setFill(new ImagePattern(apImage));
-        									                        //King
-        									                    } else if (KingsTableProgram.board.boardState[i][j] == 3) {
-        									                        piece.setRadius(KingsTableProgram.tileSize / 2);
-        									                        piece.setFill(new ImagePattern(dpImage));
-        									                    }
-        									                    GridPane.setRowIndex(piece, i);
-        									                    GridPane.setColumnIndex(piece, j);
-        									                    GridPane.setHalignment(piece, HPos.CENTER);
-        									                    piece.setId("piece");
-        									                    piece.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK)); // Radius, offsetX, offsetY, color
+        restartButton.setOnAction(clickToGame -> {
+            PauseScreen.setVisible(false);
+            MenuScreen.startTime = System.currentTimeMillis();
+            MenuScreen.timeline.play();
+            //gridPaneGAME.getChildren().remove(PauseScreen);
+            gameBorder.setCenter(gridPaneGAME); //TODO
+            for (int i = 0; i < KingsTableProgram.boardSize; i++) {
+                for (int j = 0; j < KingsTableProgram.boardSize; j++) {
+                    if ((KingsTableProgram.board.getPieceType(i, j)) > 0) {
+                        gridPaneGAME.getChildren().remove(getPieceAtPosition(i, j, gridPaneGAME));
+                    }
+                }
+            }
+            board = new Board();
+            userScore.setText("Score: " + KingsTableProgram.board.score);
+            for (int i = 0; i < KingsTableProgram.boardSize; i++) {
+                for (int j = 0; j < KingsTableProgram.boardSize; j++) {
+                    if (KingsTableProgram.board.boardState[i][j] != 0) {
+                        Circle piece = new Circle(KingsTableProgram.tileSize / 3);
+                        //Defender
+                        if (KingsTableProgram.board.boardState[i][j] == 1) {
+                            piece.setFill(new ImagePattern(dpImage));
+                            //Attacker
+                        } else if (KingsTableProgram.board.boardState[i][j] == 2) {
+                            piece.setFill(new ImagePattern(apImage));
+                            //King
+                        } else if (KingsTableProgram.board.boardState[i][j] == 3) {
+                            piece.setRadius(KingsTableProgram.tileSize / 2);
+                            piece.setFill(new ImagePattern(dpImage));
+                        }
+                        GridPane.setRowIndex(piece, i);
+                        GridPane.setColumnIndex(piece, j);
+                        GridPane.setHalignment(piece, HPos.CENTER);
+                        piece.setId("piece");
+                        piece.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK)); // Radius, offsetX, offsetY, color
 
-        									                    //Determine which pieces, if any, the player cannot control.
-        									                    piece.setOnMouseEntered(event -> { // we can add a thing here where if it is the player's piece it will
-        									                        // highlight
-        									                        //Change this condition to specify which pieces can be highlighted.
-        									                        if (KingsTableProgram.board.boardState[GridPane.getRowIndex(piece)][GridPane.getColumnIndex(piece)] != KingsTableProgram.illegalPiece
-        									                                && KingsTableProgram.board.boardState[GridPane.getRowIndex(piece)][GridPane.getColumnIndex(piece)] != KingsTableProgram.illegalPiece + 2) {
-        									                            piece.setEffect(new InnerShadow(+30d, 0d, 0d, Color.GOLD));
-        									                        }
-        									                    });
-        									                    // Click this piece, save to a global last clicked value
-        									                    // Remove last clicked image location replace on new clicked location
-        									                    piece.setOnMouseClicked(event -> {
-        									                        if (selected == piece) { //piece is already selected
-        									                            selected = null;
-        									                            piece.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK));
-        									                            //Change this condition to specify which pieces can be selected
-        									                        } else if (selected == null && (KingsTableProgram.board.boardState[GridPane.getRowIndex(piece)][GridPane.getColumnIndex(piece)] != KingsTableProgram.illegalPiece)
-        									                                && KingsTableProgram.board.boardState[GridPane.getRowIndex(piece)][GridPane.getColumnIndex(piece)] != KingsTableProgram.illegalPiece + 2) {
-        									                            selected = piece;
-        									                            piece.setEffect(new InnerShadow(+30d, 0d, 0d, Color.GOLD));
-        									                        }
-        									                    });
-        									                    piece.setOnMouseExited(event -> {
-        									                        if (selected != piece) {
-        									                            piece.setEffect(new InnerShadow(+6d, 0d, 0d, Color.BLACK));
-        									                        }
-        									                    });
-        									                    gridPaneGAME.getChildren().addAll(piece);}}}
-        											
-        											System.out.println("Restarted Game");});
+                        //Determine which pieces, if any, the player cannot control.
+                        piece.setOnMouseEntered(event -> { // we can add a thing here where if it is the player's piece it will
+                            // highlight
+                            //Change this condition to specify which pieces can be highlighted.
+                            if (KingsTableProgram.board.boardState[GridPane.getRowIndex(piece)][GridPane.getColumnIndex(piece)] != KingsTableProgram.illegalPiece
+                                    && KingsTableProgram.board.boardState[GridPane.getRowIndex(piece)][GridPane.getColumnIndex(piece)] != KingsTableProgram.illegalPiece + 2) {
+                                piece.setEffect(new InnerShadow(+30d, 0d, 0d, Color.GOLD));
+                            }
+                        });
+                        // Click this piece, save to a global last clicked value
+                        // Remove last clicked image location replace on new clicked location
+                        piece.setOnMouseClicked(event -> {
+                            if (selected == piece) { //piece is already selected
+                                selected = null;
+                                piece.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK));
+                                //Change this condition to specify which pieces can be selected
+                            } else if (selected == null && (KingsTableProgram.board.boardState[GridPane.getRowIndex(piece)][GridPane.getColumnIndex(piece)] != KingsTableProgram.illegalPiece)
+                                    && KingsTableProgram.board.boardState[GridPane.getRowIndex(piece)][GridPane.getColumnIndex(piece)] != KingsTableProgram.illegalPiece + 2) {
+                                selected = piece;
+                                piece.setEffect(new InnerShadow(+30d, 0d, 0d, Color.GOLD));
+                            }
+                        });
+                        piece.setOnMouseExited(event -> {
+                            if (selected != piece) {
+                                piece.setEffect(new InnerShadow(+6d, 0d, 0d, Color.BLACK));
+                            }
+                        });
+                        gridPaneGAME.getChildren().addAll(piece);
+                    }
+                }
+            }
+
+            System.out.println("Restarted Game");
+        });
         exitButton.setMaxSize(200, 150);
         restartButton.setMaxSize(200, 150);
 
         pauseScreenItems.getChildren().addAll(pauseScreenText,
-        										pauseSpacer1,
-        										movesText,
-        										piecesCapturedText,
-        										timePassedText,
-        										winText,
-        										achievementsText,
-        										totalScoreText,
-        										pauseSpacer2,
-        										restartButton,
-        										exitButton);
+                pauseSpacer1,
+                movesText,
+                piecesCapturedText,
+                timePassedText,
+                winText,
+                achievementsText,
+                totalScoreText,
+                pauseSpacer2,
+                restartButton,
+                exitButton);
         PauseScreen.getChildren().addAll(pauseScreenItems);
         pauseScreenItems.setAlignment(Pos.TOP_CENTER);
-
-
-
 
         // CENTER (Game Table)-----------
         gridPaneGAME.setAlignment(Pos.CENTER);
@@ -352,42 +348,38 @@ public class KingsTableProgram extends Application {
                                     System.out.println("Defenders Win!");
                                     pauseScreenText.setText("Defenders Win!");
                                     winText.setText("Victory!..................... +500pts");
-                                    movesText.setText("Moves.............."+ KingsTableProgram.board.moves +".... x5pts");
-                                    piecesCapturedText.setText("Pieces Captured...."+ pieceCaptureCounter +".... x10pts");
+                                    movesText.setText("Moves.............." + KingsTableProgram.board.moves + ".... x5pts");
+                                    piecesCapturedText.setText("Pieces Captured...." + pieceCaptureCounter + ".... x10pts");
                                     int timeScore = 0;
-                                    if((MenuScreen.timeDifference/1000)/60 <= 2) {
-                                    	timeScore = 100;
+                                    if ((MenuScreen.timeDifference / 1000) / 60 <= 2) {
+                                        timeScore = 100;
+                                    } else if ((MenuScreen.timeDifference / 1000) / 60 <= 5) {
+                                        timeScore = 80;
+                                    } else if ((MenuScreen.timeDifference / 1000) / 60 <= 10) {
+                                        timeScore = 60;
+                                    } else if ((MenuScreen.timeDifference / 1000) / 60 <= 15) {
+                                        timeScore = 40;
+                                    } else if ((MenuScreen.timeDifference / 1000) / 60 <= 20) {
+                                        timeScore = 20;
                                     }
-                                    else if((MenuScreen.timeDifference/1000)/60 <= 5) {
-                                    	timeScore = 80;
-                                    }
-                                    else if((MenuScreen.timeDifference/1000)/60 <= 10) {
-                                    	timeScore = 60;
-                                    }
-                                    else if((MenuScreen.timeDifference/1000)/60 <= 15) {
-                                    	timeScore = 40;
-                                    }
-                                    else if((MenuScreen.timeDifference/1000)/60 <= 20) {
-                                    	timeScore = 20;
-                                    }
-                                    timePassedText.setText("Time..............."+(MenuScreen.timeDifference/1000)/60+"mins.... +"+timeScore+"pts");
+                                    timePassedText.setText("Time..............." + (MenuScreen.timeDifference / 1000) / 60 + "mins.... +" + timeScore + "pts");
 
-                                    if(doubleCaptureCounter > 0 || tripleCaptureCounter > 0) {
-                                    	//Achievements
-                                    	achievementsText.setText("Multiple Captures......."+
-                                    						(doubleCaptureCounter+tripleCaptureCounter)+
-                                    						"....+"+((doubleCaptureCounter * 100)+(tripleCaptureCounter * 200))+
-                                    						"pts");
+                                    if (doubleCaptureCounter > 0 || tripleCaptureCounter > 0) {
+                                        //Achievements
+                                        achievementsText.setText("Multiple Captures......."
+                                                + (doubleCaptureCounter + tripleCaptureCounter)
+                                                + "....+" + ((doubleCaptureCounter * 100) + (tripleCaptureCounter * 200))
+                                                + "pts");
                                     }
-                                    totalScoreText.setText("TOTAL SCORE........"+(500+(KingsTableProgram.board.moves * 5)+KingsTableProgram.board.score + timeScore+(doubleCaptureCounter*100)+(tripleCaptureCounter*200)));
+                                    totalScoreText.setText("TOTAL SCORE........" + (500 + (KingsTableProgram.board.moves * 5) + KingsTableProgram.board.score + timeScore + (doubleCaptureCounter * 100) + (tripleCaptureCounter * 200)));
                                     gridPaneGAME.getChildren().addAll(PauseScreen);
                                     gameBorder.setCenter(PauseScreen);
                                     MenuScreen.timeline.stop();
                                     // Clear Graveyards and re-add the placeholder pieces
                                     vboxLeft.getChildren().clear();
-									vboxRight.getChildren().clear();
-							        vboxLeft.getChildren().addAll(placeHolderD);
-							        vboxRight.getChildren().addAll(placeHolderD);
+                                    vboxRight.getChildren().clear();
+                                    vboxLeft.getChildren().addAll(placeHolderD);
+                                    vboxRight.getChildren().addAll(placeHolderD);
 
                                 }
                             }
@@ -460,8 +452,7 @@ public class KingsTableProgram extends Application {
                                 currentScore = KingsTableProgram.board.getScore();
                                 userScore.setText("Score: " + KingsTableProgram.board.score);
                                 System.out.println("Double Capture! +5 points.");
-                            }
-                            else if (count == 3){
+                            } else if (count == 3) {
                                 KingsTableProgram.board.score += 200;
                                 tripleCaptureCounter++;
                                 userScore.setText("Score: " + KingsTableProgram.board.score);
@@ -475,34 +466,30 @@ public class KingsTableProgram extends Application {
                                 //Attackers win.
                                 System.out.println("Attackers Win!");
                                 pauseScreenText.setText("Attackers Win!");
-                                movesText.setText("Moves.............."+ KingsTableProgram.board.moves +".... x5pts");
-                                piecesCapturedText.setText("Pieces Captured...."+ pieceCaptureCounter +".... x10pts");
+                                movesText.setText("Moves.............." + KingsTableProgram.board.moves + ".... x5pts");
+                                piecesCapturedText.setText("Pieces Captured...." + pieceCaptureCounter + ".... x10pts");
                                 int timeScore = 0;
-                                if((MenuScreen.timeDifference/1000)/60 <= 2) {
-                                	timeScore = 100;
+                                if ((MenuScreen.timeDifference / 1000) / 60 <= 2) {
+                                    timeScore = 100;
+                                } else if ((MenuScreen.timeDifference / 1000) / 60 <= 5) {
+                                    timeScore = 80;
+                                } else if ((MenuScreen.timeDifference / 1000) / 60 <= 10) {
+                                    timeScore = 60;
+                                } else if ((MenuScreen.timeDifference / 1000) / 60 <= 15) {
+                                    timeScore = 40;
+                                } else if ((MenuScreen.timeDifference / 1000) / 60 <= 20) {
+                                    timeScore = 20;
                                 }
-                                else if((MenuScreen.timeDifference/1000)/60 <= 5) {
-                                	timeScore = 80;
-                                }
-                                else if((MenuScreen.timeDifference/1000)/60 <= 10) {
-                                	timeScore = 60;
-                                }
-                                else if((MenuScreen.timeDifference/1000)/60 <= 15) {
-                                	timeScore = 40;
-                                }
-                                else if((MenuScreen.timeDifference/1000)/60 <= 20) {
-                                	timeScore = 20;
-                                }
-                                timePassedText.setText("Time..............."+(MenuScreen.timeDifference/1000)/60+"mins.... +"+timeScore+"pts");
+                                timePassedText.setText("Time..............." + (MenuScreen.timeDifference / 1000) / 60 + "mins.... +" + timeScore + "pts");
 
-                                if(doubleCaptureCounter > 0 || tripleCaptureCounter > 0) {
-                                	//Achievements
-                                	achievementsText.setText("Multiple Captures......."+
-                                						(doubleCaptureCounter+tripleCaptureCounter)+
-                                						"....+"+((doubleCaptureCounter * 100)+(tripleCaptureCounter * 200))+
-                                						"pts");
+                                if (doubleCaptureCounter > 0 || tripleCaptureCounter > 0) {
+                                    //Achievements
+                                    achievementsText.setText("Multiple Captures......."
+                                            + (doubleCaptureCounter + tripleCaptureCounter)
+                                            + "....+" + ((doubleCaptureCounter * 100) + (tripleCaptureCounter * 200))
+                                            + "pts");
                                 }
-                                totalScoreText.setText("TOTAL SCORE........"+((KingsTableProgram.board.moves * 5)+KingsTableProgram.board.score + timeScore+(doubleCaptureCounter*100)+(tripleCaptureCounter*200)));
+                                totalScoreText.setText("TOTAL SCORE........" + ((KingsTableProgram.board.moves * 5) + KingsTableProgram.board.score + timeScore + (doubleCaptureCounter * 100) + (tripleCaptureCounter * 200)));
                                 gridPaneGAME.getChildren().addAll(PauseScreen);
                                 gameBorder.setCenter(PauseScreen);
                                 MenuScreen.timeline.stop();
@@ -524,28 +511,28 @@ public class KingsTableProgram extends Application {
 
                                 //Check captures.
                                 if (KingsTableProgram.board.checkCapture(coords.get(2), coords.get(3), "right")) {
-                                	Circle graveYardPiece = new Circle(KingsTableProgram.tileSize / 3);
+                                    Circle graveYardPiece = new Circle(KingsTableProgram.tileSize / 3);
                                     graveYardPiece.setFill(new ImagePattern(dpImage));
                                     graveYardPiece.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK));
                                     vboxLeft.getChildren().addAll(graveYardPiece);
                                     gridPaneGAME.getChildren().remove(getPieceAtPosition(coords.get(2), coords.get(3) + 1, gridPaneGAME));
                                 }
                                 if (KingsTableProgram.board.checkCapture(coords.get(2), coords.get(3), "left")) {
-                                	Circle graveYardPiece = new Circle(KingsTableProgram.tileSize / 3);
+                                    Circle graveYardPiece = new Circle(KingsTableProgram.tileSize / 3);
                                     graveYardPiece.setFill(new ImagePattern(dpImage));
                                     graveYardPiece.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK));
                                     vboxLeft.getChildren().addAll(graveYardPiece);
                                     gridPaneGAME.getChildren().remove(getPieceAtPosition(coords.get(2), coords.get(3) - 1, gridPaneGAME));
                                 }
                                 if (KingsTableProgram.board.checkCapture(coords.get(2), coords.get(3), "down")) {
-                                	Circle graveYardPiece = new Circle(KingsTableProgram.tileSize / 3);
+                                    Circle graveYardPiece = new Circle(KingsTableProgram.tileSize / 3);
                                     graveYardPiece.setFill(new ImagePattern(dpImage));
                                     graveYardPiece.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK));
                                     vboxLeft.getChildren().addAll(graveYardPiece);
                                     gridPaneGAME.getChildren().remove(getPieceAtPosition(coords.get(2) + 1, coords.get(3), gridPaneGAME));
                                 }
                                 if (KingsTableProgram.board.checkCapture(coords.get(2), coords.get(3), "up")) {
-                                	Circle graveYardPiece = new Circle(KingsTableProgram.tileSize / 3);
+                                    Circle graveYardPiece = new Circle(KingsTableProgram.tileSize / 3);
                                     graveYardPiece.setFill(new ImagePattern(dpImage));
                                     graveYardPiece.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK));
                                     vboxLeft.getChildren().addAll(graveYardPiece);
@@ -605,7 +592,6 @@ public class KingsTableProgram extends Application {
         gameBorder.setCenter(gridPaneGAME);
 
         // BOTTOM (High Score, Timer, Player's Score)------------
-        
         hboxBOTTOM.setAlignment(Pos.BOTTOM_CENTER);
         hboxBOTTOM.setPadding(new Insets(25, 10, 25, 20));// top,right,bottom,left
         // hboxBOTTOM.setStyle("-fx-background-color: #D3D3D3;"); //for visual testing
@@ -636,12 +622,11 @@ public class KingsTableProgram extends Application {
 
         // Show Game ------------
         // Draw Pieces
-
-        if (KingsTableProgram.board.score > currentScore ) {
-        	// logic for incrementing score in GUI
-        	currentScore = KingsTableProgram.board.getScore();
-        	userScore.setText("Score: " + KingsTableProgram.board.score);
-        	//hboxBOTTOM.getChildren().addAll(highScore, region1, timer, MenuScreen.timeLabel, region2, userScore);
+        if (KingsTableProgram.board.score > currentScore) {
+            // logic for incrementing score in GUI
+            currentScore = KingsTableProgram.board.getScore();
+            userScore.setText("Score: " + KingsTableProgram.board.score);
+            //hboxBOTTOM.getChildren().addAll(highScore, region1, timer, MenuScreen.timeLabel, region2, userScore);
         }
 
         for (int i = 0; i < KingsTableProgram.boardSize; i++) {
