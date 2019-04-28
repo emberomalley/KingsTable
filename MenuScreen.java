@@ -1,25 +1,19 @@
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.Clock;
-
 import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.application.Application;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -27,9 +21,8 @@ public class MenuScreen {
 	// Menu Scene
     public static 		KingsTableProgram 	KingsTableProgram 	= new KingsTableProgram();  
     public static 		Timeline 			timeline 			= new Timeline();
-    public static 		Timeline 			timepaused 			= new Timeline(); 
     public static 		Label 				timeLabel 			= new Label();
-    public static               long                            startTime;
+    public static       long                startTime;
     public static		long				timeDifference		= 0;
 	public static void 	display(Stage primaryStage) {
 		
@@ -84,8 +77,7 @@ public class MenuScreen {
 	        menuTitle.setStroke(Color.RED);
 	        
 	        button1Player.setOnAction(clickToGame -> { // button goes to gameScreen and starts timer
-                    primaryStage.setScene(Config.game);
-        	    	/////MenuScreen.timepaused.pause();                    
+                    primaryStage.setScene(Config.game);                  
                     startTime = System.currentTimeMillis();
                     
             	    DateFormat timeFormat = new SimpleDateFormat("mm:ss");
@@ -95,11 +87,11 @@ public class MenuScreen {
 
 	            	    MenuScreen.timeline = new Timeline(
 	            	            new KeyFrame(
-	            	                    Duration.seconds(1),
+	            	                    Duration.seconds(1), // increments every second
 	            	                    event -> {
 	            	                        long currentTime = System.currentTimeMillis();// stores system time into the currentTime variable
-	            	                        final long diff = currentTime - startTime;
-	            	                        MenuScreen.timeDifference = diff;
+	            	                        final long diff = currentTime - startTime;//math for time
+	            	                        MenuScreen.timeDifference = diff; // sets time difference to diff
 	            	                        if (diff <= 0) {
 	            	                            timeLabel.setText("00:00");
 	            	                            timeLabel.setText(timeFormat.format(0));
@@ -110,11 +102,7 @@ public class MenuScreen {
 	                    timeline.setCycleCount(Timeline.INDEFINITE);
 	                    
             	    }      
-            	    else 
-            	    {
-            	    	//timeline.playFrom(timeDuration);
-					}
-            	    timeline.play();
+            	    timeline.play();//starts timer
             	    
                     primaryStage.setTitle("Kings Table: One Player Mode");
                         });//click button go to Game screen for now
@@ -123,9 +111,12 @@ public class MenuScreen {
                     primaryStage.setTitle("Kings Table: Two Player Mode");
                         });//click button go to Game screen for now
 	        buttonHelp.setOnAction(clickToHelpScreen -> primaryStage.setScene(Config.help));//click button go to Help screen
-	        VBox layout1 = new VBox(20);
-	        layout1.getChildren().addAll(button1Player, button2Player, buttonHelp, menuTitle);
-	        menuBorder.setBottom(layout1);
+	        BorderPane buttonBorder = new BorderPane();
+	        VBox titleMenuBox = new VBox(20);
+	        HBox boxOfButtons = new HBox(20);
+	        boxOfButtons.getChildren().addAll(button1Player, button2Player, buttonHelp);
+	        titleMenuBox.getChildren().addAll(menuTitle,boxOfButtons);
+	        menuBorder.setBottom(titleMenuBox);
 	}
 	
 		
