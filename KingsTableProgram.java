@@ -32,8 +32,6 @@ import java.util.List;
 public class KingsTableProgram extends Application {
 
     public static Board board = new Board();
-    //public static MenuScreen MenuScreen = new MenuScreen();
-    // public static gameScreen gameScreen = new gameScreen();
     public static Node selected;
     public static int boardSize = board.getSize(); // always Odd# x Odd#, usually 11x11 or 13x13
     public static int tileSize = board.getTileSize(); // px size of the grid boxes
@@ -49,19 +47,6 @@ public class KingsTableProgram extends Application {
     public static int overflowRight = 0;
     public static int overflowLeft = 0;
     public static boolean singlePlayerMode = true;
-    
-
-    public static void game() {
-
-    }
-
-    public static void gameScreen() {
-
-    }
-
-    public static void MenuScreen() {
-
-    }
 
     public static void main(String[] args) {
         launch(args);
@@ -79,20 +64,25 @@ public class KingsTableProgram extends Application {
         primaryStage.setResizable(false);
         primaryStage.show();
         // Game Scene
-        // set up background border pane (Top/Left/Right/Center/Bottom)
-        BorderPane gameBorder = new BorderPane();
-        HBox hboxBOTTOM = new HBox();
+        BorderPane gameBorder = new BorderPane();// set up background border pane (Top: Title and Menu Button
+																				//Left: grave yard for defenders
+																				//Right: grave yard for attackers
+																				//Center : game board
+																				//Bottom: high score, timer, user's score)
+        HBox hboxBOTTOM = new HBox(); //the bottom section (high score, timer, user's score)
         Label userScore = new Label("Score: " + KingsTableProgram.board.score);
-        Label timerText = new Label("");
 
 
         // Screen Size
         int gameWidth = 1000;
         int gameHeight = 700;
 
-        Image dpImage = new Image("defenderPiece.jpg");
-        Image apImage = new Image("attackerPiece.jpg");
+        
+        // images for attacker and defender pieces
+        Image dpImage = new Image("defenderPiece.jpg"); 
+        Image apImage = new Image("attackerPiece.jpg"); 
 
+        
         // Background Image--------------
         StackPane gameBackgroundImgContainer = new StackPane();
         ImageView gameBgImage = new ImageView("stoneBG.jpg");
@@ -101,7 +91,9 @@ public class KingsTableProgram extends Application {
         gameBackgroundImgContainer.getChildren().addAll(gameBgImage, gameBorder);
         Config.game = new Scene(gameBackgroundImgContainer, gameWidth, gameHeight);
 
-        // TOP (Menu Button and Title of Game Scene)------------
+        
+        
+        // TOP PROTION OF GAME SCREEN (Menu Button and Title of Game Scene)------------
         HBox hboxTOP = new HBox();
         hboxTOP.setAlignment(Pos.TOP_LEFT);
         hboxTOP.setPadding(new Insets(15, 0, 15, 5));// top,right,bottom,left
@@ -136,7 +128,7 @@ public class KingsTableProgram extends Application {
         hboxTOP.setSpacing(295);
         gameBorder.setTop(hboxTOP);
 
-        // LEFT (white Game Pieces graveyard)------------
+        // LEFT PROTION OF GAME SCREEN (white Game Pieces graveyard)------------
         VBox vboxLeft = new VBox();
         vboxLeft.setSpacing(10);
         vboxLeft.setAlignment(Pos.BOTTOM_LEFT);
@@ -146,7 +138,7 @@ public class KingsTableProgram extends Application {
         vboxLeft.getChildren().addAll(placeHolderD);
         gameBorder.setLeft(vboxLeft);
 
-        // RIGHT (black Game Pieces graveyard)------------
+        // RIGHT PROTION OF GAME SCREEN (black Game Pieces graveyard)------------
         HBox rightSide = new HBox();
         VBox vboxRight = new VBox();
         vboxRight.setSpacing(10);
@@ -314,7 +306,7 @@ public class KingsTableProgram extends Application {
         PauseScreen.getChildren().addAll(pauseScreenItems);
         pauseScreenItems.setAlignment(Pos.TOP_CENTER);
 
-        // CENTER (Game Table)-----------
+        // CENTER PROTION OF GAME SCREEN (Game Table)-----------
         gridPaneGAME.setAlignment(Pos.CENTER);
         for (int i = 0; i < KingsTableProgram.boardSize; i++) {
             for (int j = 0; j < KingsTableProgram.boardSize; j++) {
@@ -613,10 +605,8 @@ public class KingsTableProgram extends Application {
                             } //Switch Turns
                             else if (KingsTableProgram.illegalPiece == 1) {
                                 KingsTableProgram.illegalPiece = 2;
-                                timerText.setText("");
                             } else {
                                 KingsTableProgram.illegalPiece = 1;
-                                timerText.setText("");
                             }
 
                             //Display the text board for testing.
@@ -655,7 +645,7 @@ public class KingsTableProgram extends Application {
         }
         gameBorder.setCenter(gridPaneGAME);
 
-        // BOTTOM (High Score, Timer, Player's Score)------------
+        // BOTTOM PROTION OF GAME SCREEN (High Score, Timer, Player's Score)------------
         hboxBOTTOM.setAlignment(Pos.BOTTOM_CENTER);
         hboxBOTTOM.setPadding(new Insets(25, 10, 25, 20));// top,right,bottom,left
         // hboxBOTTOM.setStyle("-fx-background-color: #D3D3D3;"); //for visual testing
@@ -670,9 +660,6 @@ public class KingsTableProgram extends Application {
         highScore.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK)); // Radius, offsetX, offsetY, color;
         highScore.setTextFill(KingsTableProgram.textColor);
         highScore.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
-        timerText.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
-        timerText.setTextFill(KingsTableProgram.textColor);
-        timerText.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
         MenuScreen.timeLabel.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
         MenuScreen.timeLabel.setTextFill(KingsTableProgram.textColor);
         MenuScreen.timeLabel.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
@@ -680,7 +667,7 @@ public class KingsTableProgram extends Application {
         userScore.setTextFill(KingsTableProgram.textColor);
         userScore.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
         //THIS IS IT! THE UPDATE UI
-        hboxBOTTOM.getChildren().addAll(highScore, region1, timerText, MenuScreen.timeLabel, region2, userScore);
+        hboxBOTTOM.getChildren().addAll(highScore, region1, MenuScreen.timeLabel, region2, userScore);
         gameBorder.setBottom(hboxBOTTOM);
 
         // Show Game ------------
