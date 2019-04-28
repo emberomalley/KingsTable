@@ -233,77 +233,10 @@ public class KingsTableProgram extends Application {
         restartButton.setOnMouseExited(event -> {
             restartButton.setStyle("-fx-background-color: #B8860B");
         });
-        restartButton.setOnAction(clickToGame -> {
-            PauseScreen.setVisible(false);
-            MenuScreen.startTime = System.currentTimeMillis();
-            MenuScreen.timeline.play();
-            //gridPaneGAME.getChildren().remove(PauseScreen);
-            gameBorder.setCenter(gridPaneGAME); //TODO
-            for (int i = 0; i < KingsTableProgram.boardSize; i++) {
-                for (int j = 0; j < KingsTableProgram.boardSize; j++) {
-                    if ((KingsTableProgram.board.getPieceType(i, j)) > 0) {
-                        gridPaneGAME.getChildren().remove(getPieceAtPosition(i, j, gridPaneGAME));
-                    }
-                }
-            }
-            board = new Board();
-            userScore.setText("Score: " + KingsTableProgram.board.score);
-            for (int i = 0; i < KingsTableProgram.boardSize; i++) {
-                for (int j = 0; j < KingsTableProgram.boardSize; j++) {
-                    if (KingsTableProgram.board.boardState[i][j] != 0) {
-                        Circle piece = new Circle(KingsTableProgram.tileSize / 3);
-                        //Defender
-                        if (KingsTableProgram.board.boardState[i][j] == 1) {
-                            piece.setFill(new ImagePattern(dpImage));
-                            //Attacker
-                        } else if (KingsTableProgram.board.boardState[i][j] == 2) {
-                            piece.setFill(new ImagePattern(apImage));
-                            //King
-                        } else if (KingsTableProgram.board.boardState[i][j] == 3) {
-                            piece.setRadius(KingsTableProgram.tileSize / 2);
-                            piece.setFill(new ImagePattern(dpImage));
-                        }
-                        GridPane.setRowIndex(piece, i);
-                        GridPane.setColumnIndex(piece, j);
-                        GridPane.setHalignment(piece, HPos.CENTER);
-                        piece.setId("piece");
-                        piece.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK)); // Radius, offsetX, offsetY, color
-
-                        //Determine which pieces, if any, the player cannot control.
-                        piece.setOnMouseEntered(event -> { // we can add a thing here where if it is the player's piece it will
-                            // highlight
-                            //Change this condition to specify which pieces can be highlighted.
-                            if (KingsTableProgram.board.boardState[GridPane.getRowIndex(piece)][GridPane.getColumnIndex(piece)] != KingsTableProgram.illegalPiece
-                                    && KingsTableProgram.board.boardState[GridPane.getRowIndex(piece)][GridPane.getColumnIndex(piece)] != KingsTableProgram.illegalPiece + 2) {
-                                piece.setEffect(new InnerShadow(+30d, 0d, 0d, Color.GOLD));
-                            }
-                        });
-                        // Click this piece, save to a global last clicked value
-                        // Remove last clicked image location replace on new clicked location
-                        piece.setOnMouseClicked(event -> {
-                            if (selected == piece) { //piece is already selected
-                                selected = null;
-                                piece.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK));
-                                //Change this condition to specify which pieces can be selected
-                            } else if (selected == null && (KingsTableProgram.board.boardState[GridPane.getRowIndex(piece)][GridPane.getColumnIndex(piece)] != KingsTableProgram.illegalPiece)
-                                    && KingsTableProgram.board.boardState[GridPane.getRowIndex(piece)][GridPane.getColumnIndex(piece)] != KingsTableProgram.illegalPiece + 2) {
-                                selected = piece;
-                                piece.setEffect(new InnerShadow(+30d, 0d, 0d, Color.GOLD));
-                            }
-                        });
-                        piece.setOnMouseExited(event -> {
-                            if (selected != piece) {
-                                piece.setEffect(new InnerShadow(+6d, 0d, 0d, Color.BLACK));
-                            }
-                        });
-                        gridPaneGAME.getChildren().addAll(piece);
-                    }
-                }
-            }
-
-            System.out.println("Restarted Game");
-        });
+        
         restartButton.setOnAction(clickToGame -> { //PauseScreen.setVisible(false);
+        											MenuScreen.startTime = System.currentTimeMillis();
+        											MenuScreen.timeline.play();
         											//gridPaneGAME.getChildren().remove(PauseScreen);
         											gameBorder.setCenter(gridPaneGAME); //TODO
         											for (int i=0; i<KingsTableProgram.boardSize; i++) {
