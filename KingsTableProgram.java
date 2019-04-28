@@ -152,6 +152,37 @@ public class KingsTableProgram extends Application {
         hboxTOP.setSpacing(295);
         gameBorder.setTop(hboxTOP);
 
+       
+        
+        
+        // LEFT (white Game Pieces graveyard)------------
+        VBox vboxLeft = new VBox();
+        vboxLeft.setSpacing(10);
+        vboxLeft.setAlignment(Pos.BOTTOM_LEFT);
+        vboxLeft.setPadding(new Insets(0, 0, 20, 200));// top,right,bottom,left
+        Circle placeHolderD = new Circle(KingsTableProgram.tileSize / 3);
+        placeHolderD.setFill(Color.TRANSPARENT);
+        vboxLeft.getChildren().addAll(placeHolderD);
+        //vboxLeft.setPrefHeight(100);
+        // vboxLeft.setStyle("-fx-background-color: #D3D3D3;"); //for visual testing
+        gameBorder.setLeft(vboxLeft);
+
+        // RIGHT (black Game Pieces graveyard)------------
+        VBox vboxRight = new VBox();
+        vboxRight.setSpacing(10);
+        vboxRight.setAlignment(Pos.BOTTOM_LEFT);
+        vboxRight.setPadding(new Insets(0, 200, 20, 0));
+        Circle placeHolderA = new Circle(KingsTableProgram.tileSize / 3);
+        placeHolderA.setFill(Color.TRANSPARENT);
+        vboxRight.getChildren().addAll(placeHolderA);
+        //vboxRight.setPrefHeight(100);
+        // vboxRight.setStyle("-fx-background-color: #D3D3D3;"); //for visual testing
+        gameBorder.setRight(vboxRight);
+        
+        
+        
+        
+        
         // Center Pause Menu/Game Over Screen ---------------------
         StackPane PauseScreen = new StackPane();
         VBox pauseScreenItems = new VBox();
@@ -216,7 +247,9 @@ public class KingsTableProgram extends Application {
         });
         restartButton.setOnAction(clickToGame -> { PauseScreen.setVisible(false);
         											//gridPaneGAME.getChildren().remove(PauseScreen);
-        											System.out.println("Restarted Game");});
+        											System.out.println("Restarted Game");
+        											vboxRight.getChildren().clear();
+        											vboxLeft.getChildren().clear();});
         exitButton.setMaxSize(200, 150);
         restartButton.setMaxSize(200, 150);
         
@@ -234,29 +267,7 @@ public class KingsTableProgram extends Application {
         PauseScreen.getChildren().addAll(pauseScreenItems);
         pauseScreenItems.setAlignment(Pos.TOP_CENTER);
 
-        // LEFT (white Game Pieces graveyard)------------
-        VBox vboxLeft = new VBox();
-        vboxLeft.setSpacing(10);
-        vboxLeft.setAlignment(Pos.BOTTOM_LEFT);
-        vboxLeft.setPadding(new Insets(0, 0, 20, 200));// top,right,bottom,left
-        Circle placeHolderD = new Circle(KingsTableProgram.tileSize / 3);
-        placeHolderD.setFill(Color.TRANSPARENT);
-        vboxLeft.getChildren().addAll(placeHolderD);
-        //vboxLeft.setPrefHeight(100);
-        // vboxLeft.setStyle("-fx-background-color: #D3D3D3;"); //for visual testing
-        gameBorder.setLeft(vboxLeft);
-
-        // RIGHT (black Game Pieces graveyard)------------
-        VBox vboxRight = new VBox();
-        vboxRight.setSpacing(10);
-        vboxRight.setAlignment(Pos.BOTTOM_LEFT);
-        vboxRight.setPadding(new Insets(0, 200, 20, 0));
-        Circle placeHolderA = new Circle(KingsTableProgram.tileSize / 3);
-        placeHolderA.setFill(Color.TRANSPARENT);
-        vboxRight.getChildren().addAll(placeHolderA);
-        //vboxRight.setPrefHeight(100);
-        // vboxRight.setStyle("-fx-background-color: #D3D3D3;"); //for visual testing
-        gameBorder.setRight(vboxRight);
+      
         
         
         // CENTER (Game Table)-----------
