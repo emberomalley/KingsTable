@@ -29,6 +29,7 @@ public class MenuScreen {
     public static 		Timeline 			timeline 			= new Timeline();
     public static 		Timeline 			timepaused 			= new Timeline(); 
     public static 		Label 				timeLabel 			= new Label();
+    public static               long                            startTime;
     public static		long				timeDifference		= 0;
 	public static void 	display(Stage primaryStage) {
 		
@@ -85,7 +86,7 @@ public class MenuScreen {
 	        button1Player.setOnAction(clickToGame -> { // button goes to gameScreen and starts timer
                     primaryStage.setScene(Config.game);
         	    	/////MenuScreen.timepaused.pause();                    
-                    long startTime = System.currentTimeMillis();
+                    startTime = System.currentTimeMillis();
                     
             	    DateFormat timeFormat = new SimpleDateFormat("mm:ss");
     
