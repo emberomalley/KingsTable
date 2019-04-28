@@ -132,8 +132,8 @@ public class KingsTableProgram extends Application {
 ////////                hboxTOP.getChildren().addAll(buttonMenu, buttonHelp, gameTitle);
         hboxTOP.setSpacing(295);
         gameBorder.setTop(hboxTOP);
-      
-     // LEFT (white Game Pieces graveyard)------------
+
+        // LEFT (white Game Pieces graveyard)------------
         VBox vboxLeft = new VBox();
         vboxLeft.setSpacing(10);
         vboxLeft.setAlignment(Pos.BOTTOM_LEFT);
@@ -142,7 +142,6 @@ public class KingsTableProgram extends Application {
         placeHolderD.setFill(Color.TRANSPARENT);
         vboxLeft.getChildren().addAll(placeHolderD);
         gameBorder.setLeft(vboxLeft);
-
 
         // RIGHT (black Game Pieces graveyard)------------
         HBox rightSide = new HBox();
@@ -160,9 +159,8 @@ public class KingsTableProgram extends Application {
         Circle placeHolderAO = new Circle(KingsTableProgram.tileSize / 3);
         placeHolderAO.setFill(Color.TRANSPARENT);
         vboxRightOverflow.getChildren().addAll(placeHolderAO);
-        rightSide.getChildren().addAll(vboxRight,vboxRightOverflow);
+        rightSide.getChildren().addAll(vboxRight, vboxRightOverflow);
         gameBorder.setRight(rightSide);
-        
 
         // Center Pause Menu/Game Over Screen ---------------------
         StackPane PauseScreen = new StackPane();
@@ -226,72 +224,76 @@ public class KingsTableProgram extends Application {
         restartButton.setOnMouseExited(event -> {
             restartButton.setStyle("-fx-background-color: #B8860B");
         });
-        
-        restartButton.setOnAction(clickToGame -> { //PauseScreen.setVisible(false);
-        											MenuScreen.startTime = System.currentTimeMillis();
-        											MenuScreen.timeline.play();
-        											//gridPaneGAME.getChildren().remove(PauseScreen);
-        											gameBorder.setCenter(gridPaneGAME); //TODO
-        											for (int i=0; i<KingsTableProgram.boardSize; i++) {
-        												for (int j=0; j<KingsTableProgram.boardSize; j++) {
-        													if ((KingsTableProgram.board.getPieceType(i, j)) > 0) {
-        														gridPaneGAME.getChildren().remove(getPieceAtPosition(i, j, gridPaneGAME));
-        													}
-        												}
-        											}
-        											board = new Board();
-        											userScore.setText("Score: " + KingsTableProgram.board.score);
-        											for (int i = 0; i < KingsTableProgram.boardSize; i++) {
-        									            for (int j = 0; j < KingsTableProgram.boardSize; j++) {
-        									                if (KingsTableProgram.board.boardState[i][j] != 0) {
-        									                    Circle piece = new Circle(KingsTableProgram.tileSize / 3);
-        									                    //Defender
-        									                    if (KingsTableProgram.board.boardState[i][j] == 1) {
-        									                        piece.setFill(new ImagePattern(dpImage));
-        									                        //Attacker
-        									                    } else if (KingsTableProgram.board.boardState[i][j] == 2) {
-        									                        piece.setFill(new ImagePattern(apImage));
-        									                        //King
-        									                    } else if (KingsTableProgram.board.boardState[i][j] == 3) {
-        									                        piece.setRadius(KingsTableProgram.tileSize / 2);
-        									                        piece.setFill(new ImagePattern(dpImage));
-        									                    }
-        									                    GridPane.setRowIndex(piece, i);
-        									                    GridPane.setColumnIndex(piece, j);
-        									                    GridPane.setHalignment(piece, HPos.CENTER);
-        									                    piece.setId("piece");
-        									                    piece.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK)); // Radius, offsetX, offsetY, color
 
-        									                    //Determine which pieces, if any, the player cannot control.
-        									                    piece.setOnMouseEntered(event -> { // we can add a thing here where if it is the player's piece it will
-        									                        // highlight
-        									                        //Change this condition to specify which pieces can be highlighted.
-        									                        if (KingsTableProgram.board.boardState[GridPane.getRowIndex(piece)][GridPane.getColumnIndex(piece)] != KingsTableProgram.illegalPiece
-        									                                && KingsTableProgram.board.boardState[GridPane.getRowIndex(piece)][GridPane.getColumnIndex(piece)] != KingsTableProgram.illegalPiece + 2) {
-        									                            piece.setEffect(new InnerShadow(+30d, 0d, 0d, Color.GOLD));
-        									                        }
-        									                    });
-        									                    // Click this piece, save to a global last clicked value
-        									                    // Remove last clicked image location replace on new clicked location
-        									                    piece.setOnMouseClicked(event -> {
-        									                        if (selected == piece) { //piece is already selected
-        									                            selected = null;
-        									                            piece.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK));
-        									                            //Change this condition to specify which pieces can be selected
-        									                        } else if (selected == null && (KingsTableProgram.board.boardState[GridPane.getRowIndex(piece)][GridPane.getColumnIndex(piece)] != KingsTableProgram.illegalPiece)
-        									                                && KingsTableProgram.board.boardState[GridPane.getRowIndex(piece)][GridPane.getColumnIndex(piece)] != KingsTableProgram.illegalPiece + 2) {
-        									                            selected = piece;
-        									                            piece.setEffect(new InnerShadow(+30d, 0d, 0d, Color.GOLD));
-        									                        }
-        									                    });
-        									                    piece.setOnMouseExited(event -> {
-        									                        if (selected != piece) {
-        									                            piece.setEffect(new InnerShadow(+6d, 0d, 0d, Color.BLACK));
-        									                        }
-        									                    });
-        									                    gridPaneGAME.getChildren().addAll(piece);}}}
-        											
-        											System.out.println("Restarted Game");});
+        restartButton.setOnAction(clickToGame -> { //PauseScreen.setVisible(false);
+            MenuScreen.startTime = System.currentTimeMillis();
+            MenuScreen.timeline.play();
+            //gridPaneGAME.getChildren().remove(PauseScreen);
+            gameBorder.setCenter(gridPaneGAME); //TODO
+            for (int i = 0; i < KingsTableProgram.boardSize; i++) {
+                for (int j = 0; j < KingsTableProgram.boardSize; j++) {
+                    if ((KingsTableProgram.board.getPieceType(i, j)) > 0) {
+                        gridPaneGAME.getChildren().remove(getPieceAtPosition(i, j, gridPaneGAME));
+                    }
+                }
+            }
+            board = new Board();
+            userScore.setText("Score: " + KingsTableProgram.board.score);
+            for (int i = 0; i < KingsTableProgram.boardSize; i++) {
+                for (int j = 0; j < KingsTableProgram.boardSize; j++) {
+                    if (KingsTableProgram.board.boardState[i][j] != 0) {
+                        Circle piece = new Circle(KingsTableProgram.tileSize / 3);
+                        //Defender
+                        if (KingsTableProgram.board.boardState[i][j] == 1) {
+                            piece.setFill(new ImagePattern(dpImage));
+                            //Attacker
+                        } else if (KingsTableProgram.board.boardState[i][j] == 2) {
+                            piece.setFill(new ImagePattern(apImage));
+                            //King
+                        } else if (KingsTableProgram.board.boardState[i][j] == 3) {
+                            piece.setRadius(KingsTableProgram.tileSize / 2);
+                            piece.setFill(new ImagePattern(dpImage));
+                        }
+                        GridPane.setRowIndex(piece, i);
+                        GridPane.setColumnIndex(piece, j);
+                        GridPane.setHalignment(piece, HPos.CENTER);
+                        piece.setId("piece");
+                        piece.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK)); // Radius, offsetX, offsetY, color
+
+                        //Determine which pieces, if any, the player cannot control.
+                        piece.setOnMouseEntered(event -> { // we can add a thing here where if it is the player's piece it will
+                            // highlight
+                            //Change this condition to specify which pieces can be highlighted.
+                            if (KingsTableProgram.board.boardState[GridPane.getRowIndex(piece)][GridPane.getColumnIndex(piece)] != KingsTableProgram.illegalPiece
+                                    && KingsTableProgram.board.boardState[GridPane.getRowIndex(piece)][GridPane.getColumnIndex(piece)] != KingsTableProgram.illegalPiece + 2) {
+                                piece.setEffect(new InnerShadow(+30d, 0d, 0d, Color.GOLD));
+                            }
+                        });
+                        // Click this piece, save to a global last clicked value
+                        // Remove last clicked image location replace on new clicked location
+                        piece.setOnMouseClicked(event -> {
+                            if (selected == piece) { //piece is already selected
+                                selected = null;
+                                piece.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK));
+                                //Change this condition to specify which pieces can be selected
+                            } else if (selected == null && (KingsTableProgram.board.boardState[GridPane.getRowIndex(piece)][GridPane.getColumnIndex(piece)] != KingsTableProgram.illegalPiece)
+                                    && KingsTableProgram.board.boardState[GridPane.getRowIndex(piece)][GridPane.getColumnIndex(piece)] != KingsTableProgram.illegalPiece + 2) {
+                                selected = piece;
+                                piece.setEffect(new InnerShadow(+30d, 0d, 0d, Color.GOLD));
+                            }
+                        });
+                        piece.setOnMouseExited(event -> {
+                            if (selected != piece) {
+                                piece.setEffect(new InnerShadow(+6d, 0d, 0d, Color.BLACK));
+                            }
+                        });
+                        gridPaneGAME.getChildren().addAll(piece);
+                    }
+                }
+            }
+
+            System.out.println("Restarted Game");
+        });
         exitButton.setMaxSize(200, 150);
         restartButton.setMaxSize(200, 150);
 
@@ -375,11 +377,11 @@ public class KingsTableProgram extends Application {
                                     MenuScreen.timeline.stop();
                                     // Clear Graveyards and re-add the placeholder pieces
                                     vboxLeft.getChildren().clear();
-									vboxRight.getChildren().clear();
-									vboxRightOverflow.getChildren().clear();
-							        vboxLeft.getChildren().addAll(placeHolderD);
-							        vboxRight.getChildren().addAll(placeHolderA);
-							        vboxRightOverflow.getChildren().addAll(placeHolderAO);
+                                    vboxRight.getChildren().clear();
+                                    vboxRightOverflow.getChildren().clear();
+                                    vboxLeft.getChildren().addAll(placeHolderD);
+                                    vboxRight.getChildren().addAll(placeHolderA);
+                                    vboxRightOverflow.getChildren().addAll(placeHolderAO);
 
                                 }
                             }
@@ -403,17 +405,15 @@ public class KingsTableProgram extends Application {
                                 Circle graveYardPiece = new Circle(KingsTableProgram.tileSize / 3);
                                 graveYardPiece.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK));
                                 if (KingsTableProgram.illegalPiece == 1) {
-                                	graveYardPiece.setFill(new ImagePattern(dpImage));
-                                	vboxLeft.getChildren().addAll(graveYardPiece);
-                                }
-                                else {
-                                	 graveYardPiece.setFill(new ImagePattern(apImage));
-                                	 if(overflowRight <= 12) { // add to first graveyard
-                                     	vboxRight.getChildren().addAll(graveYardPiece);
-                                     }
-                                     else { //add to overflow graveyard
-                                     	vboxRightOverflow.getChildren().addAll(graveYardPiece);
-                                     }
+                                    graveYardPiece.setFill(new ImagePattern(dpImage));
+                                    vboxLeft.getChildren().addAll(graveYardPiece);
+                                } else {
+                                    graveYardPiece.setFill(new ImagePattern(apImage));
+                                    if (overflowRight <= 12) { // add to first graveyard
+                                        vboxRight.getChildren().addAll(graveYardPiece);
+                                    } else { //add to overflow graveyard
+                                        vboxRightOverflow.getChildren().addAll(graveYardPiece);
+                                    }
                                 }
                                 currentScore = KingsTableProgram.board.getScore();
                                 userScore.setText("Score: " + KingsTableProgram.board.score);
@@ -428,17 +428,15 @@ public class KingsTableProgram extends Application {
                                 Circle graveYardPiece = new Circle(KingsTableProgram.tileSize / 3);
                                 graveYardPiece.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK));
                                 if (KingsTableProgram.illegalPiece == 1) {
-                                	graveYardPiece.setFill(new ImagePattern(dpImage));
-                                	vboxLeft.getChildren().addAll(graveYardPiece);
-                                }
-                                else {
-                                	 graveYardPiece.setFill(new ImagePattern(apImage));
-                                	 if(overflowRight <= 12) { // add to first graveyard
-                                     	vboxRight.getChildren().addAll(graveYardPiece);
-                                     }
-                                     else { //add to overflow graveyard
-                                     	vboxRightOverflow.getChildren().addAll(graveYardPiece);
-                                     }
+                                    graveYardPiece.setFill(new ImagePattern(dpImage));
+                                    vboxLeft.getChildren().addAll(graveYardPiece);
+                                } else {
+                                    graveYardPiece.setFill(new ImagePattern(apImage));
+                                    if (overflowRight <= 12) { // add to first graveyard
+                                        vboxRight.getChildren().addAll(graveYardPiece);
+                                    } else { //add to overflow graveyard
+                                        vboxRightOverflow.getChildren().addAll(graveYardPiece);
+                                    }
                                 }
                                 currentScore = KingsTableProgram.board.getScore();
                                 userScore.setText("Score: " + KingsTableProgram.board.score);
@@ -452,17 +450,15 @@ public class KingsTableProgram extends Application {
                                 Circle graveYardPiece = new Circle(KingsTableProgram.tileSize / 3);
                                 graveYardPiece.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK));
                                 if (KingsTableProgram.illegalPiece == 1) {
-                                	graveYardPiece.setFill(new ImagePattern(dpImage));
-                                	vboxLeft.getChildren().addAll(graveYardPiece);
-                                }
-                                else {
-                                	 graveYardPiece.setFill(new ImagePattern(apImage));
-                                	 if(overflowRight <= 12) { // add to first graveyard
-                                     	vboxRight.getChildren().addAll(graveYardPiece);
-                                     }
-                                     else { //add to overflow graveyard
-                                     	vboxRightOverflow.getChildren().addAll(graveYardPiece);
-                                     }
+                                    graveYardPiece.setFill(new ImagePattern(dpImage));
+                                    vboxLeft.getChildren().addAll(graveYardPiece);
+                                } else {
+                                    graveYardPiece.setFill(new ImagePattern(apImage));
+                                    if (overflowRight <= 12) { // add to first graveyard
+                                        vboxRight.getChildren().addAll(graveYardPiece);
+                                    } else { //add to overflow graveyard
+                                        vboxRightOverflow.getChildren().addAll(graveYardPiece);
+                                    }
                                 }
                                 currentScore = KingsTableProgram.board.getScore();
                                 userScore.setText("Score: " + KingsTableProgram.board.score);
@@ -476,17 +472,15 @@ public class KingsTableProgram extends Application {
                                 Circle graveYardPiece = new Circle(KingsTableProgram.tileSize / 3);
                                 graveYardPiece.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK));
                                 if (KingsTableProgram.illegalPiece == 1) {
-                                	graveYardPiece.setFill(new ImagePattern(dpImage));
-                                	vboxLeft.getChildren().addAll(graveYardPiece);
-                                }
-                                else {
-                                	 graveYardPiece.setFill(new ImagePattern(apImage));
-                                	 if(overflowRight <= 12) { // add to first graveyard
-                                     	vboxRight.getChildren().addAll(graveYardPiece);
-                                     }
-                                     else { //add to overflow graveyard
-                                     	vboxRightOverflow.getChildren().addAll(graveYardPiece);
-                                     }
+                                    graveYardPiece.setFill(new ImagePattern(dpImage));
+                                    vboxLeft.getChildren().addAll(graveYardPiece);
+                                } else {
+                                    graveYardPiece.setFill(new ImagePattern(apImage));
+                                    if (overflowRight <= 12) { // add to first graveyard
+                                        vboxRight.getChildren().addAll(graveYardPiece);
+                                    } else { //add to overflow graveyard
+                                        vboxRightOverflow.getChildren().addAll(graveYardPiece);
+                                    }
                                 }
                                 currentScore = KingsTableProgram.board.getScore();
                                 userScore.setText("Score: " + KingsTableProgram.board.score);
@@ -508,7 +502,10 @@ public class KingsTableProgram extends Application {
                                 System.out.println("Triple Capture!! +10 points.");
 
                             }
-
+                            if ((primaryStage.getTitle() == "Kings Table: Two Player Mode")){
+                                KingsTableProgram.board.score = 0;
+                                userScore.setText("Score: " + KingsTableProgram.board.score);
+                            }
                             //Check King Capture
                             if (KingsTableProgram.board.checkKingCapture(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]))) {
                                 //Attackers win.
@@ -543,16 +540,16 @@ public class KingsTableProgram extends Application {
                                 MenuScreen.timeline.stop();
                                 // Clear Graveyards and re-add the placeholder pieces
                                 vboxLeft.getChildren().clear();
-								vboxRight.getChildren().clear();
-								vboxRightOverflow.getChildren().clear();
-						        vboxLeft.getChildren().addAll(placeHolderD);
-						        vboxRight.getChildren().addAll(placeHolderA);
-						        vboxRightOverflow.getChildren().addAll(placeHolderAO);
+                                vboxRight.getChildren().clear();
+                                vboxRightOverflow.getChildren().clear();
+                                vboxLeft.getChildren().addAll(placeHolderD);
+                                vboxRight.getChildren().addAll(placeHolderA);
+                                vboxRightOverflow.getChildren().addAll(placeHolderAO);
                             }
 
                             //Check if the user is playing the AI here.
                             if (primaryStage.getTitle() == "Kings Table: One Player Mode") {
-                            	timerText.setText("Timer: ");
+                                timerText.setText("Timer: ");
                                 //This returns the coordinates of the piece to move and the coordinates of where to move it.
                                 List<Integer> coords = KingsTableProgram.board.moveAttacker();
                                 if (coords != null) {
