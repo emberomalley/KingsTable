@@ -85,7 +85,6 @@ public class MenuScreen {
 	        
 	        button1Player.setOnAction(clickToGame -> { // button goes to gameScreen and starts timer
                     primaryStage.setScene(Config.game);
-        	    	/////MenuScreen.timepaused.pause();                    
                     long startTime = System.currentTimeMillis();
                     
             	    DateFormat timeFormat = new SimpleDateFormat("mm:ss");
