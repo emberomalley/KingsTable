@@ -27,7 +27,7 @@ public class MenuScreen {
 	// Menu Scene
     public static 		KingsTableProgram 	KingsTableProgram 	= new KingsTableProgram();  
     public static 		Timeline 			timeline 			= new Timeline();
-    public static 		Timeline 			timepaused 			= new Timeline(); 
+    public static 		String 			timepaused 			= new String(); 
     public static 		long 				timePauseValue		= 0;
     public static 		Label 				timeLabel 			= new Label();
     public static 		long 				currentTime			= 0;
@@ -111,7 +111,7 @@ public class MenuScreen {
             	    }      
             	    else 
             	    {
-            	    	//timeline.playFrom(timeDuration);
+            	    	//timeline.playFrom(MenuScreen.timepaused);
 					}
             	    timeline.play();
             	    
