@@ -109,12 +109,12 @@ public class MenuScreen {
             	    
                     primaryStage.setTitle("Kings Table: One Player Mode");
                     playerMode = 1;
-                        });//click button go to Game screen for now
+                        });//click button go to Game screen for 1 player
 	        button2Player.setOnAction(clickToGame -> {
                     primaryStage.setScene(Config.game);
                     primaryStage.setTitle("Kings Table: Two Player Mode");
                     playerMode = 2;
-                        });//click button go to Game screen for now
+                        });//click button go to Game screen for 2 player
 	        buttonHelp.setOnAction(clickToHelpScreen -> primaryStage.setScene(Config.help));//click button go to Help screen
 	        VBox titleMenuBox = new VBox(20);
 	        HBox boxOfButtons = new HBox(20);
