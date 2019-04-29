@@ -15,10 +15,13 @@ public class Board {
     private int size = 11; //Dimensions of the board.
     private int tileSize = 45; //Size of tile of the board in pixels.
     //boardState: 0 - Empty, 1 - Defender, 2 - Attacker, 3 - King.
-    public int[][] boardState = new int[size][size]; //Change to be an array of pieces later/
+    public int[][] boardState = new int[size][size]; 
+    //Keeps track of the score.
     public int score = 0;
+    //Keeps track of the moves.
     public int moves = 0;
-    private int selectedTileX = -1; //Selected tile of the board.
+    //Selected tile of the board.
+    private int selectedTileX = -1; 
     private int selectedTileY = -1;
 
     //Constructor
@@ -248,43 +251,34 @@ public class Board {
     }
 
     //Getters and Setters.
-    //Set and get the size of the board.
     public void setSize(int size) {
         this.size = size;
     }
-
     public int getSize() {
         return this.size;
     }
-
-    //Set and get the size of a tile.
     public void setTileSize(int tileSize) {
         this.tileSize = tileSize;
     }
-
     public int getTileSize() {
         return this.tileSize;
     }
-
     public int getSelectedTileX() {
         return this.selectedTileX;
     }
-
     public int getSelectedTileY() {
         return this.selectedTileY;
     }
-
     public int getPieceType(int i, int j) {
         return boardState[i][j];
     }
-    
     public int getScore() {
         return this.score;
     }  
     public void resetScore() {
     	score = 0;
     }
-
+    //A method to print the board in text format.
     public void printBoard() {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
