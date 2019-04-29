@@ -116,7 +116,6 @@ public class MenuScreen {
                     playerMode = 2;
                         });//click button go to Game screen for now
 	        buttonHelp.setOnAction(clickToHelpScreen -> primaryStage.setScene(Config.help));//click button go to Help screen
-	        BorderPane buttonBorder = new BorderPane();
 	        VBox titleMenuBox = new VBox(20);
 	        HBox boxOfButtons = new HBox(20);
 	        boxOfButtons.getChildren().addAll(button1Player, button2Player, buttonHelp);
