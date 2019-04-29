@@ -111,7 +111,7 @@ public class MenuScreen {
             primaryStage.setTitle("Kings Table: One Player Mode");
             playerMode = 1;
             
-        });//click button go to Game screen for now
+        });//click button go to Game screen for 2 player
         button2Player.setOnAction(clickToGame -> {
             primaryStage.setScene(Config.game);
             primaryStage.setTitle("Kings Table: Two Player Mode");
@@ -128,4 +128,3 @@ public class MenuScreen {
 
 }
 ///////////// end of menu scene
-
