@@ -291,7 +291,7 @@ public class KingsTableProgram extends Application {
         
         
         
-        // CENTER PROTION OF GAME SCREEN (Game Table)-----------
+        // CENTER PROTION OF GAME SCREEN (Game Table)--------------------------------------------
         gridPaneGAME.setAlignment(Pos.CENTER);
         for (int i = 0; i < KingsTableProgram.boardSize; i++) {
             for (int j = 0; j < KingsTableProgram.boardSize; j++) {
@@ -307,8 +307,6 @@ public class KingsTableProgram extends Application {
                 square.setOnMouseExited(event -> {
                     square.setEffect(new InnerShadow(10d, 0d, 0d, Color.BLACK));
                 });
-
-                // Gabe - Give every box an id
                 square.setId(i + "," + j);
                 StackPane imageContainer = new StackPane();
                 square.setOnMouseClicked((MouseEvent event) -> {
@@ -318,8 +316,7 @@ public class KingsTableProgram extends Application {
                         if (KingsTableProgram.board.movePiece(GridPane.getRowIndex(selected), GridPane.getColumnIndex(selected), Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]))) {
                             System.out.println("Piece " + KingsTableProgram.board.getPieceType(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1])) + " moved from (" + GridPane.getRowIndex(selected) + "," + GridPane.getColumnIndex(selected) + ") to (" + coordinates[0] + "," + coordinates[1] + ").");
                             KingsTableProgram.board.moves++;
-
-                            //This stuff updates the display.
+                            //updates the display.
                             //if Piece is King
                             if (KingsTableProgram.board.getPieceType(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1])) == 3) {
                                 //if King Moved to Kings Square
@@ -487,11 +484,11 @@ public class KingsTableProgram extends Application {
                             }
                             if ((primaryStage.getTitle() == "Kings Table: Two Player Mode")){
                                 KingsTableProgram.board.score = 0;
-                                userScore.setText("Score: " + KingsTableProgram.board.score);
+                                userScore.setText("");
                             }
                             //Check King Capture
                             if (KingsTableProgram.board.checkKingCapture(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]))) {
-                                //Attackers win.
+                                //Attackers win
                                 System.out.println("Attackers Win!");
                                 pauseScreenText.setText("Attackers Win!");
                                 if (MenuScreen.playerMode == 1) {
@@ -535,7 +532,6 @@ public class KingsTableProgram extends Application {
 
                             //Check if the user is playing the AI here.
                             if (primaryStage.getTitle() == "Kings Table: One Player Mode") {
-                                
                                 //This returns the coordinates of the piece to move and the coordinates of where to move it.
                                 List<Integer> coords = KingsTableProgram.board.moveAttacker();
                                 if (coords != null) {
@@ -596,13 +592,10 @@ public class KingsTableProgram extends Application {
 
                             //Display the text board for testing.
                             KingsTableProgram.board.printBoard();
-
                         } else {
                             System.out.println("This move is invalid.");
                         }
-
                     }
-
                 });
 
                 if ((i == 0 && (j == 0 || j == (boardSize - 1)))
@@ -630,13 +623,13 @@ public class KingsTableProgram extends Application {
         }
         gameBorder.setCenter(gridPaneGAME);
 
-        // BOTTOM PROTION OF GAME SCREEN (High Score, Timer, Player's Score)------------
+        
+        
+        
+        // BOTTOM PROTION OF GAME SCREEN (High Score, Timer, Player's Score)--------------------------------
         hboxBOTTOM.setAlignment(Pos.BOTTOM_CENTER);
         hboxBOTTOM.setPadding(new Insets(25, 10, 25, 20));// top,right,bottom,left
-        // hboxBOTTOM.setStyle("-fx-background-color: #D3D3D3;"); //for visual testing
         Label highScore = new Label("High Score");
-        //TODO2
-        //Label userScore = new Label("Score: " + KingsTableProgram.board.score);
         int currentScore = KingsTableProgram.board.getScore();
         Region region1 = new Region(); // spacer
         HBox.setHgrow(region1, Priority.ALWAYS);
@@ -651,19 +644,20 @@ public class KingsTableProgram extends Application {
         userScore.setEffect(new DropShadow(+10d, 0d, 3d, Color.BLACK));
         userScore.setTextFill(KingsTableProgram.textColor);
         userScore.setFont(Font.font(KingsTableProgram.textFont, FontWeight.BOLD, 20));
-        //THIS IS IT! THE UPDATE UI
         hboxBOTTOM.getChildren().addAll(highScore, region1, MenuScreen.timeLabel, region2, userScore);
         gameBorder.setBottom(hboxBOTTOM);
 
-        // Show Game ------------
+        
+        
+        
+        
+        // Show Game ---------------
         // Draw Pieces
         if (KingsTableProgram.board.score > currentScore) {
             // logic for incrementing score in GUI
             currentScore = KingsTableProgram.board.getScore();
             userScore.setText("Score: " + KingsTableProgram.board.score);
-            //hboxBOTTOM.getChildren().addAll(highScore, region1, timer, MenuScreen.timeLabel, region2, userScore);
         }
-
         for (int i = 0; i < KingsTableProgram.boardSize; i++) {
             for (int j = 0; j < KingsTableProgram.boardSize; j++) {
                 if (KingsTableProgram.board.boardState[i][j] != 0) {
@@ -684,7 +678,6 @@ public class KingsTableProgram extends Application {
                     GridPane.setHalignment(piece, HPos.CENTER);
                     piece.setId("piece");
                     piece.setEffect(new InnerShadow(+10d, 0d, 0d, Color.BLACK)); // Radius, offsetX, offsetY, color
-
                     //Determine which pieces, if any, the player cannot control.
                     piece.setOnMouseEntered(event -> { // we can add a thing here where if it is the player's piece it will
                         // highlight
@@ -718,7 +711,6 @@ public class KingsTableProgram extends Application {
         }
 
     }
-
     //Function to get the the piece at a given position in the GridPane.
     public Node getPieceAtPosition(int x, int y, GridPane gridPane) {
         Node piece = null;

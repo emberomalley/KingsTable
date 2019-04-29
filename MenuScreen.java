@@ -22,7 +22,7 @@ public class MenuScreen {
     public static 		KingsTableProgram 	KingsTableProgram 	= new KingsTableProgram();  
     public static 		Timeline 			timeline 			= new Timeline();
     public static 		Label 				timeLabel 			= new Label();
-    public static       long                startTime;
+    public static       long                startTime			= -1;
     public static		long				timeDifference		= 0;
     public static		int					playerMode			= 0;
 	public static void 	display(Stage primaryStage) {
@@ -79,7 +79,9 @@ public class MenuScreen {
 	        
 	        button1Player.setOnAction(clickToGame -> { // button goes to gameScreen and starts timer
                     primaryStage.setScene(Config.game);                  
-                    startTime = System.currentTimeMillis();
+                    if(startTime == -1) {
+                    	startTime = System.currentTimeMillis();
+                    }
                     
             	    DateFormat timeFormat = new SimpleDateFormat("mm:ss");
     
